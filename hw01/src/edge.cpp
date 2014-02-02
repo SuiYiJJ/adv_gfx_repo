@@ -36,4 +36,7 @@ float Edge::Length() const {
   return diff.Length();
 }
 
+float dihedralAngle(){
+    
+}
 #endif

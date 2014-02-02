@@ -8,7 +8,7 @@
 #include "boundingbox.h"
 #include "argparser.h"
 
-// There are only 3 real elements
+//Lets me use these classes in my .cpp file
 class Vertex;
 class Edge;
 class Triangle;
@@ -130,12 +130,12 @@ private:
   
   // ==============
   // REPRESENTATION
-  ArgParser *args;
-  std::vector<Vertex*> vertices;
-  edgeshashtype edges;
-  triangleshashtype triangles;
-  BoundingBox bbox;
-  vphashtype vertex_parents;
+  ArgParser *args;                //Arguments
+  std::vector<Vertex*> vertices;  //Vector of vertices
+  edgeshashtype edges;            //Hash table of edges
+  triangleshashtype triangles;    //Hash table of triangles
+  BoundingBox bbox;               //bbox?
+  vphashtype vertex_parents;      //List of parents of each vertex
 
   int num_boundary_edges;
   int num_crease_edges;

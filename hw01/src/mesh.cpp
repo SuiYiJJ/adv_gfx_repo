@@ -1,6 +1,7 @@
 #include "glCanvas.h"
 #include <fstream>
 #include <sstream>
+#include <cassert>
 
 #include "mesh.h"
 #include "edge.h"
@@ -120,6 +121,7 @@ Edge* Mesh::getMeshEdge(Vertex *a, Vertex *b) const {
   return iter->second;
 }
 
+// What are these for?
 Vertex* Mesh::getChildVertex(Vertex *p1, Vertex *p2) const {
   vphashtype::const_iterator iter = vertex_parents.find(std::make_pair(p1,p2)); 
   if (iter == vertex_parents.end()) return NULL;
@@ -188,6 +190,7 @@ void Mesh::Load(const std::string &input_file) {
     } else if (token == std::string("e")) {
       a = b = -1;
       ss >> a >> b >> token2;
+
       // whoops: inconsistent file format, don't subtract 1
       assert (a >= 0 && a <= numVertices());
       assert (b >= 0 && b <= numVertices());
@@ -215,6 +218,23 @@ void Mesh::Load(const std::string &input_file) {
 // DRAWING
 // =======================================================================
 
+Vec3f AverageNormal(std::vector<Vec3f> &vectors ){
+
+  //Add up all the vectors
+  Vec3f sum; 
+
+  for(unsigned int i = 0; i < vectors.size(); i++){
+    sum = sum + vectors[i];
+  }
+
+  double n = vectors.size();
+
+  sum = n * sum;
+
+  return sum;
+}
+
+
 Vec3f ComputeNormal(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3) {
   Vec3f v12 = p2;
   v12 -= p1;
@@ -226,6 +246,47 @@ Vec3f ComputeNormal(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3) {
   return normal;
 }
 
+Vec3f getAverageNormals(Edge* givenEdge){
+
+
+  // Finding avereage normal of edgeA
+  Edge* cur = givenEdge;
+  std::vector<Vec3f> curSum;
+  bool reversed = false;
+
+  do{
+
+    Triangle* curTri = (*cur).getTriangle();
+    // Get that face's normal
+    Vec3f v1= (*curTri)[0]->getPos();
+    Vec3f v2= (*curTri)[1]->getPos();
+    Vec3f v3= (*curTri)[2]->getPos();   
+    // Find normal of that face
+    Vec3f n = ComputeNormal(v1,v2,v3);
+    //Push into curSum
+    curSum.push_back(n);
+    //incremement pointer
+    cur = cur->getOpposite();
+
+    //If opposite is a dead end
+    if(cur == NULL && !reversed){
+        cur = givenEdge->getPrev();
+        reversed = true;
+    }else if(cur == NULL && reversed){
+        cur = givenEdge;
+    }else if(cur != NULL){
+        if(reversed)
+            cur = cur->getPrev();
+        else
+            cur = cur->getNext();
+    }
+
+  }while ( givenEdge != cur );
+
+  Vec3f normal = AverageNormal(curSum);
+  return normal;
+
+}
 
 void Mesh::initializeVBOs() {
   // create a pointer for the vertex & index VBOs
@@ -247,6 +308,7 @@ void Mesh::setupVBOs() {
 
 
 void Mesh::setupTriVBOs() {
+  // Set up Triangle Vertex Buffer Object
 
   VBOTriVert* mesh_tri_verts;
   VBOTri* mesh_tri_indices;
@@ -261,20 +323,30 @@ void Mesh::setupTriVBOs() {
   triangleshashtype::iterator iter = triangles.begin();
   for (; iter != triangles.end(); iter++,i++) {
     Triangle *t = iter->second;
+
     Vec3f a = (*t)[0]->getPos();
     Vec3f b = (*t)[1]->getPos();
     Vec3f c = (*t)[2]->getPos();
     
     if (args->gouraud) {
 
+      // Find avaerage normal of faces surrouding each vertex. (a,b,c)
+        
+      // Three Edges in triangle
+      Edge* edgeA = (*t).getEdge();
+      Edge* edgeB = (*t).getEdge()->getNext();
+      Edge* edgeC = (*t).getEdge()->getNext()->getNext();
 
-      // =====================================
-      // ASSIGNMENT: reimplement 
-      Vec3f normal = ComputeNormal(a,b,c);
-      mesh_tri_verts[i*3]   = VBOTriVert(a,normal);
-      mesh_tri_verts[i*3+1] = VBOTriVert(b,normal);
-      mesh_tri_verts[i*3+2] = VBOTriVert(c,normal);
-      // =====================================
+      // Call to getAverageNormals -- This function calculates the normal of 
+      // surrounding faces of a triangle. 
+      Vec3f normalA = getAverageNormals(edgeA);
+      Vec3f normalB = getAverageNormals(edgeB);
+      Vec3f normalC = getAverageNormals(edgeC);
+
+      // Send normal to VBO
+      mesh_tri_verts[i*3]   = VBOTriVert(a,normalA);
+      mesh_tri_verts[i*3+1] = VBOTriVert(b,normalB);
+      mesh_tri_verts[i*3+2] = VBOTriVert(c,normalC);
 
 
     } else {

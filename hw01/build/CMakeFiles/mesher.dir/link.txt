@@ -1,1 +1,1 @@
-/usr/bin/c++       CMakeFiles/mesher.dir/main.cpp.o CMakeFiles/mesher.dir/glCanvas.cpp.o CMakeFiles/mesher.dir/camera.cpp.o CMakeFiles/mesher.dir/matrix.cpp.o CMakeFiles/mesher.dir/edge.cpp.o CMakeFiles/mesher.dir/mesh.cpp.o  -o mesher -rdynamic -lGLU -lGL -lSM -lICE -lX11 -lXext -lglut 
+/usr/bin/c++   -g    CMakeFiles/mesher.dir/main.cpp.o CMakeFiles/mesher.dir/glCanvas.cpp.o CMakeFiles/mesher.dir/camera.cpp.o CMakeFiles/mesher.dir/matrix.cpp.o CMakeFiles/mesher.dir/edge.cpp.o CMakeFiles/mesher.dir/mesh.cpp.o  -o mesher -rdynamic -lGLU -lGL -lSM -lICE -lX11 -lXext -lglut 

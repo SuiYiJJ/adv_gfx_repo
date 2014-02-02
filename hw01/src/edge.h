@@ -27,8 +27,17 @@ public:
   Edge* getOpposite() const {
     // warning!  the opposite edge might be NULL!
     return opposite; }
+  Edge* getPrev() const {
+      assert(next != NULL);
+      assert (next->getNext() != NULL);
+      return next->getNext();
+  }
+
   float getCrease() const { return crease; }
   float Length() const;
+  float dihedralAngle(); 
+
+
   
   // =========
   // MODIFIERS

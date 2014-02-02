@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/espinm2/Downloads/hw01
+CMAKE_SOURCE_DIR = /home/espinm2/Code/adv_gfx_repo/hw01/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/espinm2/Downloads/hw01/build
+CMAKE_BINARY_DIR = /home/espinm2/Code/adv_gfx_repo/hw01/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/mesher.dir/depend.make
@@ -47,18 +47,18 @@ include CMakeFiles/mesher.dir/progress.make
 include CMakeFiles/mesher.dir/flags.make
 
 CMakeFiles/mesher.dir/main.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/main.cpp.o: ../main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_1)
+CMakeFiles/mesher.dir/main.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/main.cpp.o -c /home/espinm2/Downloads/hw01/main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/main.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp
 
 CMakeFiles/mesher.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/main.cpp > CMakeFiles/mesher.dir/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp > CMakeFiles/mesher.dir/main.cpp.i
 
 CMakeFiles/mesher.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/main.cpp -o CMakeFiles/mesher.dir/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp -o CMakeFiles/mesher.dir/main.cpp.s
 
 CMakeFiles/mesher.dir/main.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/main.cpp.o.requires
@@ -70,18 +70,18 @@ CMakeFiles/mesher.dir/main.cpp.o.provides: CMakeFiles/mesher.dir/main.cpp.o.requ
 CMakeFiles/mesher.dir/main.cpp.o.provides.build: CMakeFiles/mesher.dir/main.cpp.o
 
 CMakeFiles/mesher.dir/glCanvas.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/glCanvas.cpp.o: ../glCanvas.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_2)
+CMakeFiles/mesher.dir/glCanvas.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/glCanvas.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/glCanvas.cpp.o -c /home/espinm2/Downloads/hw01/glCanvas.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/glCanvas.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp
 
 CMakeFiles/mesher.dir/glCanvas.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/glCanvas.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/glCanvas.cpp > CMakeFiles/mesher.dir/glCanvas.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp > CMakeFiles/mesher.dir/glCanvas.cpp.i
 
 CMakeFiles/mesher.dir/glCanvas.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/glCanvas.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/glCanvas.cpp -o CMakeFiles/mesher.dir/glCanvas.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp -o CMakeFiles/mesher.dir/glCanvas.cpp.s
 
 CMakeFiles/mesher.dir/glCanvas.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/glCanvas.cpp.o.requires
@@ -93,18 +93,18 @@ CMakeFiles/mesher.dir/glCanvas.cpp.o.provides: CMakeFiles/mesher.dir/glCanvas.cp
 CMakeFiles/mesher.dir/glCanvas.cpp.o.provides.build: CMakeFiles/mesher.dir/glCanvas.cpp.o
 
 CMakeFiles/mesher.dir/camera.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/camera.cpp.o: ../camera.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_3)
+CMakeFiles/mesher.dir/camera.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/camera.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/camera.cpp.o -c /home/espinm2/Downloads/hw01/camera.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/camera.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp
 
 CMakeFiles/mesher.dir/camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/camera.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/camera.cpp > CMakeFiles/mesher.dir/camera.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp > CMakeFiles/mesher.dir/camera.cpp.i
 
 CMakeFiles/mesher.dir/camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/camera.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/camera.cpp -o CMakeFiles/mesher.dir/camera.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp -o CMakeFiles/mesher.dir/camera.cpp.s
 
 CMakeFiles/mesher.dir/camera.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/camera.cpp.o.requires
@@ -116,18 +116,18 @@ CMakeFiles/mesher.dir/camera.cpp.o.provides: CMakeFiles/mesher.dir/camera.cpp.o.
 CMakeFiles/mesher.dir/camera.cpp.o.provides.build: CMakeFiles/mesher.dir/camera.cpp.o
 
 CMakeFiles/mesher.dir/matrix.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/matrix.cpp.o: ../matrix.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_4)
+CMakeFiles/mesher.dir/matrix.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/matrix.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/matrix.cpp.o -c /home/espinm2/Downloads/hw01/matrix.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/matrix.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp
 
 CMakeFiles/mesher.dir/matrix.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/matrix.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/matrix.cpp > CMakeFiles/mesher.dir/matrix.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp > CMakeFiles/mesher.dir/matrix.cpp.i
 
 CMakeFiles/mesher.dir/matrix.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/matrix.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/matrix.cpp -o CMakeFiles/mesher.dir/matrix.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp -o CMakeFiles/mesher.dir/matrix.cpp.s
 
 CMakeFiles/mesher.dir/matrix.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/matrix.cpp.o.requires
@@ -139,18 +139,18 @@ CMakeFiles/mesher.dir/matrix.cpp.o.provides: CMakeFiles/mesher.dir/matrix.cpp.o.
 CMakeFiles/mesher.dir/matrix.cpp.o.provides.build: CMakeFiles/mesher.dir/matrix.cpp.o
 
 CMakeFiles/mesher.dir/edge.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/edge.cpp.o: ../edge.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_5)
+CMakeFiles/mesher.dir/edge.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/edge.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/edge.cpp.o -c /home/espinm2/Downloads/hw01/edge.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/edge.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp
 
 CMakeFiles/mesher.dir/edge.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/edge.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/edge.cpp > CMakeFiles/mesher.dir/edge.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp > CMakeFiles/mesher.dir/edge.cpp.i
 
 CMakeFiles/mesher.dir/edge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/edge.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/edge.cpp -o CMakeFiles/mesher.dir/edge.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp -o CMakeFiles/mesher.dir/edge.cpp.s
 
 CMakeFiles/mesher.dir/edge.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/edge.cpp.o.requires
@@ -162,18 +162,18 @@ CMakeFiles/mesher.dir/edge.cpp.o.provides: CMakeFiles/mesher.dir/edge.cpp.o.requ
 CMakeFiles/mesher.dir/edge.cpp.o.provides.build: CMakeFiles/mesher.dir/edge.cpp.o
 
 CMakeFiles/mesher.dir/mesh.cpp.o: CMakeFiles/mesher.dir/flags.make
-CMakeFiles/mesher.dir/mesh.cpp.o: ../mesh.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Downloads/hw01/build/CMakeFiles $(CMAKE_PROGRESS_6)
+CMakeFiles/mesher.dir/mesh.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mesher.dir/mesh.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/mesh.cpp.o -c /home/espinm2/Downloads/hw01/mesh.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -o CMakeFiles/mesher.dir/mesh.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp
 
 CMakeFiles/mesher.dir/mesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mesher.dir/mesh.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Downloads/hw01/mesh.cpp > CMakeFiles/mesher.dir/mesh.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -E /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp > CMakeFiles/mesher.dir/mesh.cpp.i
 
 CMakeFiles/mesher.dir/mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mesher.dir/mesh.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Downloads/hw01/mesh.cpp -o CMakeFiles/mesher.dir/mesh.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -std=c++0x -S /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp -o CMakeFiles/mesher.dir/mesh.cpp.s
 
 CMakeFiles/mesher.dir/mesh.cpp.o.requires:
 .PHONY : CMakeFiles/mesher.dir/mesh.cpp.o.requires
@@ -231,6 +231,6 @@ CMakeFiles/mesher.dir/clean:
 .PHONY : CMakeFiles/mesher.dir/clean
 
 CMakeFiles/mesher.dir/depend:
-	cd /home/espinm2/Downloads/hw01/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/espinm2/Downloads/hw01 /home/espinm2/Downloads/hw01 /home/espinm2/Downloads/hw01/build /home/espinm2/Downloads/hw01/build /home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/espinm2/Code/adv_gfx_repo/hw01/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/espinm2/Code/adv_gfx_repo/hw01/src /home/espinm2/Code/adv_gfx_repo/hw01/src /home/espinm2/Code/adv_gfx_repo/hw01/build /home/espinm2/Code/adv_gfx_repo/hw01/build /home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/mesher.dir/depend
 

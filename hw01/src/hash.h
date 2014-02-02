@@ -47,7 +47,6 @@ struct orderedsamevertexpair {
 };
 
 
-
 // ===================================================================================
 // PARENT/CHILD VERTEX relationships (for subdivision) are stored in a
 // hash table using a simple hash function based on the indices of the

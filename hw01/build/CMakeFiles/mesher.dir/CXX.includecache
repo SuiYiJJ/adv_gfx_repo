@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/espinm2/Downloads/hw01/MersenneTwister.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/MersenneTwister.h
 iostream
 -
 climits
@@ -18,61 +18,27 @@ ctime
 cmath
 -
 
-/home/espinm2/Downloads/hw01/argparser.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
 string
 -
 cassert
 -
 MersenneTwister.h
-/home/espinm2/Downloads/hw01/MersenneTwister.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/MersenneTwister.h
 
-/home/espinm2/Downloads/hw01/boundingbox.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/boundingbox.h
 cassert
 -
 algorithm
 -
 vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 
-/home/espinm2/Downloads/hw01/camera.cpp
-glCanvas.h
-/home/espinm2/Downloads/hw01/glCanvas.h
-camera.h
-/home/espinm2/Downloads/hw01/camera.h
-matrix.h
-/home/espinm2/Downloads/hw01/matrix.h
-
-/home/espinm2/Downloads/hw01/camera.h
-cassert
--
-iostream
--
-fstream
--
-vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
-
-/home/espinm2/Downloads/hw01/edge.cpp
-vertex.h
-/home/espinm2/Downloads/hw01/vertex.h
-edge.h
-/home/espinm2/Downloads/hw01/edge.h
-
-/home/espinm2/Downloads/hw01/edge.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
 cassert
 -
 
-/home/espinm2/Downloads/hw01/glCanvas.cpp
-glCanvas.h
-/home/espinm2/Downloads/hw01/glCanvas.h
-mesh.h
-/home/espinm2/Downloads/hw01/mesh.h
-argparser.h
-/home/espinm2/Downloads/hw01/argparser.h
-camera.h
-/home/espinm2/Downloads/hw01/camera.h
-
-/home/espinm2/Downloads/hw01/glCanvas.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
 cstdio
 -
 cstdlib
@@ -96,9 +62,9 @@ GL/gl.h
 GL/glu.h
 -
 GL/wglew.h
-/home/espinm2/Downloads/hw01/GL/wglew.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/GL/wglew.h
 
-/home/espinm2/Downloads/hw01/hash.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h
 ext/hash_map
 -
 unordered_map
@@ -108,69 +74,45 @@ unordered_map
 ext/hash_map
 -
 vertex.h
-/home/espinm2/Downloads/hw01/vertex.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 
-/home/espinm2/Downloads/hw01/main.cpp
+/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp
 glCanvas.h
-/home/espinm2/Downloads/hw01/glCanvas.h
-iostream
--
-argparser.h
-/home/espinm2/Downloads/hw01/argparser.h
-mesh.h
-/home/espinm2/Downloads/hw01/mesh.h
-
-/home/espinm2/Downloads/hw01/matrix.cpp
-iostream
--
-iomanip
--
-matrix.h
-/home/espinm2/Downloads/hw01/matrix.h
-vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
-
-/home/espinm2/Downloads/hw01/matrix.h
-cassert
--
-vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
-
-/home/espinm2/Downloads/hw01/mesh.cpp
-glCanvas.h
-/home/espinm2/Downloads/hw01/glCanvas.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
 fstream
 -
 sstream
 -
+cassert
+-
 mesh.h
-/home/espinm2/Downloads/hw01/mesh.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
 edge.h
-/home/espinm2/Downloads/hw01/edge.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
 vertex.h
-/home/espinm2/Downloads/hw01/vertex.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 triangle.h
-/home/espinm2/Downloads/hw01/triangle.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
 
-/home/espinm2/Downloads/hw01/mesh.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
 vector
 -
 string
 -
 vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 hash.h
-/home/espinm2/Downloads/hw01/hash.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h
 boundingbox.h
-/home/espinm2/Downloads/hw01/boundingbox.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/boundingbox.h
 argparser.h
-/home/espinm2/Downloads/hw01/argparser.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
 
-/home/espinm2/Downloads/hw01/triangle.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
 edge.h
-/home/espinm2/Downloads/hw01/edge.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
 
-/home/espinm2/Downloads/hw01/vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 iostream
 -
 cmath
@@ -178,7 +120,7 @@ cmath
 cassert
 -
 
-/home/espinm2/Downloads/hw01/vertex.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 vectors.h
-/home/espinm2/Downloads/hw01/vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 

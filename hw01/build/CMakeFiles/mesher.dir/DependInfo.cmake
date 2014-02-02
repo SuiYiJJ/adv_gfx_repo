@@ -4,12 +4,12 @@ SET(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 SET(CMAKE_DEPENDS_CHECK_CXX
-  "/home/espinm2/Downloads/hw01/camera.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/camera.cpp.o"
-  "/home/espinm2/Downloads/hw01/edge.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/edge.cpp.o"
-  "/home/espinm2/Downloads/hw01/glCanvas.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/glCanvas.cpp.o"
-  "/home/espinm2/Downloads/hw01/main.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/main.cpp.o"
-  "/home/espinm2/Downloads/hw01/matrix.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/matrix.cpp.o"
-  "/home/espinm2/Downloads/hw01/mesh.cpp" "/home/espinm2/Downloads/hw01/build/CMakeFiles/mesher.dir/mesh.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/camera.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/edge.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/glCanvas.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/main.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/matrix.cpp.o"
+  "/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp" "/home/espinm2/Code/adv_gfx_repo/hw01/build/CMakeFiles/mesher.dir/mesh.cpp.o"
   )
 SET(CMAKE_CXX_COMPILER_ID "GNU")
 
