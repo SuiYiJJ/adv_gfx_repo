@@ -1,7 +1,7 @@
 #ifndef _TRIANGLE_H
 #define _TRIANGLE_H
 
-#include "edge.h"
+#include "vertex.h"
 
 // ===========================================================
 // Stores the indices to the 3 vertices of the triangles, 
@@ -37,6 +37,22 @@ public:
     edge = e;
   }
   int getID() { return id; }
+
+  Vec3f getNormal(){
+    Vec3f p1 = edge->getStartVertex()->getPos();
+    Vec3f p2 = edge->getNext()->getStartVertex()->getPos();
+    Vec3f p3 = edge->getNext()->getNext()->getStartVertex()->getPos();
+    
+    Vec3f v12 = p2;
+    v12 -= p1;
+    Vec3f v23 = p3;
+    v23 -= p2;
+    Vec3f normal;
+    Vec3f::Cross3(normal,v12,v23);
+    normal.Normalize();
+    return normal;
+ 
+  }
 
   // NOTE: If you want to modify a triangle, it is recommended that
   // you remove it from the mesh, delete it, create a triangle object

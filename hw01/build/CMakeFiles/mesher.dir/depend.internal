@@ -10,6 +10,7 @@ CMakeFiles/mesher.dir/camera.cpp.o
 CMakeFiles/mesher.dir/edge.cpp.o
  /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp
  /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
+ /home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 CMakeFiles/mesher.dir/glCanvas.cpp.o
@@ -17,20 +18,24 @@ CMakeFiles/mesher.dir/glCanvas.cpp.o
  /home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/boundingbox.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.h
+ /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp
  /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
+ /home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 CMakeFiles/mesher.dir/main.cpp.o
  /home/espinm2/Code/adv_gfx_repo/hw01/src/MersenneTwister.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/boundingbox.h
+ /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp
  /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
+ /home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
  /home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 CMakeFiles/mesher.dir/matrix.cpp.o

@@ -35,7 +35,7 @@ public:
 
   float getCrease() const { return crease; }
   float Length() const;
-  float dihedralAngle(); 
+  float DihedralAngle();
 
 
   

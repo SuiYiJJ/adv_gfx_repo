@@ -3,6 +3,8 @@
 
 #include "vertex.h"
 #include "edge.h"
+#include "triangle.h"   //max
+#include <math.h>
 
 
 // ===========
@@ -36,7 +38,30 @@ float Edge::Length() const {
   return diff.Length();
 }
 
-float dihedralAngle(){
-    
+float Edge::DihedralAngle(){
+  /*
+   * Warning this function returns NULL 
+   * when there is an edge without two 
+   * adjcent triangles
+   *
+   */
+
+  // Is there even an angle here?
+  if(opposite == NULL)
+    return (float)NULL;
+
+  // Find the angle of the face of a triangle
+  Triangle* a = triangle;
+  Triangle* b = opposite->getTriangle();
+
+  Vec3f normalA = a->getNormal();
+  Vec3f normalB = b->getNormal();
+
+  // Using Equation theta = acos( (a . b) / (|a||b|)) 
+  double top = normalA.Dot3(normalB);
+  double bottom = normalA.Length() * normalB.Length();
+  double result = acos(top/bottom);
+  return result;
+
 }
 #endif

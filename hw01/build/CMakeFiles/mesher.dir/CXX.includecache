@@ -34,9 +34,39 @@ algorithm
 vectors.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 
+/home/espinm2/Code/adv_gfx_repo/hw01/src/camera.h
+cassert
+-
+iostream
+-
+fstream
+-
+vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
+
+/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.cpp
+vertex.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
+edge.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
+triangle.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
+math.h
+-
+
 /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
 cassert
 -
+
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.cpp
+glCanvas.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
+mesh.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
+argparser.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
+camera.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/camera.h
 
 /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
 cstdio
@@ -76,6 +106,16 @@ ext/hash_map
 vertex.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 
+/home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp
+glCanvas.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
+iostream
+-
+argparser.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
+mesh.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
+
 /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp
 glCanvas.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
@@ -84,6 +124,8 @@ fstream
 sstream
 -
 cassert
+-
+cstddef
 -
 mesh.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
@@ -99,6 +141,12 @@ vector
 -
 string
 -
+utility
+-
+cassert
+-
+cstddef
+-
 vectors.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 hash.h
@@ -107,10 +155,14 @@ boundingbox.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/boundingbox.h
 argparser.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h
-
-/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
 edge.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/edge.h
+triangle.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
+
+/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h
+vertex.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h
 
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 iostream

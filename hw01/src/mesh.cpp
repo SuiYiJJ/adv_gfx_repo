@@ -2,11 +2,17 @@
 #include <fstream>
 #include <sstream>
 #include <cassert>
+#include <cstddef>
+
 
 #include "mesh.h"
 #include "edge.h"
 #include "vertex.h"
 #include "triangle.h"
+
+// Easier to read 
+typedef std::pair<Vec3f,Vec3f> vPair;
+
 
 
 int Triangle::next_triangle_id = 0;
@@ -115,20 +121,24 @@ void Mesh::removeTriangle(Triangle *t) {
 // Helper functions for accessing data in the hash table
 // =======================================================================
 
+
 Edge* Mesh::getMeshEdge(Vertex *a, Vertex *b) const {
+  // Given two verticies you return the correct edge
   edgeshashtype::const_iterator iter = edges.find(std::make_pair(a,b));
   if (iter == edges.end()) return NULL;
   return iter->second;
 }
 
-// What are these for?
 Vertex* Mesh::getChildVertex(Vertex *p1, Vertex *p2) const {
+  // Given two verticies you get the child
   vphashtype::const_iterator iter = vertex_parents.find(std::make_pair(p1,p2)); 
   if (iter == vertex_parents.end()) return NULL;
   return iter->second; 
 }
 
 void Mesh::setParentsChild(Vertex *p1, Vertex *p2, Vertex *child) {
+  // Given two verticies and a child, you set the parent
+  // Some form of relationship between triangles?
   assert (vertex_parents.find(std::make_pair(p1,p2)) == vertex_parents.end());
   vertex_parents[std::make_pair(p1,p2)] = child; 
 }
@@ -249,7 +259,7 @@ Vec3f ComputeNormal(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3) {
 Vec3f getAverageNormals(Edge* givenEdge){
 
 
-  // Finding avereage normal of edgeA
+  // Finding avereage normal of givenEdge
   Edge* cur = givenEdge;
   std::vector<Vec3f> curSum;
   bool reversed = false;
@@ -314,7 +324,8 @@ void Mesh::setupTriVBOs() {
   VBOTri* mesh_tri_indices;
   unsigned int num_tris = triangles.size();
 
-  // allocate space for the data
+  // allocate space for the data (goes on the heap)
+  // NOTE: VBOTriVert -> What is it
   mesh_tri_verts = new VBOTriVert[num_tris*3];
   mesh_tri_indices = new VBOTri[num_tris];
 
@@ -347,7 +358,6 @@ void Mesh::setupTriVBOs() {
       mesh_tri_verts[i*3]   = VBOTriVert(a,normalA);
       mesh_tri_verts[i*3+1] = VBOTriVert(b,normalB);
       mesh_tri_verts[i*3+2] = VBOTriVert(c,normalC);
-
 
     } else {
       Vec3f normal = ComputeNormal(a,b,c);
@@ -586,7 +596,6 @@ void Mesh::drawVBOs() {
 // SUBDIVISION
 // =================================================================
 
-
 void Mesh::LoopSubdivision() {
   printf ("Subdivide the mesh!\n");
   
@@ -602,10 +611,89 @@ void Mesh::LoopSubdivision() {
 // =================================================================
 
 void Mesh::Simplification(int target_tri_count) {
+
   // clear out any previous relationships between vertices
   vertex_parents.clear();
 
+
+  // Picking random edge 
+  // TODO: Replace with better manner using hash table
+  int triStop = args->mtrand.randInt((unsigned long int)triangles.size());
+
+  triangleshashtype::iterator iter = triangles.begin();
+  for (int i = 0; i > triStop; i++) 
+    iter ++;
+
+  Edge* deadEdge = (*iter).second->getEdge();
+
+  // If I have an boundery edge, don't take to preserve shape
+  if(deadEdge->getOpposite() == NULL)
+    return;
+
+
+  // deadVertex will be merged onto mergeVertex
+  Vertex* deadVertex = deadEdge->getStartVertex();
+  Vertex* mergeVertex = deadEdge->getOpposite()->getStartVertex();
+  Vec3f mVertex = mergeVertex->getPos();
+
+  // triangle to delete later
+  std::vector<Triangle*> triangleToDelete;
+
+  // vector of pairs to save ptr to recreate altered triangles
+  std::vector<vPair> triangleToAlter;
+
+  //JUMP
+  Edge* cur = deadEdge;
+
+  do{
+
+    // Get the triangle of that edge save to delete
+    Triangle* curTri = cur->getTriangle();
+    triangleToDelete.push_back(curTri);
+
+    // Getting pair to reconstruct triangle with 
+    vPair aPair = alteredTriPair(curTri,deadVertex,mergeVertex);
+  
+
+    // If legal add to set altredVertexPair, return nullptr
+    // If the pair has to be deleted
+    if(aPair.first != NULL || aPair.second != NULL)
+      triangleToAlter.push_back(aPair);
+
+    // circle around deadVertex
+    cur = cur->getOpposite();
+    if(cur == NULL){ return;}
+    cur = cur->getNext();
+
+    // sanity check
+    assert(cur->getStartVertex() == deadVertex);
+
+  }while( cur != deadEdge );
+
+  // done collecting triangles and pairs
+  
+  // Remove all dead triangles 
+  // kills objects pointers were pointing to
+  for(int v = 0; v < triangleToDelete.size(); v++)
+    removeTriangle(triangleToDelete[v]);
+
+  // Adding in the removed merage
+  Vertex* merge = addVertex(mVertex.second);
+
+  //Recreate new triangles
+  for(int c = 0; c < triangleToAlter.size(); c++){
+    
+    //Create Veritices Again
+    Vertex* a = addVertex(triangleToAlter[c].first);
+    Vertex* b = addVertex(triangleToAlter[c].second);
+    
+    //Create triangle
+    addTriangle(a,b,merge);
+  }
+
+
   printf ("Simplify the mesh! %d -> %d\n", numTriangles(), target_tri_count);
+
 
   // =====================================
   // ASSIGNMENT: complete this functionality

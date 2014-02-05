@@ -3,10 +3,20 @@
 
 #include <vector>
 #include <string>
+#include <utility>
+#include <cassert>
+#include <cstddef>
+
 #include "vectors.h"
 #include "hash.h"
 #include "boundingbox.h"
 #include "argparser.h"
+
+#include "edge.h"
+#include "triangle.h"
+
+// Easier to read 
+typedef std::pair<Vec3f,Vec3f> vPair;
 
 //Lets me use these classes in my .cpp file
 class Vertex;
@@ -105,6 +115,41 @@ public:
   // ===============
   // OTHER ACCESSORS
   const BoundingBox& getBoundingBox() const { return bbox; }
+
+  
+  
+  //JUMP
+  void alteredTriPair(Triangle* tri, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair){
+    
+    // WARNING: The following function returns vPair with NULL pointers
+    // in some instances. We applogize for any inconvince this might cause
+    // and appricate your continued support. 
+
+    // Get three nodes of the triangle
+    // NOTE: One is bound to be deadVertex, one might be mergeVertex
+    Vertex* a = tri->getEdge()->getStartVertex();                       
+    Vertex* b = tri->getEdge()->getNext()->getStartVertex();            
+    Vertex* c = tri->getEdge()->getNext()->getNext()->getStartVertex(); 
+
+    // Check if valid, if valid return pair ELSE null pair
+    if( a == mergeVertex || b == mergeVertex || c == mergeVertex ){
+      // Do nothing, leaving alterPair unititated
+      alteredPair 
+      
+    }else if( a == deadVertex){
+     alteredPair = std::make_pair(b->getPos(),c->getPos());
+
+    }else if( b == deadVertex){
+     alteredPair = std::make_pair(b->getPos(),c->getPos());
+
+    }else if( c == deadVertex){
+     alteredPair = std::make_pair(b->getPos(),c->getPos());
+
+    }else{
+      // Something went wrong...
+      assert(true);
+    }
+  }
   
   // ===+=====
   // RENDERING
@@ -131,11 +176,16 @@ private:
   // ==============
   // REPRESENTATION
   ArgParser *args;                //Arguments
-  std::vector<Vertex*> vertices;  //Vector of vertices
+
+  std::vector<Vertex*> vertices;  //Vector of vertices pointers
+                                  //Where are they created?
+
   edgeshashtype edges;            //Hash table of edges
   triangleshashtype triangles;    //Hash table of triangles
   BoundingBox bbox;               //bbox?
   vphashtype vertex_parents;      //List of parents of each vertex
+
+  //TODO Find out how verticies are handled!
 
   int num_boundary_edges;
   int num_crease_edges;
