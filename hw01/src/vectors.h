@@ -33,6 +33,7 @@ public:
     data[0] = d0;
     data[1] = d1;
     data[2] = d2; }
+
   const Vec3f& operator=(const Vec3f &V) {
     data[0] = V.data[0];
     data[1] = V.data[1];

@@ -1,5 +1,6 @@
 #include "glCanvas.h"
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <cassert>
 #include <cstddef>
@@ -11,7 +12,7 @@
 #include "triangle.h"
 
 // Easier to read 
-typedef std::pair<Vec3f,Vec3f> vPair;
+typedef std::pair<Vertex*,Vertex*> vPair;
 
 
 
@@ -612,29 +613,41 @@ void Mesh::LoopSubdivision() {
 
 void Mesh::Simplification(int target_tri_count) {
 
+
+
+  std::cout << "PHASE 1: SIMPLIFICATION " << std::endl;
   // clear out any previous relationships between vertices
   vertex_parents.clear();
+  int oringalTriNum = numTriangles();
+  int oringalEdgNum = edges.size();
+  int orginalVecNum = vertices.size();
 
 
   // Picking random edge 
-  // TODO: Replace with better manner using hash table
   int triStop = args->mtrand.randInt((unsigned long int)triangles.size());
 
   triangleshashtype::iterator iter = triangles.begin();
-  for (int i = 0; i > triStop; i++) 
+  for (int i = 0; i > triStop; i++) {
     iter ++;
+  }
 
-  Edge* deadEdge = (*iter).second->getEdge();
+
+  Triangle* randTriangle = (*iter).second;
+  Edge* collapseEdge = (*iter).second->getEdge();
+  
+  std::cout << "PHASE 2: SIMPLIFICATION " << std::endl;
 
   // If I have an boundery edge, don't take to preserve shape
-  if(deadEdge->getOpposite() == NULL)
+  if(collapseEdge->getOpposite() == NULL || collapseEdge->getTriangle() == NULL){
+    std::cout << "BOUNDRY EDGE, TRY AGAIN" << std::endl;
     return;
+  }
+
 
 
   // deadVertex will be merged onto mergeVertex
-  Vertex* deadVertex = deadEdge->getStartVertex();
-  Vertex* mergeVertex = deadEdge->getOpposite()->getStartVertex();
-  Vec3f mVertex = mergeVertex->getPos();
+  Vertex* deadVertex = collapseEdge->getStartVertex();
+  Vertex* mergeVertex = collapseEdge->getOpposite()->getStartVertex();
 
   // triangle to delete later
   std::vector<Triangle*> triangleToDelete;
@@ -643,56 +656,71 @@ void Mesh::Simplification(int target_tri_count) {
   std::vector<vPair> triangleToAlter;
 
   //JUMP
-  Edge* cur = deadEdge;
+  Edge* cur = collapseEdge;
 
   do{
+
+
 
     // Get the triangle of that edge save to delete
     Triangle* curTri = cur->getTriangle();
     triangleToDelete.push_back(curTri);
 
     // Getting pair to reconstruct triangle with 
-    vPair aPair = alteredTriPair(curTri,deadVertex,mergeVertex);
+    vPair aPair;
+    bool valid = alteredTriPair(cur,deadVertex,mergeVertex, aPair);
   
 
     // If legal add to set altredVertexPair, return nullptr
     // If the pair has to be deleted
-    if(aPair.first != NULL || aPair.second != NULL)
+    if(valid){
       triangleToAlter.push_back(aPair);
+      std::cout << "Vailid Triangle Found" <<std::endl;
+    }
 
     // circle around deadVertex
     cur = cur->getOpposite();
-    if(cur == NULL){ return;}
+    if(cur == NULL){ 
+      std::cout << "Ran into NULL" << std::endl;
+      return;}
+
     cur = cur->getNext();
 
     // sanity check
     assert(cur->getStartVertex() == deadVertex);
 
-  }while( cur != deadEdge );
+  }while( cur != collapseEdge );
 
   // done collecting triangles and pairs
   
   // Remove all dead triangles 
   // kills objects pointers were pointing to
-  for(int v = 0; v < triangleToDelete.size(); v++)
+  for(int v = 0; v < triangleToDelete.size(); v++){
     removeTriangle(triangleToDelete[v]);
+    std::cout << "Removing Triangles" << std::endl;
+  }
 
-  // Adding in the removed merage
-  Vertex* merge = addVertex(mVertex.second);
+  
+  // JUMP 
+  // Adding Question? Does triangleRemove delete mVertex?
 
   //Recreate new triangles
   for(int c = 0; c < triangleToAlter.size(); c++){
     
-    //Create Veritices Again
-    Vertex* a = addVertex(triangleToAlter[c].first);
-    Vertex* b = addVertex(triangleToAlter[c].second);
-    
     //Create triangle
-    addTriangle(a,b,merge);
+    std::cout << "Adding Triangles" <<std::endl;
+    addTriangle(mergeVertex,triangleToAlter[c].first, triangleToAlter[c].second);
+ 
   }
 
+  printf("=-=-=-=-STATS AFTER ADDITION=-=-=-=-=-=-\n");
+  printf("Start Triangles: %d\nEnd Triangle: %d\n", oringalTriNum, numTriangles());
+  printf("Start Edges: %d\nEnd Edges: %d\n", oringalEdgNum, edges.size());
+  printf("Start Vectors: %d\nEnd Vectors: %d\n", orginalVecNum, vertices.size());
+  
 
-  printf ("Simplify the mesh! %d -> %d\n", numTriangles(), target_tri_count);
+
+   //printf ("Simplify the mesh! %d -> %d\n", numTriangles(), target_tri_count);
 
 
   // =====================================

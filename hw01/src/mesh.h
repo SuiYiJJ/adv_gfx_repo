@@ -6,6 +6,7 @@
 #include <utility>
 #include <cassert>
 #include <cstddef>
+#include <typeinfo>
 
 #include "vectors.h"
 #include "hash.h"
@@ -16,7 +17,7 @@
 #include "triangle.h"
 
 // Easier to read 
-typedef std::pair<Vec3f,Vec3f> vPair;
+typedef std::pair<Vertex*,Vertex*> vPair;
 
 //Lets me use these classes in my .cpp file
 class Vertex;
@@ -116,39 +117,61 @@ public:
   // OTHER ACCESSORS
   const BoundingBox& getBoundingBox() const { return bbox; }
 
+  void printEdges(){
+
+    std::cout << "*-_-*-_-*-_-*-_EDGES-*-_-*-_-*-_-*-_-*" <<std::endl;
+    for (edgeshashtype::iterator iter = edges.begin();
+         iter != edges.end(); iter++) {
+
+      std::cout << (*iter).second << std::endl;
+      //std::cout << (*iter).second.first->getStartVertex().getIndex() << "\t"; 
+      //std::cout << (*iter).second.second->getStartVertex().getIndex() << "\n"; 
+    }
+    
+  }
   
   
   //JUMP
-  void alteredTriPair(Triangle* tri, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair){
+  bool alteredTriPair(Edge* cur, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair){
     
-    // WARNING: The following function returns vPair with NULL pointers
+    // WARNING: The following function returns vPair with no contents
     // in some instances. We applogize for any inconvince this might cause
     // and appricate your continued support. 
 
     // Get three nodes of the triangle
     // NOTE: One is bound to be deadVertex, one might be mergeVertex
-    Vertex* a = tri->getEdge()->getStartVertex();                       
-    Vertex* b = tri->getEdge()->getNext()->getStartVertex();            
-    Vertex* c = tri->getEdge()->getNext()->getNext()->getStartVertex(); 
+    Vertex* a = cur->getStartVertex();                       
+    Vertex* b = cur->getNext()->getStartVertex();            
+    Vertex* c = cur->getNext()->getNext()->getStartVertex(); 
 
     // Check if valid, if valid return pair ELSE null pair
     if( a == mergeVertex || b == mergeVertex || c == mergeVertex ){
       // Do nothing, leaving alterPair unititated
-      alteredPair 
-      
+      return false;
     }else if( a == deadVertex){
-     alteredPair = std::make_pair(b->getPos(),c->getPos());
+      //Vec3f one = c->getPos(); // Probabily redudent
+      //Vec3f two = b->getPos(); 
+      //alteredPair = std::make_pair(one,two);
+      alteredPair = std::make_pair(b,c);
 
     }else if( b == deadVertex){
-     alteredPair = std::make_pair(b->getPos(),c->getPos());
+      //Vec3f one = a->getPos();
+      //Vec3f two = c->getPos(); 
+      //alteredPair = std::make_pair(one,two);
+      alteredPair = std::make_pair(a,c);
 
     }else if( c == deadVertex){
-     alteredPair = std::make_pair(b->getPos(),c->getPos());
+      //Vec3f one = a->getPos();
+      //Vec3f two = b->getPos(); 
+      //alteredPair = std::make_pair(one,two);
+      alteredPair = std::make_pair(a,b);
 
     }else{
       // Something went wrong...
-      assert(true);
+      std::cout << "Something wen wrong" <<std::endl;
     }
+
+    return true;
   }
   
   // ===+=====

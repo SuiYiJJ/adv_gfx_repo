@@ -28,14 +28,17 @@ public:
     if (i==2) return edge->getNext()->getNext()->getStartVertex();
     assert(0); exit(0);
   }
+
   Edge* getEdge() { 
     assert (edge != NULL);
     return edge; 
   }
+
   void setEdge(Edge *e) {
     assert (edge == NULL);
     edge = e;
   }
+
   int getID() { return id; }
 
   Vec3f getNormal(){
@@ -51,7 +54,6 @@ public:
     Vec3f::Cross3(normal,v12,v23);
     normal.Normalize();
     return normal;
- 
   }
 
   // NOTE: If you want to modify a triangle, it is recommended that

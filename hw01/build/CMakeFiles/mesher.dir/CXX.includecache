@@ -34,6 +34,14 @@ algorithm
 vectors.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
 
+/home/espinm2/Code/adv_gfx_repo/hw01/src/camera.cpp
+glCanvas.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
+camera.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/camera.h
+matrix.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.h
+
 /home/espinm2/Code/adv_gfx_repo/hw01/src/camera.h
 cassert
 -
@@ -116,10 +124,28 @@ argparser.h
 mesh.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h
 
+/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp
+iostream
+-
+iomanip
+-
+matrix.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.h
+vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
+
+/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.h
+cassert
+-
+vectors.h
+/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
+
 /home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp
 glCanvas.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/glCanvas.h
 fstream
+-
+iostream
 -
 sstream
 -
@@ -146,6 +172,8 @@ utility
 cassert
 -
 cstddef
+-
+typeinfo
 -
 vectors.h
 /home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h
