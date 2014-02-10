@@ -647,7 +647,6 @@ void Mesh::LoopSubdivision() {
   // Divide the mesh!
   std::cout << "=-=-=-=-==--=SUBDIVIDE-=--=--==-=-\n";
   divide();
-
   std::cout << "=-=-=-=-==--=REFINE-=--=--==-=-\n";
 
   // Update Vector
@@ -688,20 +687,26 @@ void Mesh::LoopSubdivision() {
       // 0) None
  
       if(typeVertex == 1){
-        getControlPts_newEdge(curEdges[i], controlPts);
         std::cout << "New Edge\n";
-      
-      }else if(typeVertex == 2){
-        getControlPts_oldEdge(curEdges[i], controlPts);
-        std::cout << "Old Edge\n";
+        getControlPts_newEdge(curEdges[i], controlPts);
+      }
 
-      }else if(typeVertex == 3){
+      if(typeVertex == 2){
+        std::cout << "Old Edge\n";
+        getControlPts_oldEdge(curEdges[i], controlPts);
+      }
+
+      if(typeVertex == 3){
+        std::cout << "New Bound\n";
         getControlPts_newBound(curEdges[i], controlPts);
+      }
       
-      }else if(typeVertex == 4){
+      if(typeVertex == 4){
+        std::cout <<"Old Bound\n";
         getControlPts_oldBound(curEdges[i], controlPts);
+      }
       
-      }else{
+      if(typeVertex == 0){
         controlPts.push_back(curEdges[i]->getStartVertex()->getPos());
         std::cout <<"Not Concidered\n";
       }//endif
@@ -1085,16 +1090,44 @@ void Mesh::divide(){
 }
 void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
 
-  // Getting control point 1
-  Vertex* one = edg->getNext()->getOpposite()->getPrev()->getStartVertex();
-  // Getting control point 2 (oppsoite of 1)
-  Vertex* two = edg->getOpposite()->getNext()->getOpposite()->getNext()->getOpposite()->
-    getNext()->getOpposite()->getPrev()->getStartVertex();
-  // Getting control point 3
-  Vertex* three = edg->getOpposite()->getPrev()->getStartVertex();
-  // Gettting point 4
-  Vertex* four = edg->getPrev()->getOpposite()->getPrev()->getStartVertex();
+  // I know this is new.
+  
+  // Getting control point 1 and 2, WIN
+  Vertex* one = childParentMap[edg->getStartVertex()].first;
+  Vertex* two = childParentMap[edg->getStartVertex()].second;
+  Vertex* three = NULL;
+  Vertex* four = NULL;
 
+  Edge* curEdge = edg;
+
+  do{
+    // Using the way I build triangles
+    // Getting gettingEdge[0] gives me parent
+    Vertex* mystery = curEdge->getTriangle()->getEdge()->getStartVertex();
+    if(mystery != one && mystery != two){
+
+      // Means that I have one of the middle triangles, lets assert to make sure
+      assert(curEdge->getStartVertex() == edg->getStartVertex());
+      Vertex * possible = curEdge->getNext()->getOpposite()->getPrev()->getStartVertex();
+
+      if(three == NULL){
+        three = possible;
+
+      }else if(three != NULL && three != possible){
+        four = possible;
+        break;
+      }
+      
+    }
+
+    curEdge = curEdge->getOpposite()->getNext();
+  }while(curEdge != edg);
+
+
+  assert(one != NULL);
+  assert(two != NULL);
+  assert(three != NULL);
+  assert(four != NULL);
   // Apply weights
   Vec3f onePos =  (3/(double)8) * one->getPos();
   Vec3f twoPos =  (3/(double)8) * two->getPos();
@@ -1120,6 +1153,8 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   // Counting how many edges/triangles i have surounding me
   do{
 
+    std::cout << "######TRACE IN GET:###########\n";
+    std::cout << cur << std::endl;
     // Legal?
     assert(cur->getStartVertex());
     adjEdges.push_back(cur);
@@ -1224,26 +1259,55 @@ void Mesh::getControlPts_oldBound(Edge* edg, std::vector<Vec3f> &controlPts){
   
 }
 
-int Mesh::identifyVertex(Edge * edge){
+int Mesh::identifyVertex(Edge * edg){
 
-  Vertex* mysteryVertex = edge->getStartVertex();
+  Vertex* mysteryVertex = edg->getStartVertex();
+
+  if(childParentMap.count(mysteryVertex) == 1){
+  
+    // I know I have a child, easy to find if boundry
+  
+    Edge* cur  = edg;
+
+    // Counting how many edges/triangles i have surounding me
+    do{
+      // Increment
+      cur = cur->getOpposite();
+      if(cur == NULL){
+        return 3;
+      }
+      cur = cur->getNext();
+    
+    }while(cur != edg);
+
+    return 1;
+  }else{
+
+    Edge* cur  = edg;
+
+    // Counting how many edges/triangles i have surounding me
+    do{
+      // Increment
+      cur = cur->getOpposite();
+      if(cur == NULL){
+        return 4;
+      }
+      cur = cur->getNext();
+    
+    }while(cur != edg);
+
+    return 2;
+  }
+
+  //std::cout << "Problems!\n";
+  return 0;
 
   /*
-  if(childParentMap[mysteryVertex] != NULL){
-    // You are new
-    // Are you boundry?
-    // Are you normal?
-  }else{
-    // You are old
-  }
-  */
-
+  // THIS WORKS FOR MOST CASES, NOT BOUNDS THOU!
   Edge* curEdge = edge;
-  int i = 0;
 
   do{
 
-    i++;
     curEdge = curEdge->getOpposite();
     if(curEdge == NULL){
       return 0;
@@ -1254,8 +1318,6 @@ int Mesh::identifyVertex(Edge * edge){
   }while(curEdge != edge);
 
 
-  if(i == 6){
-    std::cout<< "Found 6\n";
 
     //TODO Only works for first iteration
     if(childParentMap.count(mysteryVertex) == 1){
@@ -1264,9 +1326,9 @@ int Mesh::identifyVertex(Edge * edge){
       return 2;
     }
     
-  }
 
   return 0;
 
+  */
 }
 // =================================================================
