@@ -7,6 +7,7 @@
 #include <cassert>
 #include <cstddef>
 #include <typeinfo>
+#include <map>
 
 #include "vectors.h"
 #include "hash.h"
@@ -78,10 +79,15 @@ public:
 
   // ========================
   // CONSTRUCTOR & DESTRUCTOR
-  Mesh(ArgParser *a) { args = a; }
+  Mesh(ArgParser *a) { 
+    args = a;
+    sub_division_level = 0;
+  }
+
   ~Mesh();
   void Load(const std::string &input_file);
   
+
   // ========
   // VERTICES
   int numVertices() const { return vertices.size(); }
@@ -106,73 +112,27 @@ public:
   int numEdges() const { return edges.size(); }
   // this efficiently looks for an edge with the given vertices, using a hash table
   Edge* getMeshEdge(Vertex *a, Vertex *b) const;
+  Edge* getShortestEdge();
+  int identifyVertex(Edge * edge);
 
   // =========
   // TRIANGLES
   int numTriangles() const { return triangles.size(); }
   void addTriangle(Vertex *a, Vertex *b, Vertex *c);
   void removeTriangle(Triangle *t);
+  void removeTriangle(Edge* edge);
+  bool alteredTriPair(Edge* cur, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair);
+  // Subdivide methods
+  void divide();
+  void getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts);
+  void getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts);
+  void getControlPts_newBound(Edge* edg, std::vector<Vec3f>  &controlPts);
+  void getControlPts_oldBound(Edge* edg, std::vector<Vec3f> &controlPts);
+
 
   // ===============
   // OTHER ACCESSORS
   const BoundingBox& getBoundingBox() const { return bbox; }
-
-  void printEdges(){
-
-    std::cout << "*-_-*-_-*-_-*-_EDGES-*-_-*-_-*-_-*-_-*" <<std::endl;
-    for (edgeshashtype::iterator iter = edges.begin();
-         iter != edges.end(); iter++) {
-
-      std::cout << (*iter).second << std::endl;
-      //std::cout << (*iter).second.first->getStartVertex().getIndex() << "\t"; 
-      //std::cout << (*iter).second.second->getStartVertex().getIndex() << "\n"; 
-    }
-    
-  }
-  
-  
-  //JUMP
-  bool alteredTriPair(Edge* cur, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair){
-    
-    // WARNING: The following function returns vPair with no contents
-    // in some instances. We applogize for any inconvince this might cause
-    // and appricate your continued support. 
-
-    // Get three nodes of the triangle
-    // NOTE: One is bound to be deadVertex, one might be mergeVertex
-    Vertex* a = cur->getStartVertex();                       
-    Vertex* b = cur->getNext()->getStartVertex();            
-    Vertex* c = cur->getNext()->getNext()->getStartVertex(); 
-
-    // Check if valid, if valid return pair ELSE null pair
-    if( a == mergeVertex || b == mergeVertex || c == mergeVertex ){
-      // Do nothing, leaving alterPair unititated
-      return false;
-    }else if( a == deadVertex){
-      //Vec3f one = c->getPos(); // Probabily redudent
-      //Vec3f two = b->getPos(); 
-      //alteredPair = std::make_pair(one,two);
-      alteredPair = std::make_pair(b,c);
-
-    }else if( b == deadVertex){
-      //Vec3f one = a->getPos();
-      //Vec3f two = c->getPos(); 
-      //alteredPair = std::make_pair(one,two);
-      alteredPair = std::make_pair(a,c);
-
-    }else if( c == deadVertex){
-      //Vec3f one = a->getPos();
-      //Vec3f two = b->getPos(); 
-      //alteredPair = std::make_pair(one,two);
-      alteredPair = std::make_pair(a,b);
-
-    }else{
-      // Something went wrong...
-      std::cout << "Something wen wrong" <<std::endl;
-    }
-
-    return true;
-  }
   
   // ===+=====
   // RENDERING
@@ -195,6 +155,7 @@ private:
   // helper functions
   void setupTriVBOs();
   void setupEdgeVBOs();
+  bool manifoldLegal(Edge* a, Edge* b);
   
   // ==============
   // REPRESENTATION
@@ -203,13 +164,16 @@ private:
   std::vector<Vertex*> vertices;  //Vector of vertices pointers
                                   //Where are they created?
 
-  edgeshashtype edges;            //Hash table of edges
+  std::vector<Edge *> ignoreVec;  //Ignore when trying to simplify
+  std::map<Vertex*,std::pair<Vertex*,Vertex*>> childParentMap;
+  
+
+  edgeshashtype edges;            //Hash table Pair<Vertex*,Vertex*> ---> Edge*
   triangleshashtype triangles;    //Hash table of triangles
   BoundingBox bbox;               //bbox?
   vphashtype vertex_parents;      //List of parents of each vertex
 
-  //TODO Find out how verticies are handled!
-
+  int sub_division_level;
   int num_boundary_edges;
   int num_crease_edges;
   int num_other_edges;
@@ -225,7 +189,6 @@ private:
 
 // ======================================================================
 // ======================================================================
-
 
 #endif
 

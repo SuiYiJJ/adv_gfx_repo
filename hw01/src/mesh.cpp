@@ -1,9 +1,14 @@
 #include "glCanvas.h"
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <sstream>
 #include <cassert>
 #include <cstddef>
+#include <cmath>
+#include <math.h>
+#include <algorithm>
+#include <map>
 
 
 #include "mesh.h"
@@ -97,6 +102,35 @@ void Mesh::addTriangle(Vertex *a, Vertex *b, Vertex *c) {
   triangles[t->getID()] = t;
 }
 
+void Mesh::removeTriangle(Edge* edge) {
+  // Input: An edge pointer
+  // Assumptions: Triangle that pointer is on is valid
+  // Output: None
+  // Modification: Deletion of a triangle
+  Edge *ea = edge;
+  Edge *eb = ea->getNext();
+  Edge *ec = eb->getNext();
+  Vertex *a = ea->getStartVertex();
+  Vertex *b = eb->getStartVertex();
+  Vertex *c = ec->getStartVertex();
+  // remove these elements from master lists
+  edges.erase(std::make_pair(a,b)); 
+  edges.erase(std::make_pair(b,c)); 
+  edges.erase(std::make_pair(c,a)); 
+  // check that I removed it
+  assert (edges.find(std::make_pair(a,b)) == edges.end());
+  assert (edges.find(std::make_pair(b,c)) == edges.end());
+  assert (edges.find(std::make_pair(c,a)) == edges.end());
+
+  Triangle* t = edge->getTriangle();
+  triangles.erase(t->getID());
+  // clean up memory
+  delete ea;
+  delete eb;
+  delete ec;
+  delete t;
+}
+
 
 void Mesh::removeTriangle(Triangle *t) {
   Edge *ea = t->getEdge();
@@ -109,6 +143,10 @@ void Mesh::removeTriangle(Triangle *t) {
   edges.erase(std::make_pair(a,b)); 
   edges.erase(std::make_pair(b,c)); 
   edges.erase(std::make_pair(c,a)); 
+  // check that I removed it
+  assert (edges.find(std::make_pair(a,b)) == edges.end());
+  assert (edges.find(std::make_pair(b,c)) == edges.end());
+  assert (edges.find(std::make_pair(c,a)) == edges.end());
   triangles.erase(t->getID());
   // clean up memory
   delete ea;
@@ -597,15 +635,103 @@ void Mesh::drawVBOs() {
 // SUBDIVISION
 // =================================================================
 
+// jumpSub
+
 void Mesh::LoopSubdivision() {
   printf ("Subdivide the mesh!\n");
+
+  // =========================================
+  // Refine/Apply Mask to edges
+  // =========================================
+
+  // Divide the mesh!
+  std::cout << "=-=-=-=-==--=SUBDIVIDE-=--=--==-=-\n";
+  divide();
+
+  std::cout << "=-=-=-=-==--=REFINE-=--=--==-=-\n";
+
+  // Update Vector
+  std::vector<std::pair<Vertex*, Vec3f>> updateVec;
   
-  // =====================================
-  // ASSIGNMENT: complete this functionality
-  // =====================================
+  // Go through all the triangles
+  triangleshashtype::iterator iter = triangles.begin();
 
+  while(iter!=triangles.end()){
+    
+    // Each triangle has 3 edges/ each have a vertex
+    Edge* ab = (*iter).second->getEdge();
+    Edge* bc = ab->getNext();
+    Edge* ca = bc->getNext();
+
+    // Saving in array to take care of
+    Edge* curEdges[3] = {ab,bc,ca};
+
+    for(int i = 0; i < 3; i++){
+
+      std::cout<<"-----------------\n";
+
+      if(curEdges[i]->getStartVertex()->getRefineLevel()
+          == sub_division_level){
+        // This vertex has alread been calculated for
+        std::cout << "Already Done\n";
+        continue;
+      }
+
+      int typeVertex = identifyVertex(curEdges[i]);
+      std::vector<Vec3f> controlPts;
+      Vec3f newPos;
+      //Vec3f newPos; 
+      // 1) New Vertex
+      // 2) Old Vertex
+      // 3) New Boundry
+      // 4) Old Boundry
+      // 0) None
+ 
+      if(typeVertex == 1){
+        getControlPts_newEdge(curEdges[i], controlPts);
+        std::cout << "New Edge\n";
+      
+      }else if(typeVertex == 2){
+        getControlPts_oldEdge(curEdges[i], controlPts);
+        std::cout << "Old Edge\n";
+
+      }else if(typeVertex == 3){
+        getControlPts_newBound(curEdges[i], controlPts);
+      
+      }else if(typeVertex == 4){
+        getControlPts_oldBound(curEdges[i], controlPts);
+      
+      }else{
+        controlPts.push_back(curEdges[i]->getStartVertex()->getPos());
+        std::cout <<"Not Concidered\n";
+      }//endif
+
+      // find average of control points
+      for(unsigned int c = 0; c  < controlPts.size(); c++)
+        newPos = newPos + controlPts[c];
+
+      // Toss into updateVector
+      std::pair<Vertex*, Vec3f> update(curEdges[i]->getStartVertex(), newPos);
+      updateVec.push_back(update);
+
+      // Update it's refine level
+      curEdges[i]->getStartVertex()->incrRefineLevel();
+      
+    } //forEachVertexinTriangle
+    iter++;
+  } //forEachTriangleinMesh
+
+  std::cout << "-=-=-=-=--=-UPDATES-=-=-=-=-=-=-=-\n";
+  // Assumed that updateVec has all updates to apply
+  for(unsigned int v = 0; v < updateVec.size(); v++){
+    // For everything in my updateVec go ahead and update its point
+    Vertex* curVertex = updateVec[v].first;
+    Vec3f curChange = updateVec[v].second;
+    std::cout << "update" << curChange<< std::endl;
+    curVertex->setPos(curChange);
+  }
+  
 }
-
 
 // =================================================================
 // SIMPLIFICATION
@@ -613,77 +739,60 @@ void Mesh::LoopSubdivision() {
 
 void Mesh::Simplification(int target_tri_count) {
 
-
-
-  std::cout << "PHASE 1: SIMPLIFICATION " << std::endl;
   // clear out any previous relationships between vertices
   vertex_parents.clear();
-  int oringalTriNum = numTriangles();
-  int oringalEdgNum = edges.size();
-  int orginalVecNum = vertices.size();
 
+  // This is my edge to collapse
+  Edge* collapseEdge = getShortestEdge();
 
-  // Picking random edge 
-  int triStop = args->mtrand.randInt((unsigned long int)triangles.size());
-
-  triangleshashtype::iterator iter = triangles.begin();
-  for (int i = 0; i > triStop; i++) {
-    iter ++;
-  }
-
-
-  Triangle* randTriangle = (*iter).second;
-  Edge* collapseEdge = (*iter).second->getEdge();
-  
-  std::cout << "PHASE 2: SIMPLIFICATION " << std::endl;
-
-  // If I have an boundery edge, don't take to preserve shape
+  // Make sure my half edge has its pair 
   if(collapseEdge->getOpposite() == NULL || collapseEdge->getTriangle() == NULL){
-    std::cout << "BOUNDRY EDGE, TRY AGAIN" << std::endl;
+    std::cout << "Boundry Edge" << std::endl;
     return;
   }
-
-
 
   // deadVertex will be merged onto mergeVertex
   Vertex* deadVertex = collapseEdge->getStartVertex();
   Vertex* mergeVertex = collapseEdge->getOpposite()->getStartVertex();
 
+  // Make sure my half edge won't break the mesh
+  if(!manifoldLegal(collapseEdge, collapseEdge->getOpposite())){
+    std::cout << "Manifold Illegal" << std::endl;
+    ignoreVec.push_back(collapseEdge);
+    ignoreVec.push_back(collapseEdge->getOpposite());
+    return;
+  }
+
   // triangle to delete later
-  std::vector<Triangle*> triangleToDelete;
+  std::vector<Edge *> triangleToDelete;
 
   // vector of pairs to save ptr to recreate altered triangles
   std::vector<vPair> triangleToAlter;
 
-  //JUMP
+  ////////////////////////////////////////////////////////////
+  // Removing verticies adj to collapse Edge
   Edge* cur = collapseEdge;
 
   do{
+    // Get the edge to push into triangles to delete
+    triangleToDelete.push_back(cur);
 
-
-
-    // Get the triangle of that edge save to delete
-    Triangle* curTri = cur->getTriangle();
-    triangleToDelete.push_back(curTri);
-
-    // Getting pair to reconstruct triangle with 
+    // Get the other two verticies to save to recreate
     vPair aPair;
-    bool valid = alteredTriPair(cur,deadVertex,mergeVertex, aPair);
-  
+    bool isChangable = alteredTriPair(cur,deadVertex,mergeVertex, aPair);
 
-    // If legal add to set altredVertexPair, return nullptr
-    // If the pair has to be deleted
-    if(valid){
+    if(isChangable){
       triangleToAlter.push_back(aPair);
-      std::cout << "Vailid Triangle Found" <<std::endl;
     }
 
-    // circle around deadVertex
+    // If I ever encounter a deadend, just delete what I have so far
     cur = cur->getOpposite();
     if(cur == NULL){ 
       std::cout << "Ran into NULL" << std::endl;
-      return;}
+      break;
+    }
 
+    // Increment
     cur = cur->getNext();
 
     // sanity check
@@ -691,42 +800,473 @@ void Mesh::Simplification(int target_tri_count) {
 
   }while( cur != collapseEdge );
 
-  // done collecting triangles and pairs
-  
+  /////////////////////////////////////////////////////////////
+  // Removing/Adding
+
   // Remove all dead triangles 
-  // kills objects pointers were pointing to
-  for(int v = 0; v < triangleToDelete.size(); v++){
+  for(unsigned int v = 0; v < triangleToDelete.size(); v++){
     removeTriangle(triangleToDelete[v]);
-    std::cout << "Removing Triangles" << std::endl;
   }
-
   
-  // JUMP 
-  // Adding Question? Does triangleRemove delete mVertex?
-
   //Recreate new triangles
-  for(int c = 0; c < triangleToAlter.size(); c++){
+  for(unsigned int v = 0; v < triangleToAlter.size(); v++){
+    //std::cout << "Adding Triangle" <<std::endl;
     
-    //Create triangle
-    std::cout << "Adding Triangles" <<std::endl;
-    addTriangle(mergeVertex,triangleToAlter[c].first, triangleToAlter[c].second);
- 
+    if( edges.find(std::make_pair(mergeVertex,triangleToAlter[v].first)) != edges.end())
+      return;
+    if ( edges.find(std::make_pair(triangleToAlter[v].first,triangleToAlter[v].second)) != edges.end())
+      return;
+    if ( edges.find(std::make_pair(triangleToAlter[v].second,mergeVertex)) != edges.end())
+      return;
+  
+    addTriangle(mergeVertex,triangleToAlter[v].first, triangleToAlter[v].second);
   }
 
-  printf("=-=-=-=-STATS AFTER ADDITION=-=-=-=-=-=-\n");
-  printf("Start Triangles: %d\nEnd Triangle: %d\n", oringalTriNum, numTriangles());
-  printf("Start Edges: %d\nEnd Edges: %d\n", oringalEdgNum, edges.size());
-  printf("Start Vectors: %d\nEnd Vectors: %d\n", orginalVecNum, vertices.size());
+
+}
+
+bool Mesh::alteredTriPair(Edge* cur, Vertex* deadVertex, Vertex*  mergeVertex, vPair& alteredPair){
+  // Input: cur edges, two verticies, and an empty alteredPair
+  // Assumptions: Triangle the cur edge resides on exist, all half edges within that triangle exisit
+  // Output: True if I should recreate this triangle, false if not
+  // Modified: alteried pair has two veritice pointers
   
+  // Get three nodes of the triangle
+  // NOTE: One is bound to be deadVertex, one might be mergeVertex
+  Vertex* a = cur->getStartVertex();                       
+  Vertex* b = cur->getNext()->getStartVertex();            
+  Vertex* c = cur->getNext()->getNext()->getStartVertex(); 
 
+  // Check if valid, if valid return pair ELSE null pair
+  if( a == mergeVertex || b == mergeVertex || c == mergeVertex ){
+    // Do nothing, leaving alterPair unititated
+    return false;
 
-   //printf ("Simplify the mesh! %d -> %d\n", numTriangles(), target_tri_count);
+  }else if( a == deadVertex){
+    // Don't include deadVertex
+    alteredPair = std::make_pair(b,c);
 
+  }else{
+    std::cout << "ERROR 753";
+    return false;
+  }
 
-  // =====================================
-  // ASSIGNMENT: complete this functionality
-  // =====================================
+  return true;
 }
 
 
+Edge* Mesh::getShortestEdge(){
+  // Input: None
+  // Assumptions: Hashtable with edges works
+  // Output: The Edge with shortest distance between veritices 
+  // SideEffect: None
+
+  edgeshashtype::iterator iter = edges.begin();
+  double shortest_dist = 100000;
+  Edge* shortEdge;
+
+  while(iter != edges.end()){
+
+    // There is no opposite
+    if((*iter).second == NULL || (*iter).second->getOpposite() == NULL){
+      iter++;
+      continue;
+    }
+
+
+    // If it's in the ignore list
+    if(std::find(ignoreVec.begin(), ignoreVec.end(),(*iter).second) != ignoreVec.end()){
+      iter++;
+      continue;
+    }
+    // Compute the distance
+    Vec3f a = ((*iter).first).first->getPos();
+    Vec3f b = ((*iter).first).second->getPos();
+
+    double delta_x = pow(a.x() - b.x(), 2.0);
+    double delta_y = pow(a.y() - b.y(), 2.0);
+    double delta_z = pow(a.z() - b.z(), 2.0);
+
+    double dist = sqrt(delta_x + delta_y + delta_z);
+
+    //Compare distance
+    if(dist < shortest_dist){
+      shortest_dist = dist;
+      shortEdge = (*iter).second;
+    }
+
+    iter++;
+  }
+
+  std::cout << shortEdge << "\tDistance: " << shortest_dist << std::endl;
+  return shortEdge;
+
+}
+
+bool Mesh::manifoldLegal(Edge* a, Edge* b){
+  // Input: two verticies I will check for manifold-illegalness
+  // Assume: these veritices share an edge
+  // Output: true if its safe to remove, false if it isn't
+  // Modify: none
+
+  // Storing counts in a map
+  std::map<Vertex*, unsigned int> count;
+
+  // Checking those nodes around a
+  Edge* cur = a;
+  bool reversed = false;
+
+  do{
+
+    // Collecting all verticies` from triangle
+    Vertex* one = cur->getTriangle()->getEdge()->getStartVertex();
+    Vertex* two = cur->getTriangle()->getEdge()->getNext()->getStartVertex();
+    Vertex* thr = cur->getTriangle()->getEdge()->getNext()->getNext()->getStartVertex();
+
+    // Adding those vertices to counter
+    (count.find(one) == count.end()) ? count[one] = 1: count[one] += 1;
+    (count.find(two) == count.end()) ? count[two] = 1: count[two] += 1;
+    (count.find(thr) == count.end()) ? count[thr] = 1: count[thr] += 1;
+
+    // Update cur
+    cur = cur->getOpposite();
+
+    // Where to iterate next
+    if(cur == NULL && !reversed){
+      cur = a->getPrev(); reversed = true;
+    }else if(cur == NULL && reversed){
+      cur = a;
+    }else if(cur != NULL && !reversed){
+      cur = cur->getNext();
+    }else if(cur!= NULL && reversed){
+      cur = cur->getPrev();
+    }
+
+  }while(cur != a);
+
+  // Checking those nodes around b
+  cur = b;
+  reversed = false;
+  do{
+
+    // Collecting all verticies` from triangle
+    Vertex* one = cur->getTriangle()->getEdge()->getStartVertex();
+    Vertex* two = cur->getTriangle()->getEdge()->getNext()->getStartVertex();
+    Vertex* thr = cur->getTriangle()->getEdge()->getNext()->getNext()->getStartVertex();
+
+    // Adding those vertices to counter
+    (count.find(one) == count.end()) ? count[one] = 1: count[one] += 1;
+    (count.find(two) == count.end()) ? count[two] = 1: count[two] += 1;
+    (count.find(thr) == count.end()) ? count[thr] = 1: count[thr] += 1;
+  
+    // Update cur
+    cur = cur->getOpposite();
+
+    // Where to iterate next
+    if(cur == NULL && !reversed){
+      cur = b->getPrev(); reversed = true;
+    }else if(cur == NULL && reversed){
+      cur = b;
+    }else if(cur != NULL && !reversed){
+      cur = cur->getNext();
+    }else if(cur!= NULL && reversed){
+      cur = cur->getPrev();
+    }
+
+  }while(cur != b);
+
+  std::map<Vertex*, unsigned int>::iterator iter = count.begin();
+
+  //std::cout << "Vertex a " << a->getStartVertex() << "\tCount: " << count[a->getStartVertex()] <<std::endl;
+  //std::cout << "Vertex b " << b->getStartVertex() << "\tCount: " << count[b->getStartVertex()] <<std::endl;
+  do{
+
+    //std::cout << "-=-=-=-=-=-=-==\n";
+    //std::cout << "Vertex " << (*iter).first << "\tCount: " << (*iter).second <<std::endl;
+
+    // vertex a and b will be there many times
+    if((*iter).first != a->getStartVertex() && 
+        (*iter).first != b->getStartVertex()){
+
+      // greater then 2 we have a non-manifold
+      if((*iter).second >  4){ return false;}
+
+    }
+
+    // Increment iter
+    iter++;
+  }while(iter != count.end());
+
+  return true;
+}
+
+void Mesh::divide(){
+  // Purpose: Every triangle in the orginal mesh, divides into 4 new triangles
+
+  sub_division_level ++;
+
+  // Clear out any previous relationships
+  // Not the nessary case
+  vertex_parents.clear();
+  childParentMap.clear();
+
+  // =========================================
+  //  Create new triangles
+  // =========================================
+
+  triangleshashtype::iterator iter = triangles.begin();
+  std::vector<Vertex*> newTriangles;
+  std::vector<Triangle*> delTriangles;
+  
+  while(iter!= triangles.end()){
+
+    // Mark for removal
+    delTriangles.push_back((*iter).second);
+
+    Vertex* a = (*iter).second->getEdge()->getStartVertex();
+    Vertex* b = (*iter).second->getEdge()->getNext()->getStartVertex();
+    Vertex* c = (*iter).second->getEdge()->getNext()->getNext()->getStartVertex();
+
+    Vertex* ab = getChildVertex(a,b);
+    Vertex* bc = getChildVertex(b,c);     
+    Vertex* ca = getChildVertex(c,a);
+
+    if(ab == NULL){
+      ab = addVertex(a->getPos().midPoint3f(b->getPos()));
+      setParentsChild(a,b,ab);
+      childParentMap[ab] = std::make_pair(a,b);
+    }
+
+    if(bc == NULL){
+      bc = addVertex(b->getPos().midPoint3f(c->getPos()));
+      setParentsChild(b,c,bc);
+      childParentMap[bc] = std::make_pair(b,c);
+    }
+
+    if(ca == NULL){
+      ca = addVertex(c->getPos().midPoint3f(a->getPos()));
+      setParentsChild(c,a,ca);
+      childParentMap[ca] = std::make_pair(c,a);
+    }
+
+    // New Triangles
+    newTriangles.push_back(a);
+    newTriangles.push_back(ab);
+    newTriangles.push_back(ca);
+
+    newTriangles.push_back(b);
+    newTriangles.push_back(bc);
+    newTriangles.push_back(ab);
+    
+    newTriangles.push_back(c);
+    newTriangles.push_back(ca);
+    newTriangles.push_back(bc);
+
+    newTriangles.push_back(ca);
+    newTriangles.push_back(ab);
+    newTriangles.push_back(bc);
+  
+    iter++;
+
+  }
+ 
+  // Have everything I need, remove and recreate
+
+  for(unsigned int i = 0; i < delTriangles.size(); i++){
+    removeTriangle(delTriangles[i]);
+  }
+ 
+  for(unsigned int i = 0; i < newTriangles.size(); i = i + 3){
+ 
+    addTriangle(newTriangles[i], 
+        newTriangles[i+1], 
+        newTriangles[i+2]);
+  }
+}
+void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
+
+  // Getting control point 1
+  Vertex* one = edg->getNext()->getOpposite()->getPrev()->getStartVertex();
+  // Getting control point 2 (oppsoite of 1)
+  Vertex* two = edg->getOpposite()->getNext()->getOpposite()->getNext()->getOpposite()->
+    getNext()->getOpposite()->getPrev()->getStartVertex();
+  // Getting control point 3
+  Vertex* three = edg->getOpposite()->getPrev()->getStartVertex();
+  // Gettting point 4
+  Vertex* four = edg->getPrev()->getOpposite()->getPrev()->getStartVertex();
+
+  // Apply weights
+  Vec3f onePos =  (3/(double)8) * one->getPos();
+  Vec3f twoPos =  (3/(double)8) * two->getPos();
+  Vec3f threePos = (1/(double)8) * three->getPos();
+  Vec3f fourPos =  (1/(double)8) * four->getPos();
+  std::cout << onePos << "\n";
+  std::cout << twoPos << "\n";
+  std::cout << threePos << "\n";
+  std::cout << fourPos<< "\n";
+  // Save to recalcuate
+  controlPts.push_back(onePos);
+  controlPts.push_back(twoPos);
+  controlPts.push_back(threePos);
+  controlPts.push_back(fourPos);
+  
+}
+
+void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
+
+  std::vector<Edge*> adjEdges;
+  Edge* cur  = edg;
+
+  // Counting how many edges/triangles i have surounding me
+  do{
+
+    // Legal?
+    assert(cur->getStartVertex());
+    adjEdges.push_back(cur);
+
+    // Increment
+    cur = cur->getOpposite();
+    assert(cur != NULL);
+    cur = cur->getNext();
+  
+  }while(cur != edg);
+
+  // I know how valancy of this vertex, find weight
+  double weight;
+
+  if(adjEdges.size() > 3){
+    weight = (3 /((double) 8*adjEdges.size()));
+  }else if(adjEdges.size() == 3){
+    weight = 3/(double)16;
+  }
+
+  // I have all adj edges
+  for(unsigned int i = 0; i < adjEdges.size(); i++){
+
+    //Navigating to old vertex
+    Vertex* c = adjEdges[i]->getNext()->getOpposite()->
+      getNext()->getOpposite()->getPrev()->getStartVertex();
+
+    // Saving control points
+    Vec3f temp = weight * c->getPos();
+    controlPts.push_back(temp);
+
+  }
+
+  // Adding in oringal vertex
+  double oldWeight = 1 - (adjEdges.size() * weight);
+  controlPts.push_back(oldWeight * edg->getStartVertex()->getPos());
+
+
+}
+void Mesh::getControlPts_newBound(Edge* edg, std::vector<Vec3f> &controlPts){
+  std::pair<Vertex*,Vertex*> oldVert;
+
+  Vec3f one;
+  Vec3f two;
+
+  oldVert = childParentMap[edg->getStartVertex()];
+
+  one = (0.5) * oldVert.first->getPos();
+  two = (0.5) * oldVert.second->getPos();
+  
+  controlPts.push_back(one);
+  controlPts.push_back(two);
+
+  
+}
+
+void Mesh::getControlPts_oldBound(Edge* edg, std::vector<Vec3f> &controlPts){
+  // Here I run into an slight issue. 
+  // I have a vertex, x and want to find orginal vertices o 
+  // I dont know how many triangles are around/between
+  
+  Edge* right = edg;
+  Edge* left =  edg;
+
+  while(true){
+    
+    right = right->getPrev();
+
+    if(right->getOpposite() != NULL){
+      right = right->getOpposite();
+      
+    }else{
+      right = right->getNext();
+      break;
+    
+    }
+  }//Finding right most
+    
+  while(true){
+
+    if(left->getOpposite() != NULL){
+      left = left->getOpposite();
+      left = left->getNext();
+    
+    }else{
+      left = left->getPrev();
+      break;
+    }
+
+  }//Finding left most
+
+  Vec3f one = right->getNext()->getOpposite()->getPrev()->getOpposite()->getPrev()->getStartVertex()->getPos();
+  Vec3f two = left->getPrev()->getOpposite()->getNext()->getOpposite()->getPrev()->getStartVertex()->getPos();
+
+  one = one * (1/(double)8);
+  two = two * (1/(double)8);
+  Vec3f org = (3/(double)4) * edg->getStartVertex()->getPos();
+
+  controlPts.push_back(one);
+  controlPts.push_back(two);
+  controlPts.push_back(org);
+  
+}
+
+int Mesh::identifyVertex(Edge * edge){
+
+  Vertex* mysteryVertex = edge->getStartVertex();
+
+  /*
+  if(childParentMap[mysteryVertex] != NULL){
+    // You are new
+    // Are you boundry?
+    // Are you normal?
+  }else{
+    // You are old
+  }
+  */
+
+  Edge* curEdge = edge;
+  int i = 0;
+
+  do{
+
+    i++;
+    curEdge = curEdge->getOpposite();
+    if(curEdge == NULL){
+      return 0;
+    }else{
+      curEdge = curEdge->getNext();
+    }
+
+  }while(curEdge != edge);
+
+
+  if(i == 6){
+    std::cout<< "Found 6\n";
+
+    //TODO Only works for first iteration
+    if(childParentMap.count(mysteryVertex) == 1){
+      return 1;
+    }else{
+      return 2;
+    }
+    
+  }
+
+  return 0;
+
+}
 // =================================================================

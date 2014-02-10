@@ -1,6 +1,8 @@
 #ifndef _TRIANGLE_H
 #define _TRIANGLE_H
 
+#include <string>
+#include <vector>
 #include "vertex.h"
 
 // ===========================================================
@@ -55,6 +57,71 @@ public:
     normal.Normalize();
     return normal;
   }
+
+  /* This is dead to me
+  void getSubTrianglesVec3f(std::vector<std::vector<Vec3f>>& subTriVec){
+    // Input: Empty Vector
+    // Assume: None creased triangle
+    // Output: A vector of Vec3f with coorindates of where the
+    //         new triangles should go
+    // Modify  Puts result in the subTriVec
+  
+    // Get the old positions
+    Vec3f a = edge->getStartVertex()->getPos();
+    Vec3f b = edge->getNext()->getStartVertex()->getPos();
+    Vec3f c = edge->getNext()->getNext()->getStartVertex()->getPos();
+    
+    Vec3f abMid = a.midPoint3f(b);
+    Vec3f bcMid = b.midPoint3f(c);
+    Vec3f caMid = a.midPoint3f(c);
+
+    assert(a.midPoint3f(b) == b.midPoint3f(a));
+    assert(b.midPoint3f(c) == c.midPoint3f(b));
+    assert(a.midPoint3f(c) == c.midPoint3f(a));
+
+    std::cout << "abMid: " << abMid  << "\t"; 
+    std::cout << "bcMid: " << bcMid  << "\t"; 
+    std::cout << "acMid: " << caMid  << "\t"; 
+    // Note: Pushing in clockwise
+    
+    //Triangle a
+    std::vector<Vec3f> aTri;
+    aTri.push_back(a);
+    aTri.push_back(abMid);
+    aTri.push_back(caMid);
+
+
+    //Triangle b
+    std::vector<Vec3f> bTri;
+    bTri.push_back(b);
+    bTri.push_back(bcMid);
+    bTri.push_back(abMid);
+
+
+    //Triangle c 
+    std::vector<Vec3f> cTri;
+    cTri.push_back(c);
+    cTri.push_back(caMid);
+    cTri.push_back(bcMid);
+
+    //Triangle mid
+    std::vector<Vec3f> midTri;
+    midTri.push_back(abMid);
+    midTri.push_back(bcMid);
+    midTri.push_back(caMid);
+
+    //Adding them to result vec
+    subTriVec.push_back(aTri);
+    subTriVec.push_back(bTri);
+    subTriVec.push_back(cTri);
+    subTriVec.push_back(midTri);
+
+  }
+  */ // DEAD CODE
+    
+
+  
+  
 
   // NOTE: If you want to modify a triangle, it is recommended that
   // you remove it from the mesh, delete it, create a triangle object

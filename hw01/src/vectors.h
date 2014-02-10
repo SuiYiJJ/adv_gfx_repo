@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <math.h>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -38,7 +39,8 @@ public:
     data[0] = V.data[0];
     data[1] = V.data[1];
     data[2] = V.data[2];
-    return *this; }
+    return *this; 
+  }
 
   // ----------------------------
   // SIMPLE ACCESSORS & MODIFIERS
@@ -92,6 +94,26 @@ public:
     double y = v1.data[2]*v2.data[0] - v1.data[0]*v2.data[2];
     double z = v1.data[0]*v2.data[1] - v1.data[1]*v2.data[0];
     c.data[0] = x; c.data[1] = y; c.data[2] = z; }
+
+  Vec3f midPoint3f(const Vec3f that) const{
+    // Compute mid point in 3 space
+    double x = (data[0] + that.x()) / 2;
+    double y = (data[1] + that.y()) / 2;
+    double z = (data[2] + that.z()) / 2;
+    Vec3f result(x,y,z);
+    return result;
+  }
+
+  double Distance3f(Vec3f &b){
+    // Compute the distance
+
+    double delta_x = pow(x() - b.x(), 2.0);
+    double delta_y = pow(y() - b.y(), 2.0);
+    double delta_z = pow(z() - b.z(), 2.0);
+
+    return sqrt(delta_x + delta_y + delta_z);
+
+  }
 
   // ---------------------
   // VECTOR MATH OPERATORS

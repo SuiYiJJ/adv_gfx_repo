@@ -12,11 +12,12 @@ public:
 
   // ========================
   // CONSTRUCTOR & DESTRUCTOR
-  Vertex(int i, const Vec3f &pos) : position(pos) { index = i; }
+  Vertex(int i, const Vec3f &pos) : position(pos) { index = i; refineLevel =0; }
   
   // =========
   // ACCESSORS
   int getIndex() const { return index; }
+  int getRefineLevel() {return refineLevel;}
   double x() const { return position.x(); }
   double y() const { return position.y(); }
   double z() const { return position.z(); }
@@ -25,6 +26,7 @@ public:
   // =========
   // MODIFIERS
   void setPos(Vec3f v) { position = v; }
+  void incrRefineLevel(){ refineLevel++; }
 
 private:
 
@@ -41,6 +43,7 @@ private:
   // technically not part of the half-edge data structure, 
   // but we use it for hashing
   int index;  
+  int refineLevel;
 
   // NOTE: the vertices don't know anything about adjacency.  In some
   // versions of this data structure they have a pointer to one of
