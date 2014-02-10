@@ -165,7 +165,8 @@ private:
                                   //Where are they created?
 
   std::vector<Edge *> ignoreVec;  //Ignore when trying to simplify
-  std::map<Vertex*,std::pair<Vertex*,Vertex*>> childParentMap;
+  std::map<Vertex*,vPair> childParentMap;
+  std::map<vPair,float> creaseMap;
   
 
   edgeshashtype edges;            //Hash table Pair<Vertex*,Vertex*> ---> Edge*

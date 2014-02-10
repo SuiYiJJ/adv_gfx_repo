@@ -90,6 +90,22 @@ void Mesh::addTriangle(Vertex *a, Vertex *b, Vertex *c) {
   edges[std::make_pair(a,b)] = ea;
   edges[std::make_pair(b,c)] = eb;
   edges[std::make_pair(c,a)] = ec;
+  // setCrease
+  if(creaseMap.count(std::make_pair(a,b)) == 1)
+    ea->setCrease(creaseMap[std::make_pair(a,b)]);
+  if(creaseMap.count(std::make_pair(b,a)) == 1)
+    ea->setCrease(creaseMap[std::make_pair(b,a)]);
+
+  if(creaseMap.count(std::make_pair(b,c)) == 1)
+    eb->setCrease(creaseMap[std::make_pair(b,c)]);
+  if(creaseMap.count(std::make_pair(c,b)) == 1)
+    eb->setCrease(creaseMap[std::make_pair(c,b)]);
+  
+  if(creaseMap.count(std::make_pair(c,a)) == 1)
+    ec->setCrease(creaseMap[std::make_pair(c,a)]);
+  if(creaseMap.count(std::make_pair(a,c)) == 1)
+    ec->setCrease(creaseMap[std::make_pair(a,c)]);
+
   // connect up with opposite edges (if they exist)
   edgeshashtype::iterator ea_op = edges.find(std::make_pair(b,a)); 
   edgeshashtype::iterator eb_op = edges.find(std::make_pair(c,b)); 
@@ -1040,18 +1056,24 @@ void Mesh::divide(){
       ab = addVertex(a->getPos().midPoint3f(b->getPos()));
       setParentsChild(a,b,ab);
       childParentMap[ab] = std::make_pair(a,b);
+      creaseMap[std::make_pair(a,ab)] = getMeshEdge(a,b)->getCrease();
+      creaseMap[std::make_pair(ab,b)] = getMeshEdge(a,b)->getCrease();
     }
 
     if(bc == NULL){
       bc = addVertex(b->getPos().midPoint3f(c->getPos()));
       setParentsChild(b,c,bc);
       childParentMap[bc] = std::make_pair(b,c);
+      creaseMap[std::make_pair(b,bc)] = getMeshEdge(b,c)->getCrease();
+      creaseMap[std::make_pair(bc,c)] = getMeshEdge(b,c)->getCrease();
     }
 
     if(ca == NULL){
       ca = addVertex(c->getPos().midPoint3f(a->getPos()));
       setParentsChild(c,a,ca);
       childParentMap[ca] = std::make_pair(c,a);
+      creaseMap[std::make_pair(c,ca)] = getMeshEdge(a,c)->getCrease();
+      creaseMap[std::make_pair(ca,a)] = getMeshEdge(a,c)->getCrease();
     }
 
     // New Triangles
@@ -1082,7 +1104,6 @@ void Mesh::divide(){
   }
  
   for(unsigned int i = 0; i < newTriangles.size(); i = i + 3){
- 
     addTriangle(newTriangles[i], 
         newTriangles[i+1], 
         newTriangles[i+2]);
@@ -1148,6 +1169,7 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
 void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
 
   std::vector<Edge*> adjEdges;
+  int adjSharp = 0;
   Edge* cur  = edg;
 
   // Counting how many edges/triangles i have surounding me
@@ -1158,6 +1180,8 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
     // Legal?
     assert(cur->getStartVertex());
     adjEdges.push_back(cur);
+    if(cur->getCrease() != 0)
+      adjSharp++;
 
     // Increment
     cur = cur->getOpposite();
@@ -1165,6 +1189,7 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
     cur = cur->getNext();
   
   }while(cur != edg);
+
 
   // I know how valancy of this vertex, find weight
   double weight;
@@ -1174,6 +1199,39 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   }else if(adjEdges.size() == 3){
     weight = 3/(double)16;
   }
+
+
+  /*
+  // CORNER VERTEX
+  if(adjSharp > 2){
+    // If I have a corner
+    controlPts.push_back(edg->getStartVertex()->getPos());
+    return;
+  }  
+  
+  
+  // CREASE VERTEX
+  if(adjSharp == 2){
+
+    // I have all adj edges
+    for(unsigned int i = 0; i < adjEdges.size(); i++){
+
+      //Navigating to old vertex
+      Vertex* c = adjEdges[i]->getNext()->getOpposite()->
+        getNext()->getOpposite()->getPrev()->getStartVertex();
+
+      if(adjEdges[i]->getCrease() > 0){
+        Vec3f temp =  (1/(double)8)* c->getPos();
+        controlPts.push_back(temp);
+      }
+
+    }
+
+    // Adding in oringal vertex
+    controlPts.push_back((6/(double)8) * edg->getStartVertex()->getPos());
+    return;
+  }
+  */
 
   // I have all adj edges
   for(unsigned int i = 0; i < adjEdges.size(); i++){
