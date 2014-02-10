@@ -115,6 +115,44 @@ public:
   Edge* getShortestEdge();
   int identifyVertex(Edge * edge);
 
+  int adjSharpEdges(Edge* edge){
+
+    // Assume I can circle around the edge's start vertex
+    int s = 0;
+    Edge* cur = edge;
+
+    do{
+
+      if(cur->getCrease() > 0 ){
+        s++;
+      
+      }
+
+      // Increment
+      cur = cur->getOpposite();
+      assert(cur != NULL);
+      cur = cur->getNext();
+
+    }while(cur != edge);
+   return s;
+  } 
+
+  int valance(Edge* edge){
+    
+    int s = 0;
+    Edge* cur = edge;
+
+    do{
+      s++;
+      cur = cur->getOpposite();
+      if(cur == NULL)
+        return -1;
+      cur = cur->getNext();
+    }while(cur != edge);
+   return s;
+  } 
+
+
   // =========
   // TRIANGLES
   int numTriangles() const { return triangles.size(); }

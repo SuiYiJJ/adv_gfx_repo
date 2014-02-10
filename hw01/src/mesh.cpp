@@ -20,7 +20,6 @@
 typedef std::pair<Vertex*,Vertex*> vPair;
 
 
-
 int Triangle::next_triangle_id = 0;
 
 // helper for VBOs
@@ -90,21 +89,24 @@ void Mesh::addTriangle(Vertex *a, Vertex *b, Vertex *c) {
   edges[std::make_pair(a,b)] = ea;
   edges[std::make_pair(b,c)] = eb;
   edges[std::make_pair(c,a)] = ec;
+
   // setCrease
   if(creaseMap.count(std::make_pair(a,b)) == 1)
-    ea->setCrease(creaseMap[std::make_pair(a,b)]);
-  if(creaseMap.count(std::make_pair(b,a)) == 1)
-    ea->setCrease(creaseMap[std::make_pair(b,a)]);
+    ea->setCrease(creaseMap[std::make_pair(a,b)] -1);
+  else if(creaseMap.count(std::make_pair(b,a)) == 1)
+    ea->setCrease(creaseMap[std::make_pair(b,a)] -1 );
 
   if(creaseMap.count(std::make_pair(b,c)) == 1)
-    eb->setCrease(creaseMap[std::make_pair(b,c)]);
-  if(creaseMap.count(std::make_pair(c,b)) == 1)
-    eb->setCrease(creaseMap[std::make_pair(c,b)]);
+    eb->setCrease(creaseMap[std::make_pair(b,c)]-1);
+  else if(creaseMap.count(std::make_pair(c,b)) == 1)
+    eb->setCrease(creaseMap[std::make_pair(c,b)]-1);
   
   if(creaseMap.count(std::make_pair(c,a)) == 1)
-    ec->setCrease(creaseMap[std::make_pair(c,a)]);
-  if(creaseMap.count(std::make_pair(a,c)) == 1)
-    ec->setCrease(creaseMap[std::make_pair(a,c)]);
+    ec->setCrease(creaseMap[std::make_pair(c,a)]-1);
+  else if(creaseMap.count(std::make_pair(a,c)) == 1)
+    ec->setCrease(creaseMap[std::make_pair(a,c)]-1);
+
+
 
   // connect up with opposite edges (if they exist)
   edgeshashtype::iterator ea_op = edges.find(std::make_pair(b,a)); 
@@ -1094,7 +1096,6 @@ void Mesh::divide(){
     newTriangles.push_back(bc);
   
     iter++;
-
   }
  
   // Have everything I need, remove and recreate
@@ -1112,7 +1113,8 @@ void Mesh::divide(){
 void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
 
   // I know this is new.
-  
+  // How many sharp edges?
+
   // Getting control point 1 and 2, WIN
   Vertex* one = childParentMap[edg->getStartVertex()].first;
   Vertex* two = childParentMap[edg->getStartVertex()].second;
@@ -1149,20 +1151,78 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   assert(two != NULL);
   assert(three != NULL);
   assert(four != NULL);
-  // Apply weights
-  Vec3f onePos =  (3/(double)8) * one->getPos();
-  Vec3f twoPos =  (3/(double)8) * two->getPos();
-  Vec3f threePos = (1/(double)8) * three->getPos();
-  Vec3f fourPos =  (1/(double)8) * four->getPos();
-  std::cout << onePos << "\n";
-  std::cout << twoPos << "\n";
-  std::cout << threePos << "\n";
-  std::cout << fourPos<< "\n";
-  // Save to recalcuate
-  controlPts.push_back(onePos);
-  controlPts.push_back(twoPos);
-  controlPts.push_back(threePos);
-  controlPts.push_back(fourPos);
+
+  // Apply Specific weights!
+  // Need parent's 1 and 2's edge
+  Edge* e1 = getMeshEdge(one,edg->getStartVertex());
+  if (e1 == NULL)
+    getMeshEdge(edg->getStartVertex(), one);
+  Edge* e2 = getMeshEdge(two,edg->getStartVertex());
+  if (e2 == NULL)
+    getMeshEdge(edg->getStartVertex(), two);
+
+  assert(e1 != NULL && e2 != NULL);
+
+  int p1_sharp = adjSharpEdges(e1);
+  int p2_sharp = adjSharpEdges(e2);
+  int methodMask = -1;
+
+  // Choices
+
+  // Smooth and darts
+  if(p1_sharp <= 1){methodMask = 1;}
+  else if(p2_sharp <= 1){methodMask = 1;}
+  
+  //P1 is Reg 3 Cases Regulars
+  else if(p1_sharp == 2 && valance(e1) == 6){
+
+    // Regular Crease Vertex
+    if(p2_sharp == 2 && valance(e2) == 6){methodMask = 2;}
+    else{ methodMask = 3;}
+        
+  }else if(p1_sharp == 2 && valance(e1) == 4){
+
+    // Non-Regular Crease
+    if(p2_sharp == 2 && valance(e2)== 6){methodMask = 3;}
+    else{ methodMask = 2;}
+  
+  }else if(p1_sharp > 2){
+    //Corner
+    if(p2_sharp == 2 && valance(e2) == 6){methodMask = 3;}
+    else{ methodMask = 2;}
+  }
+
+
+  assert(methodMask != -1);
+
+  if(methodMask == 1){
+  // Apply weights, meaning one is a dart or just regular old smooth
+    Vec3f onePos =  (3/(double)8) * one->getPos();
+    Vec3f twoPos =  (3/(double)8) * two->getPos();
+    Vec3f threePos = (1/(double)8) * three->getPos();
+    Vec3f fourPos =  (1/(double)8) * four->getPos();
+    std::cout << onePos << "\n";
+    std::cout << twoPos << "\n";
+    std::cout << threePos << "\n";
+    std::cout << fourPos<< "\n";
+    // Save to recalcuate
+    controlPts.push_back(onePos);
+    controlPts.push_back(twoPos);
+    controlPts.push_back(threePos);
+    controlPts.push_back(fourPos);
+
+  }else if(methodMask == 2){
+    Vec3f onePos =  (1/(double)2) * one->getPos();
+    Vec3f twoPos =  (1/(double)2) * two->getPos();
+    controlPts.push_back(onePos);
+    controlPts.push_back(twoPos);
+  }else if(methodMask == 3){
+  
+    Vec3f onePos =  (5/(double)8) * one->getPos();
+    Vec3f twoPos =  (3/(double)8) * two->getPos();
+    controlPts.push_back(onePos);
+    controlPts.push_back(twoPos);
+  }
   
 }
 
@@ -1201,7 +1261,6 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   }
 
 
-  /*
   // CORNER VERTEX
   if(adjSharp > 2){
     // If I have a corner
@@ -1231,7 +1290,6 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
     controlPts.push_back((6/(double)8) * edg->getStartVertex()->getPos());
     return;
   }
-  */
 
   // I have all adj edges
   for(unsigned int i = 0; i < adjEdges.size(); i++){

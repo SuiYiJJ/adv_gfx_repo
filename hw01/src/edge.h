@@ -37,8 +37,6 @@ public:
   float Length() const;
   float DihedralAngle();
 
-
-  
   // =========
   // MODIFIERS
   void setOpposite(Edge *e) {
@@ -60,7 +58,15 @@ public:
     assert (triangle == e->triangle);
     next = e;
   }
-  void setCrease(float c) { crease = c; }
+
+  void setCrease(float c) { 
+    if(c <= 0){
+      crease = 0; 
+    }else{
+      crease = c;
+    }
+  }
+  
 
 private:
 
