@@ -116,7 +116,8 @@ public:
   int identifyVertex(Edge * edge);
 
   int adjSharpEdges(Edge* edge){
-
+    // Returne adjSharpEdges, if there is a failure to get
+    // I return what I have so far
     // Assume I can circle around the edge's start vertex
     int s = 0;
     Edge* cur = edge;
@@ -127,10 +128,11 @@ public:
         s++;
       
       }
-
       // Increment
       cur = cur->getOpposite();
-      assert(cur != NULL);
+      if(cur == NULL){
+        return s;
+      }
       cur = cur->getNext();
 
     }while(cur != edge);

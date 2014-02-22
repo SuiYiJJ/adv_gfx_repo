@@ -9,6 +9,7 @@
 #include <math.h>
 #include <algorithm>
 #include <map>
+#include <set>
 
 
 #include "mesh.h"
@@ -653,7 +654,6 @@ void Mesh::drawVBOs() {
 // SUBDIVISION
 // =================================================================
 
-// jumpSub
 
 void Mesh::LoopSubdivision() {
   printf ("Subdivide the mesh!\n");
@@ -663,9 +663,7 @@ void Mesh::LoopSubdivision() {
   // =========================================
 
   // Divide the mesh!
-  std::cout << "=-=-=-=-==--=SUBDIVIDE-=--=--==-=-\n";
   divide();
-  std::cout << "=-=-=-=-==--=REFINE-=--=--==-=-\n";
 
   // Update Vector
   std::vector<std::pair<Vertex*, Vec3f>> updateVec;
@@ -685,12 +683,9 @@ void Mesh::LoopSubdivision() {
 
     for(int i = 0; i < 3; i++){
 
-      std::cout<<"-----------------\n";
-
       if(curEdges[i]->getStartVertex()->getRefineLevel()
           == sub_division_level){
         // This vertex has alread been calculated for
-        std::cout << "Already Done\n";
         continue;
       }
 
@@ -705,28 +700,23 @@ void Mesh::LoopSubdivision() {
       // 0) None
  
       if(typeVertex == 1){
-        std::cout << "New Edge\n";
         getControlPts_newEdge(curEdges[i], controlPts);
       }
 
       if(typeVertex == 2){
-        std::cout << "Old Edge\n";
         getControlPts_oldEdge(curEdges[i], controlPts);
       }
 
       if(typeVertex == 3){
-        std::cout << "New Bound\n";
         getControlPts_newBound(curEdges[i], controlPts);
       }
       
       if(typeVertex == 4){
-        std::cout <<"Old Bound\n";
         getControlPts_oldBound(curEdges[i], controlPts);
       }
       
       if(typeVertex == 0){
         controlPts.push_back(curEdges[i]->getStartVertex()->getPos());
-        std::cout <<"Not Concidered\n";
       }//endif
 
       // find average of control points
@@ -744,13 +734,11 @@ void Mesh::LoopSubdivision() {
     iter++;
   } //forEachTriangleinMesh
 
-  std::cout << "-=-=-=-=--=-UPDATES-=-=-=-=-=-=-=-\n";
   // Assumed that updateVec has all updates to apply
   for(unsigned int v = 0; v < updateVec.size(); v++){
     // For everything in my updateVec go ahead and update its point
     Vertex* curVertex = updateVec[v].first;
     Vec3f curChange = updateVec[v].second;
-    std::cout << "update" << curChange<< std::endl;
     curVertex->setPos(curChange);
   }
   
@@ -762,89 +750,98 @@ void Mesh::LoopSubdivision() {
 
 void Mesh::Simplification(int target_tri_count) {
 
-  // clear out any previous relationships between vertices
-  vertex_parents.clear();
-
-  // This is my edge to collapse
-  Edge* collapseEdge = getShortestEdge();
-
-  // Make sure my half edge has its pair 
-  if(collapseEdge->getOpposite() == NULL || collapseEdge->getTriangle() == NULL){
-    std::cout << "Boundry Edge" << std::endl;
-    return;
-  }
-
-  // deadVertex will be merged onto mergeVertex
-  Vertex* deadVertex = collapseEdge->getStartVertex();
-  Vertex* mergeVertex = collapseEdge->getOpposite()->getStartVertex();
-
-  // Make sure my half edge won't break the mesh
-  if(!manifoldLegal(collapseEdge, collapseEdge->getOpposite())){
-    std::cout << "Manifold Illegal" << std::endl;
-    ignoreVec.push_back(collapseEdge);
-    ignoreVec.push_back(collapseEdge->getOpposite());
-    return;
-  }
-
-  // triangle to delete later
-  std::vector<Edge *> triangleToDelete;
-
-  // vector of pairs to save ptr to recreate altered triangles
-  std::vector<vPair> triangleToAlter;
-
-  ////////////////////////////////////////////////////////////
-  // Removing verticies adj to collapse Edge
-  Edge* cur = collapseEdge;
-
-  do{
-    // Get the edge to push into triangles to delete
-    triangleToDelete.push_back(cur);
-
-    // Get the other two verticies to save to recreate
-    vPair aPair;
-    bool isChangable = alteredTriPair(cur,deadVertex,mergeVertex, aPair);
-
-    if(isChangable){
-      triangleToAlter.push_back(aPair);
-    }
-
-    // If I ever encounter a deadend, just delete what I have so far
-    cur = cur->getOpposite();
-    if(cur == NULL){ 
-      std::cout << "Ran into NULL" << std::endl;
-      break;
-    }
-
-    // Increment
-    cur = cur->getNext();
-
-    // sanity check
-    assert(cur->getStartVertex() == deadVertex);
-
-  }while( cur != collapseEdge );
-
-  /////////////////////////////////////////////////////////////
-  // Removing/Adding
-
-  // Remove all dead triangles 
-  for(unsigned int v = 0; v < triangleToDelete.size(); v++){
-    removeTriangle(triangleToDelete[v]);
-  }
+  int goal = numTriangles() - target_tri_count;
+  int maxRun = goal * numTriangles(); 
   
-  //Recreate new triangles
-  for(unsigned int v = 0; v < triangleToAlter.size(); v++){
-    //std::cout << "Adding Triangle" <<std::endl;
+  for(int runs = 0; runs < maxRun && numTriangles() > target_tri_count; runs++){
+
+    // clear out any previous relationships between vertices
+    vertex_parents.clear();
+
+    // This is my edge to collapse
+    Edge* collapseEdge = getShortestEdge();
+
+    // Make sure my half edge has its pair 
+    if(collapseEdge->getOpposite() == NULL || collapseEdge->getTriangle() == NULL){
+      continue;
+    }
+
+    // deadVertex will be merged onto mergeVertex
+    Vertex* deadVertex = collapseEdge->getStartVertex();
+    Vertex* mergeVertex = collapseEdge->getOpposite()->getStartVertex();
+
+    // Make sure my half edge won't break the mesh
+    if(!manifoldLegal(collapseEdge, collapseEdge->getOpposite())){
+      std::cout << "Manifold Illegal" << std::endl;
+      ignoreVec.push_back(collapseEdge);
+      ignoreVec.push_back(collapseEdge->getOpposite());
+      continue;
+    }
+
+    // triangle to delete later
+    std::vector<Edge *> triangleToDelete;
+
+    // vector of pairs to save ptr to recreate altered triangles
+    std::vector<vPair> triangleToAlter;
+
+    ////////////////////////////////////////////////////////////
+    // Removing verticies adj to collapse Edge
+    Edge* cur = collapseEdge;
+
+    do{
+      // Get the edge to push into triangles to delete
+      triangleToDelete.push_back(cur);
+
+      // Get the other two verticies to save to recreate
+      vPair aPair;
+      bool isChangable = alteredTriPair(cur,deadVertex,mergeVertex, aPair);
+
+      if(isChangable){
+        triangleToAlter.push_back(aPair);
+      }
+
+      // If I ever encounter a deadend, just delete what I have so far
+      cur = cur->getOpposite();
+      if(cur == NULL){ 
+        std::cout << "Ran into NULL" << std::endl;
+        break;
+      }
+
+      // Increment
+      cur = cur->getNext();
+
+      // sanity check
+      assert(cur->getStartVertex() == deadVertex);
+
+    }while( cur != collapseEdge );
+
+    /////////////////////////////////////////////////////////////
+    // Removing/Adding
+
+    // Remove all dead triangles 
+    for(unsigned int v = 0; v < triangleToDelete.size(); v++){
+      removeTriangle(triangleToDelete[v]);
+    }
     
-    if( edges.find(std::make_pair(mergeVertex,triangleToAlter[v].first)) != edges.end())
-      return;
-    if ( edges.find(std::make_pair(triangleToAlter[v].first,triangleToAlter[v].second)) != edges.end())
-      return;
-    if ( edges.find(std::make_pair(triangleToAlter[v].second,mergeVertex)) != edges.end())
-      return;
-  
-    addTriangle(mergeVertex,triangleToAlter[v].first, triangleToAlter[v].second);
-  }
+    //Recreate new triangles
+    for(unsigned int v = 0; v < triangleToAlter.size(); v++){
+      
+      if( edges.find(std::make_pair(mergeVertex,triangleToAlter[v].first)) != edges.end()){
+        return;
+      }
 
+      if ( edges.find(std::make_pair(triangleToAlter[v].first,triangleToAlter[v].second)) != edges.end()){
+        return;
+      }
+
+      if ( edges.find(std::make_pair(triangleToAlter[v].second,mergeVertex)) != edges.end()){
+        return;
+      }
+    
+      addTriangle(mergeVertex,triangleToAlter[v].first, triangleToAlter[v].second);
+    }
+
+  }
 
 }
 
@@ -921,7 +918,6 @@ Edge* Mesh::getShortestEdge(){
     iter++;
   }
 
-  std::cout << shortEdge << "\tDistance: " << shortest_dist << std::endl;
   return shortEdge;
 
 }
@@ -931,6 +927,89 @@ bool Mesh::manifoldLegal(Edge* a, Edge* b){
   // Assume: these veritices share an edge
   // Output: true if its safe to remove, false if it isn't
   // Modify: none
+  
+  std::set<Vertex*> aSet;
+  std::set<Vertex*> bSet;
+  int a_triNum = 0;
+  int b_triNum = 0;
+
+  Edge * cur = a;
+  bool reversed = false;
+  do{
+    // checking if orientation is the same
+    //assert(a->getStartVertex() == cur->getStartVertex());
+    // Get these
+    Vertex* v1 = cur->getNext()->getStartVertex();
+    Vertex* v2 = cur->getPrev()->getStartVertex();
+    a_triNum++;
+    //Try and add them in
+    aSet.insert(v1);
+    aSet.insert(v2);
+
+    if(!reversed){
+      // Approach problem like ususal
+      cur = cur->getOpposite();
+      if(cur!= NULL) cur = cur->getNext(); else reversed = true;
+      if(cur == NULL) break;
+      assert(cur->getStartVertex() == a->getStartVertex());
+    }
+
+    if(reversed){
+      if(cur == NULL) cur = a->getPrev(); else cur = cur->getPrev();
+      if(cur != NULL) cur = cur->getOpposite(); else break;
+      if(cur == NULL) break;
+      assert(cur->getStartVertex() == a->getStartVertex());
+    }
+  }while(cur != a);
+
+
+  cur = b;
+  reversed = false;
+  do{
+    // checking if orientation is the same
+    //assert(b->getStartVertex() == cur->getStartVertex());
+    // Get these
+    Vertex* v1 = cur->getNext()->getStartVertex();
+    Vertex* v2 = cur->getPrev()->getStartVertex();
+    //Try and add them in
+    bSet.insert(v1);
+    bSet.insert(v2);
+    b_triNum++;
+
+    if(!reversed){
+      // Approach problem like ususal
+      cur = cur->getOpposite();
+      if(cur!= NULL) cur = cur->getNext(); else reversed = true;
+      if(cur == NULL) break;
+      assert(cur->getStartVertex() == b->getStartVertex());
+    }
+
+    if(reversed){
+      if(cur == NULL) cur = a->getPrev(); else cur = cur->getPrev();
+      if(cur != NULL) cur = cur->getOpposite(); else break;
+      if(cur == NULL) break;
+      assert(cur->getStartVertex() == b->getStartVertex());
+    }
+
+  }while(cur != b);
+
+
+  if(aSet.size() < a_triNum || bSet.size() < b_triNum){
+    // Repeates localally
+    return false;
+  }
+
+  std::vector<Vertex*> v_intersection;
+  std::set_intersection(aSet.begin(), aSet.end(),
+                          bSet.begin(), bSet.end(),
+                          std::back_inserter(v_intersection));
+
+  if(v_intersection.size() > 2){
+    return false;
+  }
+  
+  return true;
+  /*
 
   // Storing counts in a map
   std::map<Vertex*, unsigned int> count;
@@ -953,7 +1032,6 @@ bool Mesh::manifoldLegal(Edge* a, Edge* b){
 
     // Update cur
     cur = cur->getOpposite();
-
     // Where to iterate next
     if(cur == NULL && !reversed){
       cur = a->getPrev(); reversed = true;
@@ -1000,12 +1078,8 @@ bool Mesh::manifoldLegal(Edge* a, Edge* b){
 
   std::map<Vertex*, unsigned int>::iterator iter = count.begin();
 
-  //std::cout << "Vertex a " << a->getStartVertex() << "\tCount: " << count[a->getStartVertex()] <<std::endl;
-  //std::cout << "Vertex b " << b->getStartVertex() << "\tCount: " << count[b->getStartVertex()] <<std::endl;
   do{
 
-    //std::cout << "-=-=-=-=-=-=-==\n";
-    //std::cout << "Vertex " << (*iter).first << "\tCount: " << (*iter).second <<std::endl;
 
     // vertex a and b will be there many times
     if((*iter).first != a->getStartVertex() && 
@@ -1021,6 +1095,7 @@ bool Mesh::manifoldLegal(Edge* a, Edge* b){
   }while(iter != count.end());
 
   return true;
+  */
 }
 
 void Mesh::divide(){
@@ -1058,24 +1133,53 @@ void Mesh::divide(){
       ab = addVertex(a->getPos().midPoint3f(b->getPos()));
       setParentsChild(a,b,ab);
       childParentMap[ab] = std::make_pair(a,b);
-      creaseMap[std::make_pair(a,ab)] = getMeshEdge(a,b)->getCrease();
-      creaseMap[std::make_pair(ab,b)] = getMeshEdge(a,b)->getCrease();
+      if(getMeshEdge(a,b) != NULL){
+      
+        creaseMap[std::make_pair(a,ab)] = getMeshEdge(a,b)->getCrease();
+        creaseMap[std::make_pair(ab,b)] = getMeshEdge(a,b)->getCrease();
+      
+      }else if(getMeshEdge(b,a)){
+      
+        creaseMap[std::make_pair(a,ab)] = getMeshEdge(b,a)->getCrease();
+        creaseMap[std::make_pair(ab,b)] = getMeshEdge(b,a)->getCrease();
+      
+      }else{assert(false);}
+
     }
 
     if(bc == NULL){
       bc = addVertex(b->getPos().midPoint3f(c->getPos()));
       setParentsChild(b,c,bc);
       childParentMap[bc] = std::make_pair(b,c);
-      creaseMap[std::make_pair(b,bc)] = getMeshEdge(b,c)->getCrease();
-      creaseMap[std::make_pair(bc,c)] = getMeshEdge(b,c)->getCrease();
+
+      if(getMeshEdge(b,c) != NULL){
+      
+        creaseMap[std::make_pair(b,bc)] = getMeshEdge(b,c)->getCrease();
+        creaseMap[std::make_pair(bc,c)] = getMeshEdge(b,c)->getCrease();
+        
+      }else if(getMeshEdge(c,b) != NULL){
+        
+        creaseMap[std::make_pair(b,bc)] = getMeshEdge(c,b)->getCrease();
+        creaseMap[std::make_pair(bc,c)] = getMeshEdge(c,b)->getCrease();
+      }else{assert(false);}
+
     }
 
     if(ca == NULL){
       ca = addVertex(c->getPos().midPoint3f(a->getPos()));
       setParentsChild(c,a,ca);
       childParentMap[ca] = std::make_pair(c,a);
-      creaseMap[std::make_pair(c,ca)] = getMeshEdge(a,c)->getCrease();
-      creaseMap[std::make_pair(ca,a)] = getMeshEdge(a,c)->getCrease();
+
+      if(getMeshEdge(a,c) != NULL){
+      
+        creaseMap[std::make_pair(c,ca)] = getMeshEdge(a,c)->getCrease();
+        creaseMap[std::make_pair(ca,a)] = getMeshEdge(a,c)->getCrease();
+      
+      }else if(getMeshEdge(c,a) != NULL){
+      
+        creaseMap[std::make_pair(c,ca)] = getMeshEdge(c,a)->getCrease();
+        creaseMap[std::make_pair(ca,a)] = getMeshEdge(c,a)->getCrease();
+      }else{assert(false);}
     }
 
     // New Triangles
@@ -1152,6 +1256,7 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   assert(three != NULL);
   assert(four != NULL);
 
+
   // Apply Specific weights!
   // Need parent's 1 and 2's edge
   Edge* e1 = getMeshEdge(one,edg->getStartVertex());
@@ -1193,7 +1298,6 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   }
 
 
-  assert(methodMask != -1);
 
   if(methodMask == 1){
   // Apply weights, meaning one is a dart or just regular old smooth
@@ -1201,10 +1305,6 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
     Vec3f twoPos =  (3/(double)8) * two->getPos();
     Vec3f threePos = (1/(double)8) * three->getPos();
     Vec3f fourPos =  (1/(double)8) * four->getPos();
-    std::cout << onePos << "\n";
-    std::cout << twoPos << "\n";
-    std::cout << threePos << "\n";
-    std::cout << fourPos<< "\n";
     // Save to recalcuate
     controlPts.push_back(onePos);
     controlPts.push_back(twoPos);
@@ -1222,6 +1322,20 @@ void Mesh::getControlPts_newEdge(Edge* edg, std::vector<Vec3f> &controlPts){
     Vec3f twoPos =  (3/(double)8) * two->getPos();
     controlPts.push_back(onePos);
     controlPts.push_back(twoPos);
+
+  }else{
+    // Just going to use loops
+    // Apply weights, meaning one is a dart or just regular old smooth
+    Vec3f onePos =  (3/(double)8) * one->getPos();
+    Vec3f twoPos =  (3/(double)8) * two->getPos();
+    Vec3f threePos = (1/(double)8) * three->getPos();
+    Vec3f fourPos =  (1/(double)8) * four->getPos();
+    // Save to recalcuate
+    controlPts.push_back(onePos);
+    controlPts.push_back(twoPos);
+    controlPts.push_back(threePos);
+    controlPts.push_back(fourPos);
+
   }
   
 }
@@ -1235,8 +1349,6 @@ void Mesh::getControlPts_oldEdge(Edge* edg, std::vector<Vec3f> &controlPts){
   // Counting how many edges/triangles i have surounding me
   do{
 
-    std::cout << "######TRACE IN GET:###########\n";
-    std::cout << cur << std::endl;
     // Legal?
     assert(cur->getStartVertex());
     adjEdges.push_back(cur);
@@ -1331,6 +1443,8 @@ void Mesh::getControlPts_oldBound(Edge* edg, std::vector<Vec3f> &controlPts){
   // Here I run into an slight issue. 
   // I have a vertex, x and want to find orginal vertices o 
   // I dont know how many triangles are around/between
+
+  //std::cout << "Concider: " << edg <<std::endl;
   
   Edge* right = edg;
   Edge* left =  edg;
@@ -1390,6 +1504,7 @@ int Mesh::identifyVertex(Edge * edg){
       // Increment
       cur = cur->getOpposite();
       if(cur == NULL){
+       //std::cout << "Inside ID Child: " << edg <<std::endl;
         return 3;
       }
       cur = cur->getNext();
@@ -1397,6 +1512,7 @@ int Mesh::identifyVertex(Edge * edg){
     }while(cur != edg);
 
     return 1;
+
   }else{
 
     Edge* cur  = edg;
@@ -1406,6 +1522,7 @@ int Mesh::identifyVertex(Edge * edg){
       // Increment
       cur = cur->getOpposite();
       if(cur == NULL){
+       //std::cout << "Inside ID Adult: " << edg <<std::endl;
         return 4;
       }
       cur = cur->getNext();
@@ -1415,7 +1532,6 @@ int Mesh::identifyVertex(Edge * edg){
     return 2;
   }
 
-  //std::cout << "Problems!\n";
   return 0;
 
   /*

@@ -1,0 +1,545 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"er",
+				"erase"
+			],
+			[
+				"beg",
+				"begin"
+			],
+			[
+				"re",
+				"remove_matching_elements"
+			],
+			[
+				"ma",
+				"matching"
+			],
+			[
+				"push",
+				"push_back"
+			],
+			[
+				"getA",
+				"getAdjParticles"
+			],
+			[
+				"Col",
+				"ClothParticle"
+			],
+			[
+				"k_",
+				"k_structural"
+			],
+			[
+				"getP",
+				"getPosition"
+			],
+			[
+				"k",
+				"k_structural"
+			],
+			[
+				"stru",
+				"structPart"
+			],
+			[
+				"Cloth",
+				"ClothParticle"
+			],
+			[
+				"get",
+				"getMass"
+			],
+			[
+				"time",
+				"timestep"
+			],
+			[
+				"upd",
+				"updateVel"
+			],
+			[
+				"part",
+				"ClothParticle"
+			],
+			[
+				"cur",
+				"currentTime"
+			],
+			[
+				"current",
+				"currentTime"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/espinm2/Code/temp/test_vec.cpp",
+			"settings":
+			{
+				"buffer_size": 3228,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#ifndef _Table_h_\n#define _Table_h_\n\n#include <iostream>\n#include <vector>\n#include <iomanip>\n//#include <string>\n//#include <algorithm>\n#include <cmath>\n\n// A templated table class to store a matrix-like 2D array of data in rows & columns.\n// The table can be dynamically resized with push & pop operations on rows & columns.\n\ntemplate <class T> \nclass Table {\n\npublic:   \n  typedef unsigned int size_type;\n  typedef unsigned int index_type;\n\n  // CONSTRUCTORS, ASSIGNMNENT OPERATOR, & DESTRUCTOR\n  Table(size_type r, size_type c, const T& v) { this->create(r,c,v); }\n  Table(const Table& t) { copy(t); }\n  Table& operator=(const Table& t); \n  ~Table() { destroy(); } \n\n  // ACCESORS\n  // numRows: O(1)\n  size_type numRows() const { return rows; }\n  // numColumns: O(1)\n  size_type numColumns() const { return cols; }\n  const T& get(index_type i, index_type j) const;\n\n  // MODIFIERS\n  void set(index_type i, index_type j, const T& v);\n  void push_back_row(const std::vector<T> &v);\n  void push_back_column(const std::vector<T> &v);\n  void pop_back_row();\n  void pop_back_column();\n\n  // extra credit\n  void push_back_rows(const Table<T> &t);\n  void push_back_columns(const Table<T> &t);\n\n\n  // OUTPUT \n  void print();\n  \nprivate:  \n\n  // PRIVATE MEMBER FUNCTIONS\n  void create(size_type r, size_type c);\n  void create(size_type r, size_type c, const T& v);\n  void destroy();\n  void copy(const Table<T>& t); \n  int maxEntryWidth();\n\n  // REPRESENTATION\n  size_type rows,cols;\n  T** values;\n};\n\n// ==============================================================\n\n// Create an empty Table\ntemplate <class T>  void Table<T>::create(size_type r, size_type c) {\n  assert (r >= 1 && c >= 1);\n  rows = r;\n  cols = c;\n  values = new T*[rows];\n  for (unsigned int i = 0; i < rows; i++) {\n    values[i] = new T[cols];\n  }\n}\n\n// Fill in default values\ntemplate <class T>  void Table<T>::create(size_type r, size_type c, const T& v) {\n  create(r,c);\n  for (unsigned int i = 0; i < rows; i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      values[i][j] = v;\n    }\n  }\n}\n\n// cleanup all memory from the table\ntemplate <class T> void Table<T>::destroy() {\n  for (unsigned int j = 0; j < rows; j++) {\n    delete [] values[j];\n  }\n  delete [] values; \n}\n\n// Assign one Table to another, avoiding duplicate copying\ntemplate <class T> Table<T>& Table<T>::operator=(const Table<T>& v) {\n  if (this != &v) {\n    destroy();\n    this->copy(v);\n  }\n  return *this;\n}\n\n// Create the Table as a copy of the given Table\ntemplate <class T> void Table<T>::copy(const Table<T>& v) {\n  this->create(v.rows,v.cols);\n  for (unsigned int i = 0; i < rows; i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      values[i][j] = v.values[i][j];\n    }\n  }  \n}\n\n// ACCESSOR\n// get: O(1)\ntemplate <class T> const T& Table<T>::get(index_type i, index_type j) const {\n  // verify legal element\n  if (!(i >= 0 && i < rows && \n        j >= 0 && j < cols)) {\n    std::cerr << \"ERROR in get: attempt to use invalid index\" << std::endl;\n    exit(1);\n  }\n  return values[i][j];\n}\n\n// MODIFIERS\n// set: O(1)\ntemplate <class T> void Table<T>::set(index_type i, index_type j, const T& t) {\n  // verify legal element\n  if (!(i >= 0 && i < rows && \n        j >= 0 && j < cols)) {\n    std::cerr << \"ERROR in set: attempt to use invalid index\" << std::endl;\n    exit(1);\n  }\n  values[i][j] = t;\n}\n\n// push_back_row: O(n+m)\ntemplate <class T> void Table<T>::push_back_row(const std::vector<T> &v) {\n  // verify new data size\n  if (!(v.size() == cols)) {\n    std::cerr << \"ERROR in push_back_row: incorrect dimensions\" << std::endl;\n    exit(1);\n  }\n  // resize to add a new row\n  T** tmp = values;\n  values = new T*[rows+1];\n  for (unsigned int i = 0; i < rows; i++) {\n    values[i] = tmp[i];\n  }\n  delete [] tmp;\n  // copy the data over\n  values[rows] = new T[cols];\n  for (unsigned int j = 0; j < cols; j++) {\n    values[rows][j] = v[j];\n  }\n  rows++;\n}\n\n// push_back_column: O(n*m)\ntemplate <class T> void Table<T>::push_back_column(const std::vector<T> &v) {\n  // verify new data size\n  if (!(v.size() == rows)) {\n    std::cerr << \"ERROR in push_back_column: incorrect dimensions\" << std::endl;\n    exit(1);\n  }\n\n  // resize each row\n  for (unsigned int i = 0; i < rows; i++) {\n    T* tmp = values[i];\n    values[i] = new T[cols+1];\n    for (unsigned int j = 0; j < cols; j++) {\n      values[i][j] = tmp[j];\n    }\n    // copy new entry for this row\n    values[i][cols] = v[i];\n    delete [] tmp;\n  }\n  cols++;\n}\n\n\n\n\n\n\n\n// push_back_row: O(n+m)\ntemplate <class T> void Table<T>::push_back_rows(const Table<T> &t) {\n  // verify new data size\n  if (!(t.numColumns() == cols)) {\n    std::cerr << \"ERROR in push_back_rows: incorrect dimensions\" << std::endl;\n    exit(1);\n  }\n  // resize to add new rows\n  T** tmp = values;\n  values = new T*[rows+t.numRows()];\n  for (unsigned int i = 0; i < rows; i++) {\n    values[i] = tmp[i];\n  }\n  delete [] tmp;\n  // copy the data over\n  for (unsigned int i = 0; i < t.numRows(); i++) {\n    values[rows+i] = new T[cols];\n  }\n  for (unsigned int i = 0; i < t.numRows(); i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      values[rows+i][j] = t.get(i,j);\n    }\n  }\n  rows += t.numRows();\n}\n\n// push_back_column: O(n*m)\ntemplate <class T> void Table<T>::push_back_columns(const Table<T> &t) {\n  // verify new data size\n  if (!(t.numRows() == rows)) {\n    std::cerr << \"ERROR in push_back_rows: incorrect dimensions\" << std::endl;\n    exit(1);\n  }  \n  // resize each row\n  for (unsigned int i = 0; i < rows; i++) {\n    T* tmp = values[i];\n    values[i] = new T[cols+t.numColumns()];\n    for (unsigned int j = 0; j < cols; j++) {\n      values[i][j] = tmp[j];\n    }\n    // copy new data for this row\n    for (unsigned int j = 0; j < t.numColumns(); j++) {\n      values[i][j+numColumns()] = t.get(i,j);\n    }\n    delete [] tmp;\n  }\n  cols += t.numColumns();\n}\n\n\n\n\n\n\n\n// pop_back_row: O(n+m)\ntemplate <class T> void Table<T>::pop_back_row() {\n  // verify at least one row\n  assert (rows > 1);\n  T** tmp = new T*[rows-1];\n  // copy over old data\n  for (unsigned int i = 0; i < rows-1; i++) {\n    tmp[i] = values[i];\n  }\n  delete [] values[rows-1];\n  delete [] values;\n  values = tmp;\n  rows--;\n}\n\n// pop_back_column: O(n*m)\ntemplate <class T> void Table<T>::pop_back_column() {\n  // verify at least one column\n  assert (cols > 1);\n  for (unsigned int i = 0; i < rows; i++) {\n    T* tmp = values[i];\n    values[i] = new T[cols-1];\n    // copy over old data\n    for (unsigned int j = 0; j < cols-1; j++) {\n      values[i][j] = tmp[j];\n    }\n    delete [] tmp;\n  }\n  cols--;\n}\n\n\n// PRINT\n// print: O(n*m)\ntemplate <class T> void Table<T>::print() {\n  std::cout << \"table: \" << rows << \" rows, \" << cols << \" cols\" << std::endl;\n  int entry_width = maxEntryWidth();\n  for (unsigned int i = 0; i < rows; i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      std::cout << std::setw(entry_width) << values[i][j] << \" \";\n    }\n    std::cout << std::endl;\n  }\n  std::cout << std::endl;\n}\n\n// MAX ENTRY WIDTH: SPECIALIZATION FOR CHAR\ntemplate <>\nint Table<char>::maxEntryWidth() {\n  return 1;\n}\n\n// MAX ENTRY WIDTH: SPECIALIZATION FOR STRING\ntemplate <>\nint Table<std::string>::maxEntryWidth() {\n  int answer = 1;\n  for (unsigned int i = 0; i < rows; i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      answer = std::max(answer, (int)values[i][j].length());\n    }\n  }\n  return answer;\n}\n\n// MAX ENTRY WIDTH: SPECIALIZATION FOR INT\ntemplate <>\nint Table<int>::maxEntryWidth() {\n  int answer = 1;\n  for (unsigned int i = 0; i < rows; i++) {\n    for (unsigned int j = 0; j < cols; j++) {\n      int tmp = 1;\n      if (values[i][j] < 0) \n	tmp = log10((float)(-values[i][j])) + 2;\n      else if (values[i][j] > 0)\n	tmp = log10((float)values[i][j]) + 1;\n      answer = std::max(answer, tmp);\n    }\n  }\n  return answer;\n}\n\n// MAX ENTRY WIDTH: ANY OTHER TYPE\ntemplate <class T> int Table<T>::maxEntryWidth() {\n  return 10;\n}\n\n#endif\n",
+			"file": "/home/espinm2/Code/temp/table.h",
+			"file_size": 7915,
+			"file_write_time": 130374090146293752,
+			"settings":
+			{
+				"buffer_size": 7915,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/main_solution.cpp",
+			"settings":
+			{
+				"buffer_size": 10936,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/vec.h",
+			"settings":
+			{
+				"buffer_size": 5317,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/lab5_notes.txt",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/C++/C++.sublime-build",
+	"command_palette":
+	{
+		"height": 389.0,
+		"selected_items":
+		[
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				":W",
+				":w - Save"
+			],
+			[
+				":e",
+				":e - Revert"
+			],
+			[
+				":saveall",
+				"File: Save All"
+			],
+			[
+				":save all",
+				"File: Save All"
+			],
+			[
+				":package",
+				"Package Control: Install Package"
+			],
+			[
+				":inst",
+				"Package Control: Install Package"
+			],
+			[
+				":pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				":",
+				":w - Save"
+			]
+		],
+		"width": 457.0
+	},
+	"console":
+	{
+		"height": 147.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/espinm2/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/espinm2/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/matrix.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cloth.h",
+		"/home/espinm2/Code/GRADING/temp/Paper",
+		"/home/espinm2/Code/GRADING/temp/temp.cpp",
+		"/home/espinm2/Code/GRADING/temp/comments_hw1",
+		"/home/espinm2/Code/GRADING/temp/vector-usage-example.cpp",
+		"/home/espinm2/Code/temp/temp.cpp",
+		"/home/espinm2/Code/temp/comments_hw1",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/edge.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/.main.cpp.swp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/mesh.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/vertex.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/mesh.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/hash.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/triangle.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/matrix.h"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"copy",
+			"maxEntryWidth",
+			"erase",
+			"erease",
+			"erase",
+			"push_back",
+			"caret",
+			"structPart",
+			"particles",
+			"Particles",
+			"particles",
+			"Particles",
+			"particles",
+			"setAcc",
+			"mass",
+			"aggressive",
+			"writer",
+			"text_vector",
+			"algorithm",
+			"k",
+			"vector",
+			"string_vector",
+			"Flush_Left",
+			"AverageNormal",
+			"ComputeNormal",
+			"Edge",
+			"auto",
+			"header",
+			"first",
+			"second",
+			"triangles",
+			"addVertex",
+			"vertices",
+			"addVertex",
+			"/edge",
+			"edge",
+			"Vertex",
+			"vertex",
+			"Vertex",
+			"VERTEX",
+			"Vertex",
+			"vertex",
+			"Vertex",
+			"line"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"adjPartVec"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/espinm2/Code/temp/test_vec.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3228,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1525,
+								1525
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/espinm2/Code/temp/table.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7915,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2732,
+								2732
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1363.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/espinm2/Code/temp/main_solution.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10936,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								935,
+								935
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/espinm2/Code/temp/vec.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5317,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1973,
+								1973
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 900.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 4,
+					"file": "/home/espinm2/Code/temp/lab5_notes.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 38.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.715605749487,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 124.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "temp.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 139.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

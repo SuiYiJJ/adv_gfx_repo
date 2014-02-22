@@ -1,14 +1,18 @@
 #include "glCanvas.h"
-#include "mesh.h"
 #include "argparser.h"
 #include "camera.h"
+#include "cloth.h"
+#include "fluid.h"
+#include "matrix.h"
 
 // ========================================================
 // static variables of GLCanvas class
 
 ArgParser* GLCanvas::args = NULL;
-Mesh* GLCanvas::mesh = NULL;
 Camera* GLCanvas::camera = NULL;
+Cloth* GLCanvas::cloth = NULL;
+Fluid* GLCanvas::fluid = NULL;
+BoundingBox GLCanvas::bbox;
 
 int GLCanvas::mouseButton = 0;
 int GLCanvas::mouseX = 0;
@@ -18,6 +22,7 @@ bool GLCanvas::controlPressed = false;
 bool GLCanvas::shiftPressed = false;
 bool GLCanvas::altPressed = false;
 
+
 // ========================================================
 // Initialize all appropriate OpenGL variables, set
 // callback functions, and start the main event loop.
@@ -25,9 +30,10 @@ bool GLCanvas::altPressed = false;
 // by calling 'exit(0)'
 // ========================================================
 
-void GLCanvas::initialize(ArgParser *_args, Mesh *_mesh) {
+void GLCanvas::initialize(ArgParser *_args) {
   args = _args;
-  mesh = _mesh;
+  cloth = NULL;
+  fluid = NULL;
 
   Vec3f camera_position = Vec3f(0,0,5);
   Vec3f point_of_interest = Vec3f(0,0,0);
@@ -39,7 +45,6 @@ void GLCanvas::initialize(ArgParser *_args, Mesh *_mesh) {
   glutInitWindowPosition(100,100);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGB);
   glutCreateWindow("OpenGL Viewer");
-
   HandleGLError("in glcanvas initialize");
 
 #ifdef _WIN32
@@ -49,9 +54,7 @@ void GLCanvas::initialize(ArgParser *_args, Mesh *_mesh) {
       exit(1);
   }
 #endif
-
   // basic rendering 
-  glEnable(GL_LIGHTING);
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_NORMALIZE);
   glShadeModel(GL_SMOOTH);
@@ -59,6 +62,7 @@ void GLCanvas::initialize(ArgParser *_args, Mesh *_mesh) {
   GLfloat ambient[] = { 0.2, 0.2, 0.2, 1.0 };
   glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
   glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+
   glCullFace(GL_BACK);
   glDisable(GL_CULL_FACE);
 
@@ -68,15 +72,32 @@ void GLCanvas::initialize(ArgParser *_args, Mesh *_mesh) {
   glutDisplayFunc(display);
   glutReshapeFunc(reshape);
   glutKeyboardFunc(keyboard);
+  glutIdleFunc(idle);
 
   HandleGLError("finished glcanvas initialize");
 
-  mesh->initializeVBOs();
+  Load();
+  bbox.initializeVBOs();
 
   HandleGLError("finished glcanvas initialize");
 
   // Enter the main rendering loop
   glutMainLoop();
+}
+
+
+
+void GLCanvas::Load() {
+  delete cloth; 
+  cloth = NULL;
+  delete fluid; 
+  fluid = NULL;
+  if (args->cloth_file != "")
+    cloth = new Cloth(args);
+  if (args->fluid_file != "")
+    fluid = new Fluid(args);
+  if (cloth) cloth->setupVBOs();
+  if (fluid) fluid->setupVBOs();
 }
 
 
@@ -111,8 +132,9 @@ void GLCanvas::InitLight() {
 }
 
 
-void GLCanvas::display(void)
-{
+void GLCanvas::display(void) {
+
+  HandleGLError("start display");
   // Clear the display buffer, set it to the background color
   glClearColor(1,1,1,0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -123,14 +145,42 @@ void GLCanvas::display(void)
   InitLight(); // light will be a headlamp!
   camera->glPlaceCamera();
 
-  glEnable(GL_LIGHTING);
+  glDisable(GL_LIGHTING);
   glEnable(GL_DEPTH_TEST);
   
-  mesh->drawVBOs();
-   
-  // Swap the back buffer with the front buffer to display
-  // the scene
+  glMatrixMode(GL_MODELVIEW);
+
+  if (cloth != NULL) {
+    bbox.Set(cloth->getBoundingBox());
+    if (fluid != NULL) {
+      bbox.Extend(fluid->getBoundingBox());
+    }
+  } else {
+    assert (fluid != NULL);
+    bbox.Set(fluid->getBoundingBox()); 
+  }
+  
+  // center the volume in the window
+  Matrix m;
+  m.setToIdentity();
+  Vec3f center;
+  bbox.getCenter(center);
+  m *= Matrix::MakeScale(1/double(bbox.maxDim()));
+  m *= Matrix::MakeTranslation(-center); 
+  float matrix_data[16];
+  m.glGet(matrix_data);
+  glMultMatrixf(matrix_data);
+  
+  if (cloth) cloth->drawVBOs();
+  if (fluid) fluid->drawVBOs();
+
+  if (args->bounding_box) {
+    bbox.setupVBOs();
+    bbox.drawVBOs();
+  }
+
   glutSwapBuffers();
+  HandleGLError("end display");
 }
 
 // ========================================================
@@ -202,34 +252,109 @@ void GLCanvas::motion(int x, int y) {
 
 void GLCanvas::keyboard(unsigned char key, int /*x*/, int /*y*/) {
   switch (key) {
+  case 'a': case 'A':
+    // toggle continuous animation
+    args->animate = !args->animate;
+    if (args->animate) 
+      printf ("animation started, press 'A' to stop\n");
+    else
+      printf ("animation stopped, press 'A' to start\n");
+    break;
+  case ' ':
+    // a single step of animation
+    if (cloth) cloth->Animate();
+    if (fluid) fluid->Animate();
+    glutPostRedisplay();
+    break; 
+  case 'm':  case 'M': 
+    args->particles = !args->particles;
+    glutPostRedisplay();
+    break; 
+  case 'v':  case 'V': 
+    args->velocity = !args->velocity;
+    glutPostRedisplay();
+    break; 
+  case 'f':  case 'F': 
+    args->force = !args->force;
+    glutPostRedisplay();
+    break; 
+  case 'e':  case 'E':   // "faces"/"edges"
+    args->face_velocity = !args->face_velocity;
+    glutPostRedisplay();
+    break; 
+  case 'd':  case 'D': 
+    args->dense_velocity = (args->dense_velocity+1)%4;
+    if (fluid) fluid->setupVBOs();
+    glutPostRedisplay();
+    break; 
+  case 's':  case 'S': 
+    args->surface = !args->surface;
+    glutPostRedisplay();
+    break; 
   case 'w':  case 'W':
     args->wireframe = !args->wireframe;
     glutPostRedisplay();
     break;
-  case 'g': case 'G':
-    args->gouraud = !args->gouraud;
-    mesh->setupVBOs();
+  case 'b':  case 'B':
+    args->bounding_box = !args->bounding_box;
     glutPostRedisplay();
     break;
-  case 's': case 'S':
-    mesh->LoopSubdivision();
-    mesh->setupVBOs();
+  case 'c':  case 'C': 
+    args->cubes = !args->cubes;
+    glutPostRedisplay();
+    break; 
+  case 'p':  case 'P': 
+    args->pressure = !args->pressure;
+    glutPostRedisplay();
+    break; 
+  case 'r':  case 'R': 
+    // reset system
+    Load();
+    glutPostRedisplay();
+    break; 
+  case '+': case '=':
+    std::cout << "timestep doubled:  " << args->timestep << " -> ";
+    args->timestep *= 2.0; 
+    std::cout << args->timestep << std::endl;
+    if (cloth) cloth->setupVBOs();
+    if (fluid) fluid->setupVBOs();
     glutPostRedisplay();
     break;
-  case 'd': case 'D':
-    std::cout << "Before: " << mesh->numTriangles() << "\tGoal " << (int)floor(0.9*mesh->numTriangles());
-    mesh->Simplification((int)floor(0.9*mesh->numTriangles()));
-    std::cout << "\tAchived: " << mesh->numTriangles() <<std::endl;
-    mesh->setupVBOs();
+  case '-': case '_':
+    std::cout << "timestep halved:  " << args->timestep << " -> ";
+    args->timestep /= 2.0; 
+    std::cout << args->timestep << std::endl;
+    if (cloth) cloth->setupVBOs();
+    if (fluid) fluid->setupVBOs();
     glutPostRedisplay();
     break;
   case 'q':  case 'Q':
+    delete cloth;
+    cloth = NULL;
+    delete fluid;
+    fluid = NULL;
+    delete camera;
+    camera = NULL;
+    printf ("program exiting\n");
     exit(0);
     break;
   default:
-    std::cout << "UNKNOWN KEYBOARD INPUT  '" << key << "'" << std::endl;
+    printf("UNKNOWN KEYBOARD INPUT  '%c'\n", key);
   }
 }
+
+
+void GLCanvas::idle() {
+  if (args->animate) {
+    // do 10 steps of animation before rendering
+    for (int i = 0; i < 10; i++) {
+      if (cloth) cloth->Animate();
+      if (fluid) fluid->Animate();
+    }
+    glutPostRedisplay();
+  }
+}
+
 
 // ========================================================
 // ========================================================
@@ -250,4 +375,3 @@ int HandleGLError(const std::string &message) {
 
 // ========================================================
 // ========================================================
-
