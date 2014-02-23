@@ -92,7 +92,7 @@ public:
     double z = v1.data[0]*v2.data[1] - v1.data[1]*v2.data[0];
     c.data[0] = x; c.data[1] = y; c.data[2] = z; }
 
-  double Distance3f(Vec3f &b){
+  double Distance3f(const Vec3f &b) const {
   // Compute the distance
   double delta_x = pow(x() - b.x(), 2.0);
   double delta_y = pow(y() - b.y(), 2.0);

@@ -8,6 +8,7 @@
 #include <map>
 
 using std::vector;
+using std::pair;
 
 // =====================================================================================
 // Cloth Particles
@@ -23,6 +24,7 @@ public:
   Vec3f getForce() const { return mass*acceleration; }
   double getMass() const { return mass; }
   bool isFixed() const { return fixed; }
+  bool isLoose() const {return !fixed; }
 
   // MODIFIERS
   void setOriginalPosition(const Vec3f &p) { original_position = p; }
@@ -45,6 +47,7 @@ private:
 // =====================================================================================
 // Cloth System
 // =====================================================================================
+
 
 class Cloth {
 
@@ -100,8 +103,7 @@ private:
   // correction thresholds
   double provot_structural_correction;
   double provot_shear_correction;
-  // global time for animation
-  double global_time;
+
 
   // VBOs
   GLuint cloth_verts_VBO;

@@ -75,21 +75,13 @@ void Cloth::setupVBOs() {
 
       float dt = args->timestep;
 
+      // Velocity is visualized
       cloth_velocity_visualization.push_back(VBOPosColor(pos,Vec3f(1,0,0)));
       cloth_velocity_visualization.push_back(VBOPosColor(pos+dt*100*vel,Vec3f(1,1,1)));
 
+      // Force is visualized
       cloth_force_visualization.push_back(VBOPosColor(pos,Vec3f(0,0,1)));
       cloth_force_visualization.push_back(VBOPosColor(pos+dt*1000*frc,Vec3f(1,1,1)));
-
-
-      // *********************************************************************  
-      // ASSIGNMENT:
-      //
-      // Visualize the forces
-      //
-      // *********************************************************************    
-
-
     }
   }
 

@@ -12,7 +12,6 @@ using std::vector;
 
 Cloth::Cloth(ArgParser *_args) {
   args =_args;
-  global_time = 0;
 
   // open the file
   std::ifstream istr(args->cloth_file.c_str());
@@ -96,6 +95,7 @@ void Cloth::computeBoundingBox() {
 }
 
 // ================================================================================
+
 const vector<ClothParticle*> Cloth::getAdjParticles(int i, int j) {
   // Input: Given an i,j index
   // Output: This will return the adj (structural) particles in a vector
@@ -168,6 +168,7 @@ const vector<ClothParticle*> Cloth::getShearParticles(int i, int j) {
 
   return shearPartVec;
 }
+
 // ================================================================================
 
 const vector<ClothParticle*> Cloth::getFlexParticles(int i, int j) {
@@ -205,8 +206,8 @@ const vector<ClothParticle*> Cloth::getFlexParticles(int i, int j) {
   }
 
   return flexPartVec;
-
 }
+
 // ================================================================================
 
 const Vec3f Cloth::getSpringForce(ClothParticle* a, ClothParticle* b) {
@@ -222,22 +223,18 @@ const Vec3f Cloth::getSpringForce(ClothParticle* a, ClothParticle* b) {
   double displace = k_structural * (p_i.Distance3f(p_j) - restLength);
   Vec3f ratio = (p_j - p_i) * (1/p_i.Distance3f(p_j));
   return displace * ratio;
-
 }
 
 // ================================================================================
+
 void Cloth::Animate() {
 
-  // Jump
-
   // Get current time and update global
-  double currentTime = global_time;
-  global_time += args->timestep;
 
-  // For each particle in the system
-  for(int i = 0; i < nx; i++){
+  // For each particle in the system update the states
+  for( int i = 0; i < nx; i++){
 
-    for(int j = 0; j < ny; j++){
+    for( int j = 0; j < ny; j++){
 
       // Trying to do eulers method
       ClothParticle* curP = &getParticle(i,j);
@@ -258,15 +255,15 @@ void Cloth::Animate() {
 
       // Structural
       vector<ClothParticle*> adjPartVec = getAdjParticles(i,j);
-      for(int v = 0; v < adjPartVec.size(); v++)
+      for(unsigned int v = 0; v < adjPartVec.size(); v++)
         f_spring = f_spring + getSpringForce(curP,adjPartVec[v]);
       // Shear 
       vector<ClothParticle*> shearVec = getShearParticles(i,j);
-      for(int v = 0; v < shearVec.size(); v++)
+      for(unsigned int v = 0; v < shearVec.size(); v++)
         f_spring = f_spring + getSpringForce(curP,shearVec[v]);
       // Flex
       vector<ClothParticle*> flexVec = getFlexParticles(i,j);
-      for(int v = 0; v < flexVec.size(); v++)
+      for(unsigned int v = 0; v < flexVec.size(); v++)
         f_spring = f_spring + getSpringForce(curP,flexVec[v]);
 
       // Accleration
@@ -280,7 +277,41 @@ void Cloth::Animate() {
     }
   }
 
+  // Get the fixed distance for  structure particles
+  double restStructLength = getParticle(0,0).getOriginalPosition().Distance3f(getParticle(0,1).getOriginalPosition());
+
+  // For each particle in the system check if it is overstreched
+  for(unsigned int i = 0; i < nx; i++){
+
+    for(unsigned int j = 0; j < ny; j++){
+
+      // Collecting surrounding nodes 
+      ClothParticle* curP = &getParticle(i,j);
+      vector<ClothParticle*> adjPartVec = getAdjParticles(i,j);
+
+      for(unsigned int v = 0; v < adjPartVec.size(); v++){
+        // For edge check if oversteched
+        ClothParticle * other = &getParticle(i,j);
+        double distance = curP->getPosition().Distance3f(other->getPosition());
+        if(distance > (provot_structural_correction * restStructLength)){
+
+          // Which are fixed? none, one or both?
+          if(curP->isLoose() && other->isLoose()){
+
+          }else if( curP->isLoose() && other->isFixed()){
+
+          }else if( curP->isFixed() && other->isLoose()){
+
+          }else{
+            // Then both are fixed, in which case do nothing.
+            assert(curP->isFixed() && other->isLoose());
+          }
+        }
+      }
+    }
+  }
   // redo VBOs for rendering
   setupVBOs();
 }
 
+// ================================================================================
