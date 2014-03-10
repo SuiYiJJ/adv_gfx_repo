@@ -1,1 +1,0 @@
-/home/espinm2/Code/adv_gfx_repo/hw02/build/CMakeFiles/simulation.dir
