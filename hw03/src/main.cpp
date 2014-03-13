@@ -10,6 +10,7 @@
 #include "raytracer.h"
 #include "utils.h"
 
+// Random Number Gen
 MTRand GLOBAL_mtrand;
 
 // =========================================
@@ -19,12 +20,13 @@ int main(int argc, char *argv[]) {
   
   // deterministic (repeatable) randomness
   GLOBAL_mtrand = MTRand(37);
+
   // "real" randomness
   //GLOBAL_mtrand = MTRand((unsigned)time(0));
-  //
   
   ArgParser *args = new ArgParser(argc, argv);
   glutInit(&argc, argv);
+
 
   Mesh *mesh = new Mesh();
   mesh->Load(args->input_file,args);

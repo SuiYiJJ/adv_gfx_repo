@@ -1,0 +1,1129 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"rest",
+				"restStructLength"
+			],
+			[
+				"adj",
+				"AdjustForIncompressibility"
+			],
+			[
+				"getN",
+				"get_new_w_plus"
+			],
+			[
+				"get_new",
+				"get_new_w_plus"
+			],
+			[
+				"get_",
+				"get_new_v_plus"
+			],
+			[
+				"upd",
+				"UpdatePressures"
+			],
+			[
+				"con",
+				"continue"
+			],
+			[
+				"div",
+				"divergance_chunck"
+			],
+			[
+				"CE",
+				"CELL_FULL"
+			],
+			[
+				"dive",
+				"divergance_chunck"
+			],
+			[
+				"CELL",
+				"CELL_FULL"
+			],
+			[
+				"get",
+				"getStatus"
+			],
+			[
+				"std",
+				"std::endl"
+			],
+			[
+				"ad",
+				"adjust_new_w_plus"
+			],
+			[
+				"adju",
+				"adjust_new_u_plus"
+			],
+			[
+				"cell",
+				"CELL_FULL"
+			],
+			[
+				"u",
+				"unhappyness"
+			],
+			[
+				"adjust",
+				"adjust_new_w_plus"
+			],
+			[
+				"ma",
+				"max_divergence"
+			],
+			[
+				"Ad",
+				"AdjustForIncompressibility"
+			],
+			[
+				"set",
+				"setPressure"
+			],
+			[
+				"num",
+				"num_adj_cells"
+			],
+			[
+				"getS",
+				"getSurroundingTargets"
+			],
+			[
+				"getP",
+				"-getPressure"
+			],
+			[
+				"pro",
+				"provot_structural_correction"
+			],
+			[
+				"new",
+				"new_other"
+			],
+			[
+				"res",
+				"restShearLength"
+			],
+			[
+				"dis",
+				"distance"
+			],
+			[
+				"sh",
+				"shearPartVec"
+			],
+			[
+				"provot_s",
+				"provot_shear_correction"
+			],
+			[
+				"line",
+				"line_other_cur"
+			],
+			[
+				"Nor",
+				"NormalizedCopy"
+			],
+			[
+				"new_",
+				"new_cur"
+			],
+			[
+				"line_",
+				"line_cur_other"
+			],
+			[
+				"are",
+				"area_u1"
+			],
+			[
+				"area",
+				"area_u2"
+			],
+			[
+				"interp",
+				"interpolated_u"
+			],
+			[
+				"wid",
+				"width*length"
+			],
+			[
+				"inter",
+				"interpolated_v"
+			],
+			[
+				"pos_",
+				"pos_u1"
+			],
+			[
+				"vel_",
+				"vel_u3"
+			],
+			[
+				"lowb",
+				"low_bound_b"
+			],
+			[
+				"hi",
+				"hig_bound_a"
+			],
+			[
+				"lo",
+				"low_bound_b"
+			],
+			[
+				"hig_b",
+				"hig_bound_b"
+			],
+			[
+				"low_b",
+				"low_bound_a"
+			],
+			[
+				"low_bound_",
+				"low_bound_b"
+			],
+			[
+				"lowB",
+				"low_bound_a"
+			],
+			[
+				"low_bound",
+				"low_bound_b"
+			],
+			[
+				"lowboun",
+				"low_bound_b"
+			],
+			[
+				"low",
+				"low_bound_a"
+			],
+			[
+				"cloth_",
+				"cloth_force_visualization"
+			],
+			[
+				"shearP",
+				"shearPartVec"
+			],
+			[
+				"shear",
+				"shearVec"
+			],
+			[
+				"getA",
+				"getAcceleration"
+			],
+			[
+				"f_g",
+				"f_gravity"
+			],
+			[
+				"acc",
+				"acceleration"
+			],
+			[
+				"Col",
+				"ClothParticle"
+			],
+			[
+				"k_",
+				"k_structural"
+			],
+			[
+				"k",
+				"k_structural"
+			],
+			[
+				"stru",
+				"structPart"
+			],
+			[
+				"Cloth",
+				"ClothParticle"
+			],
+			[
+				"time",
+				"timestep"
+			],
+			[
+				"part",
+				"ClothParticle"
+			],
+			[
+				"cur",
+				"currentTime"
+			],
+			[
+				"current",
+				"currentTime"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/espinm2/Code/adv_gfx_repo/hw02/src/hw02.todo",
+			"settings":
+			{
+				"buffer_size": 30,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 1332,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "glCanvas.cpp",
+			"settings":
+			{
+				"buffer_size": 15088,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "raytracer.h",
+			"settings":
+			{
+				"buffer_size": 1270,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "raytracer.cpp",
+			"settings":
+			{
+				"buffer_size": 4281,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "mesh.cpp",
+			"settings":
+			{
+				"buffer_size": 11788,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "primitive.h",
+			"settings":
+			{
+				"buffer_size": 739,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 54 files for \"srgb_to_linear\"\n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/material.cpp:\n   35    // we assume the texture is stored in sRGB and convert to linear for\n   36    // computation.  It will be converted back to sRGB before display.\n   37:   double r = srgb_to_linear(c.r/255.0);\n   38:   double g = srgb_to_linear(c.g/255.0);\n   39:   double b = srgb_to_linear(c.b/255.0);\n   40  \n   41    return Vec3f(r,g,b);\n   ..\n   88      for (int j = 0; j < image->Height(); j++) {\n   89        Color c = image->GetPixel(i,j);\n   90:        r += srgb_to_linear(c.r/255.0);\n   91:        g += srgb_to_linear(c.g/255.0);\n   92:        b += srgb_to_linear(c.b/255.0);\n   93      }\n   94    }\n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/raytracer.cpp:\n   49    // if there is no intersection, simply return the background color\n   50    if (intersect == false) {\n   51:     return Vec3f(srgb_to_linear(mesh->background_color.r()),\n   52: 		 srgb_to_linear(mesh->background_color.g()),\n   53: 		 srgb_to_linear(mesh->background_color.b()));\n   54    }\n   55  \n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/utils.h:\n   45  }\n   46  \n   47: inline double srgb_to_linear(double x) {\n   48    double answer;\n   49    if (x <= 0.04045)\n\n10 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 1255,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "utils.h",
+			"settings":
+			{
+				"buffer_size": 3157,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "hit.h",
+			"settings":
+			{
+				"buffer_size": 1545,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ray.h",
+			"settings":
+			{
+				"buffer_size": 1044,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/C++/C++.sublime-build",
+	"command_palette":
+	{
+		"height": 354.0,
+		"selected_items":
+		[
+			[
+				":w",
+				":w - Save"
+			],
+			[
+				":q",
+				"Set Syntax: SQL"
+			],
+			[
+				":save all",
+				"File: Save All"
+			],
+			[
+				":s",
+				"File: Save All"
+			],
+			[
+				":save",
+				"File: Save All"
+			],
+			[
+				":install",
+				"Package Control: Install Package"
+			],
+			[
+				":",
+				":w - Save"
+			],
+			[
+				":saveall",
+				"File: Save All"
+			],
+			[
+				":W",
+				":w - Save"
+			],
+			[
+				":e",
+				":e - Revert"
+			],
+			[
+				":package",
+				"Package Control: Install Package"
+			],
+			[
+				":inst",
+				"Package Control: Install Package"
+			],
+			[
+				":pack",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 457.0
+	},
+	"console":
+	{
+		"height": 147.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_compressible.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/argparser.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/hw2_gradesheet.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/self_grade_sheet.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_spiral_xy.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_random_xy.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/provot_correct_structural.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cloth_render.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/denim_curtain.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/silk_curtain.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/table_cloth.txt",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cloth.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cloth.cpp",
+		"/home/espinm2/Code/temp/yulou/table.h",
+		"/home/espinm2/Code/temp/yulou/main.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_render.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cell.h",
+		"/home/espinm2/.config/sublime-text-3/Packages/:",
+		"/home/espinm2/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/glCanvas.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/main.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/matrix.h",
+		"/home/espinm2/Code/GRADING/temp/Paper",
+		"/home/espinm2/Code/GRADING/temp/temp.cpp",
+		"/home/espinm2/Code/GRADING/temp/comments_hw1",
+		"/home/espinm2/Code/GRADING/temp/vector-usage-example.cpp",
+		"/home/espinm2/Code/temp/temp.cpp",
+		"/home/espinm2/Code/temp/comments_hw1",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/triangle.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/vertex.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/matrix.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/edge.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/hash.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/.main.cpp.swp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/mesh.h",
+		"/home/espinm2/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/mesh.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/argparser.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/src/main.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/vertex.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/mesh.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/hash.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/triangle.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw01/matrix.h"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 124.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"CastRay",
+			"Primitive",
+			"srgb_to_linear",
+			"LIST",
+			"MoveParticles",
+			"cout",
+			"printf",
+			"cout",
+			"restStructLength",
+			"fabs",
+			"%f",
+			" {",
+			"move",
+			"abs",
+			"jump",
+			"abs",
+			"surface",
+			"force",
+			"MoveParticles",
+			"print",
+			"cout",
+			"SetEmptySurfaceFull",
+			"surface",
+			"setPressure",
+			"SetBoundaryVelocities",
+			"setPressure",
+			"master",
+			"getInterpolatedVelocity",
+			"MoveParticles",
+			"main",
+			"cout",
+			"printf",
+			"adjust_new_u_plus",
+			"a",
+			"BETA_0",
+			"EPSILON",
+			"AdjustForIncompressibility",
+			"UpdatePressures",
+			"AdjustForIncompressibility",
+			"SetBoundaryVelocities",
+			"ComputeNewVelocities",
+			"GenerateParticles",
+			"UpdatePressures",
+			"SetBoundaryVelocities",
+			"CopyVelocities",
+			"ComputeNewVelocities",
+			"AdjustForIncompressibility",
+			"MoveParticles",
+			"ComputeNewVelocities",
+			"AdjustForIncompressibility",
+			"num_adj_cells",
+			"AdjustForIncompressibility",
+			"status",
+			"getCell",
+			"boundry",
+			"AdjustForIncompressibility",
+			"xy_free_slip",
+			"free",
+			"AdjustForIncompressibility",
+			"UpdatePressures",
+			"MoveParticles",
+			"getInterpolatedVelocity",
+			"getAreaSquares",
+			"cloth_unhappy_edge_indices",
+			"cout",
+			"= ",
+			"cout",
+			"restStructLength",
+			"void",
+			"other",
+			"todo",
+			"moveParticles",
+			"getParticles",
+			"getInterpolatedVelocity",
+			"todo",
+			"assignment",
+			"ass",
+			"provot_structural_correction",
+			"cloth_force_visualization",
+			"cloth_velocity_visualization_VBO",
+			"glutPostRedisplay",
+			"velocity",
+			"setVelocity",
+			"velocity",
+			"draw",
+			"cloth",
+			"red",
+			"shearPartVec",
+			"const",
+			"const between these two\n  Vec3f aOrginalPos = a->getOriginalPosition();\n  Vec3f bOrginalPos = b->getOriginalPosition();\n  double restLength = aOrginalPos.Distance3f(bOrginalPos);\n  Vec3f p_i = a->getPosition();\n  Vec3f p_j = b->getPosition();\n\n  // JUMP\n  double displace = k_structural * (p_i.Distance3f(p_j) - restLength);\n  Vec3f ratio = (p_j - p_i) * (1/p_i.Distance3f(p_j));\n  return displace * ratio;",
+			"const",
+			"assert",
+			"structPart",
+			"particles",
+			"Particles",
+			"particles",
+			"Particles",
+			"particles",
+			"setAcc",
+			"mass",
+			"aggressive",
+			"writer",
+			"text_vector",
+			"algorithm",
+			"k",
+			"vector",
+			"string_vector",
+			"Flush_Left",
+			"AverageNormal",
+			"ComputeNormal",
+			"Edge",
+			"auto",
+			"header",
+			"first",
+			"second",
+			"triangles",
+			"addVertex",
+			"vertices",
+			"addVertex",
+			"/edge",
+			"edge",
+			"Vertex",
+			"vertex",
+			"Vertex",
+			"VERTEX",
+			"Vertex",
+			"vertex",
+			"Vertex"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"%.2f",
+			"fabs",
+			"otherP",
+			"flexPartVec",
+			"adjPartVec"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/espinm2/Code/adv_gfx_repo/hw02/src/hw02.todo",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 30,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29,
+								29
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1332,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1158,
+								1158
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 741.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "glCanvas.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15088,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7746,
+								7746
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "raytracer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1270,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1152,
+								1152
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 110.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "raytracer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4281,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1980,
+								1980
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/SQL/SQL.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 456.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "mesh.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11788,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2012,
+								2012
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1700.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "primitive.h",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 739,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								366,
+								366
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1255,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										270,
+										284
+									],
+									[
+										317,
+										331
+									],
+									[
+										364,
+										378
+									],
+									[
+										554,
+										568
+									],
+									[
+										600,
+										614
+									],
+									[
+										646,
+										660
+									],
+									[
+										889,
+										903
+									],
+									[
+										943,
+										957
+									],
+									[
+										997,
+										1011
+									],
+									[
+										1150,
+										1164
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								1101,
+								1101
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 330.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "utils.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3157,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1606,
+								1606
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1288.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "hit.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1545,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								910,
+								910
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 114.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "ray.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1044,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								512,
+								512
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 39.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 124.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "hw3.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 269.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

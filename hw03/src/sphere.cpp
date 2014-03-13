@@ -1,3 +1,4 @@
+#include <math.h>
 #include "utils.h"
 #include "material.h"
 #include "argparser.h"
@@ -19,9 +20,52 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
   // ASSIGNMENT:  IMPLEMENT SPHERE INTERSECTION
   // ==========================================
 
-  // plug the explicit ray equation into the implict sphere equation and solve
+  // a = d (dot) d
+  double a = r.getDirection().Dot3(r.getDirection());
 
+  // b = 2d (dot) (orginPoint - centerPoint)
+  double b = (2*(r.getDirection())).Dot3(r.getOrigin() - center);
 
+  // c = (p_0 - p_c) dot (p_0-p_c) - r^2
+  double c = (r.getOrigin() - center).Dot3(r.getOrigin() - center) - (radius*radius);
+
+  // t = (-b +/- sqrt(b2 - 4 a c)) / (2 a)
+  // if inside is negative, then it doesn't intersect the sphere
+  // if zero just a slight glance of sphere
+  // if two then you interect and leave
+
+  double inside = (b*b) - 4*a*c;
+
+  if(inside > 0 ){
+    //inside
+
+    // get the first intersection point
+    double t = ((-1*b) - sqrt(inside)) / (2*a);
+
+    // get unit vector
+    Vec3f pt = r.getOrigin() + t * r.getDirection();
+    Vec3f norm((pt.x() - center.x())/radius, (pt.y() - center.y())/radius, (pt.z() - center.z())/radius);
+    norm.Normalize();
+
+    h.set(t,getMaterial(),norm);
+    return true;
+
+  }else if(inside == 0){
+    // skimming
+    double t = ((-1*b) - sqrt(inside))/(2*a);
+    Vec3f pt = r.getOrigin() + t * r.getDirection();
+
+    Vec3f norm((pt.x() - center.x())/radius, (pt.y() - center.y())/radius, (pt.z() - center.z())/radius);
+    norm.Normalize();
+    h.set(t,getMaterial(),norm);
+    return true;
+
+  }else{
+
+    // Negative and therefore missed
+    return false;
+    
+  }
 
   // return true if the sphere was intersected, and update
   // the hit data structure to contain the value of t for the ray at

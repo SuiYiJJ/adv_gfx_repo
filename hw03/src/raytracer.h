@@ -16,13 +16,15 @@ class PhotonMapping;
 
 class RayTracer {
 
-public:
+public:// This class manages the ray casting and ray tracing work.
+
 
   // CONSTRUCTOR & DESTRUCTOR
   RayTracer(Mesh *m, ArgParser *a) {
     mesh = m;
     args = a;
   }  
+  
   // set access to the other modules for hybrid rendering options
   void setRadiosity(Radiosity *r) { radiosity = r; }
   void setPhotonMapping(PhotonMapping *pm) { photon_mapping = pm; }
