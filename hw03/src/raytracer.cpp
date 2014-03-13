@@ -51,6 +51,7 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
   // if there is no intersection, simply return the background color
   if (intersect == false) {
     // Probs need to fix this for more complex background colors
+    RayTree::AddMainSegment(ray,0,10);
     return Vec3f(srgb_to_linear(mesh->background_color.r()),
 		 srgb_to_linear(mesh->background_color.g()),
 		 srgb_to_linear(mesh->background_color.b()));
@@ -70,6 +71,9 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
   Vec3f normal = hit.getNormal();
   Vec3f point = ray.pointAtParameter(hit.getT());
   Vec3f answer;
+
+  // Add in my ray
+  RayTree::AddReflectedSegment(ray,0,hit.getT());
 
   // ----------------------------------------------
   //  start with the indirect light (ambient light)
@@ -112,12 +116,6 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
     myLightColor = lightColor / (M_PI*distToLightCentroid*distToLightCentroid);
 
 
-    // Checking if we have a shadow
-    Hit shadowHit;
-
-    //Ray Towards Light
-    if(CastRay())
-
     // ===========================================
     // ASSIGNMENT:  ADD SHADOW & SOFT SHADOW LOGIC
     // ===========================================
@@ -128,20 +126,39 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
 
   }
 
-
-
+  Vec3f reflectiveColor = m->getReflectiveColor();
   // ----------------------------------------------
   // add contribution from reflection, if the surface is shiny
-  Vec3f reflectiveColor = m->getReflectiveColor();
 
-  // =================================
-  // ASSIGNMENT:  ADD REFLECTIVE LOGIC
-  // =================================
+  // Check if reflective if not just return, all color is absorbed
+  if(reflectiveColor.x() == 0 && reflectiveColor.y() == 0 && reflectiveColor.z() ==0){
+    return answer;
+  }
 
 
+  if(bounce_count > 0){
 
+    
+
+    // Calculate reflect direction vector
+    double term = -1* hit.getNormal().Dot3(ray.getDirection());
+    Vec3f reflectiveDir = ray.getDirection() + (2*term*hit.getNormal());
+    reflectiveDir.Normalize();
+
+    // New ray
+    Ray reflectRay(point,reflectiveDir);
+
+    Hit newHit;
+    return reflectiveColor*(answer + TraceRay(reflectRay,newHit,bounce_count-1)); 
+
+  }else{
+
+  // These is more bounce left!
+  return answer;
+
+
+  }
 
   
-  return answer; 
 }
 

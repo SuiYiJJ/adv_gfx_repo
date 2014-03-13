@@ -404,11 +404,6 @@ Vec3f GLCanvas::TraceRay(double i, double j) {
   color = raytracer->TraceRay(r,hit,args->num_bounces);
   // add that ray for visualization
   RayTree::AddMainSegment(r,0,hit.getT());
-  Vec3f hitPoint = r.getOrigin() + hit.getT() * r.getDirection();
-
-  // DEBUG
-  Ray debug(hitPoint, hit.getNormal());
-  RayTree::AddReflectedSegment(debug,0,1);
 
 
 

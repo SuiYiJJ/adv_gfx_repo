@@ -36,27 +36,20 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
 
   double inside = (b*b) - 4*a*c;
 
-  if(inside > 0 ){
+  if(inside >= 0 ){ 
     //inside
 
     // get the first intersection point
     double t = ((-1*b) - sqrt(inside)) / (2*a);
+
+    if(t < 0) return false;
+
 
     // get unit vector
     Vec3f pt = r.getOrigin() + t * r.getDirection();
     Vec3f norm((pt.x() - center.x())/radius, (pt.y() - center.y())/radius, (pt.z() - center.z())/radius);
     norm.Normalize();
 
-    h.set(t,getMaterial(),norm);
-    return true;
-
-  }else if(inside == 0){
-    // skimming
-    double t = ((-1*b) - sqrt(inside))/(2*a);
-    Vec3f pt = r.getOrigin() + t * r.getDirection();
-
-    Vec3f norm((pt.x() - center.x())/radius, (pt.y() - center.y())/radius, (pt.z() - center.z())/radius);
-    norm.Normalize();
     h.set(t,getMaterial(),norm);
     return true;
 
