@@ -96,35 +96,57 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
     // Get that light source
     Face *f = mesh->getLights()[i];
 
-    // Get color of light
-    Vec3f lightColor = f->getMaterial()->getEmittedColor() * f->getArea();
+    // Get a collection of random points on light source
+    std::vector<Vec3f> randomLightVec;
+    for(int r = 0; r < args->num_shadow_samples; r++){
+      randomLightVec.push_back(f->RandomPoint());
+    }
 
-    // Color I will have locally
-    Vec3f myLightColor;
-
-    // Middle of where light source is?
-    Vec3f lightCentroid = f->computeCentroid();
-
-    // Get the direction to that light center point
-    Vec3f dirToLightCentroid = lightCentroid-point;
-    dirToLightCentroid.Normalize();
-    
-    // How far am I from the light?
-    double distToLightCentroid = (lightCentroid-point).Length();
-
-    // Math to get my light color
-    myLightColor = lightColor / (M_PI*distToLightCentroid*distToLightCentroid);
+    for(int r = 0; r < randomLightVec.size(); r++){
 
 
-    // ===========================================
-    // ASSIGNMENT:  ADD SHADOW & SOFT SHADOW LOGIC
-    // ===========================================
 
-    // add the lighting contribution from this particular light at this point
-    // (fix this to check for blockers between the light & this surface)
-    answer += m->Shade(ray,hit,dirToLightCentroid,myLightColor,args);
+      // Get color of light
+      Vec3f lightColor = f->getMaterial()->getEmittedColor() * f->getArea();
 
+      // Color I will have locally
+      Vec3f myLightColor;
+
+      // Middle of where light source is?
+      Vec3f lightCentroid = randomLightVec[r];
+
+      // Get the direction to that light center point
+      Vec3f dirToLightCentroid = lightCentroid-point;
+      dirToLightCentroid.Normalize();
+      
+      // How far am I from the light?
+      double distToLightCentroid = (lightCentroid-point).Length();
+
+      // Math to get my light color
+      myLightColor = lightColor / (M_PI*distToLightCentroid*distToLightCentroid);
+      myLightColor = (1.0/args->num_shadow_samples) * myLightColor;
+
+      // ===========================================
+      // ASSIGNMENT:  ADD SHADOW & SOFT SHADOW LOGIC
+      // ===========================================
+
+      Ray shadowRay(point, dirToLightCentroid);
+      Hit shadowHit = Hit();
+
+      // If I hit something and that something isn't the lightsource
+      if(CastRay(shadowRay,shadowHit,false) && shadowHit.getMaterial()->getEmittedColor().Length() <= 0.001 ){
+
+        RayTree::AddShadowSegment(shadowRay,0,shadowHit.getT());
+
+      }else{
+
+        RayTree::AddMainSegment(shadowRay,0,100);
+        answer += m->Shade(ray,hit,dirToLightCentroid,myLightColor,args);
+      }
+    }
   }
+
+   
 
   Vec3f reflectiveColor = m->getReflectiveColor();
   // ----------------------------------------------
@@ -138,7 +160,6 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
 
   if(bounce_count > 0){
 
-    
 
     // Calculate reflect direction vector
     double term = -1* hit.getNormal().Dot3(ray.getDirection());

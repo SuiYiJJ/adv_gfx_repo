@@ -8,6 +8,8 @@
 #include "ray.h"
 #include "hit.h"
 
+#define EPSILON .00001
+
 // ====================================================================
 // ====================================================================
 
@@ -44,9 +46,12 @@ bool Sphere::intersect(const Ray &r, Hit &h) const {
 
     if(t < 0) return false;
 
-
-    // get unit vector
+    // get pt collision
     Vec3f pt = r.getOrigin() + t * r.getDirection();
+
+    if(pt.Distance3f(r.getOrigin()) < EPSILON) return false;
+
+
     Vec3f norm((pt.x() - center.x())/radius, (pt.y() - center.y())/radius, (pt.z() - center.z())/radius);
     norm.Normalize();
 
