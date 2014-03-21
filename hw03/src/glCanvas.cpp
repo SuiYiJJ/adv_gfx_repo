@@ -394,21 +394,48 @@ Vec3f GLCanvas::TraceRay(double i, double j) {
   // ASSIGNMENT: IMPLEMENT ANTIALIASING
   // ==================================
 
-  
-  // Here's what we do with a single sample per pixel:
-  // construct & trace a ray through the center of the pixle
-  double x = (i+0.5-args->width/2.0)/double(max_d)+0.5;
-  double y = (j+0.5-args->height/2.0)/double(max_d)+0.5;
-  Ray r = mesh->camera->generateRay(x,y); 
-  Hit hit;
-  color = raytracer->TraceRay(r,hit,args->num_bounces);
-  // add that ray for visualization
-  RayTree::AddMainSegment(r,0,hit.getT());
+  if(args->num_antialias_samples > 1){
+
+    // Using this to store values of colors in before averaging
+    std::vector<Vec3f> colorVec;
+
+    for(int n = 0; n < args->num_antialias_samples; n++){
+      double jitter = GLOBAL_mtrand.rand();
+
+      double x = (i+jitter-args->width/2.0)/double(max_d)+0.5;
+      double y = (j+jitter-args->height/2.0)/double(max_d)+0.5;
+      Ray r = mesh->camera->generateRay(x,y); 
+      Hit hit;
+      Vec3f colorJitter = raytracer->TraceRay(r,hit,args->num_bounces);
+      colorVec.push_back(colorJitter);
+
+      // add that ray for visualization
+      RayTree::AddMainSegment(r,0,hit.getT());
+    }
+
+    // Find Average
+    for(int n = 0; n < colorVec.size(); n++)
+      color += colorVec[n];
+
+    color = (1.0 / colorVec.size()) * color;
+    return color;
 
 
+  }else{
 
-  // return the color
-  return color;
+    // Here's what we do with a single sample per pixel:
+    // construct & trace a ray through the center of the pixle
+    double x = (i+0.5-args->width/2.0)/double(max_d)+0.5;
+    double y = (j+0.5-args->height/2.0)/double(max_d)+0.5;
+    Ray r = mesh->camera->generateRay(x,y); 
+    Hit hit;
+    color = raytracer->TraceRay(r,hit,args->num_bounces);
+    // add that ray for visualization
+    RayTree::AddMainSegment(r,0,hit.getT());
+
+    // return the color
+    return color;
+  }
 }
 
 // Scan through the image from the lower left corner across each row

@@ -105,7 +105,6 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
     for(int r = 0; r < randomLightVec.size(); r++){
 
 
-
       // Get color of light
       Vec3f lightColor = f->getMaterial()->getEmittedColor() * f->getArea();
 
