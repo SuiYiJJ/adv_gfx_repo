@@ -98,10 +98,18 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
 
     // Get a collection of random points on light source
     std::vector<Vec3f> randomLightVec;
-    for(int r = 0; r < args->num_shadow_samples; r++){
-      randomLightVec.push_back(f->RandomPoint());
+
+    // Are we doing a regular this via fuzzy shadow samples,
+    // or are we doing the old fasion way?
+    if(args->num_shadow_samples == 1 || args->num_shadow_samples == 0){
+      randomLightVec.push_back(f->computeCentroid());
+    }else{
+      // Create those random points
+      for(int r = 0; r < args->num_shadow_samples; r++)
+        randomLightVec.push_back(f->RandomPoint());
     }
 
+    // Contrubution of light from every shadow samples
     for(int r = 0; r < randomLightVec.size(); r++){
 
 
@@ -123,7 +131,16 @@ Vec3f RayTracer::TraceRay(Ray &ray, Hit &hit, int bounce_count) const {
 
       // Math to get my light color
       myLightColor = lightColor / (M_PI*distToLightCentroid*distToLightCentroid);
-      myLightColor = (1.0/args->num_shadow_samples) * myLightColor;
+      myLightColor = (1.0/randomLightVec.size()) * myLightColor;
+
+      // ===========================================
+      // ASSIGNMENT:  REGULAR NO-SHADOW LOGIC
+      // ===========================================
+
+      if(args->num_shadow_samples == 0){
+        answer += m->Shade(ray,hit,dirToLightCentroid,myLightColor,args);
+        break;
+      }
 
       // ===========================================
       // ASSIGNMENT:  ADD SHADOW & SOFT SHADOW LOGIC
