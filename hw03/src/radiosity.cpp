@@ -265,7 +265,6 @@ void Radiosity::ComputeFormFactors() {
 // jump
 double Radiosity::Iterate() {
 
-  /*
   // Set up the form factors will only run once
   if (formfactors == NULL)
     ComputeFormFactors();
@@ -273,18 +272,36 @@ double Radiosity::Iterate() {
 
   // Update for the brightest
   findMaxUndistributed();
-
   printf("max undistributed: %d\n", max_undistributed_patch);
 
 
-
-
-  // For other faces in the scene, index j
+  // Go though all the faces to find how much of max_undistrubted effects them
   for(int i = 0; i < num_faces; i++){
+
+    if(i == max_undistributed_patch) { continue; }
+
 
 
     // WARNING: Maybe flip args
-    double formFac = getFormFactor(i,max_undistributed_patch);
+    double F_i_max = getFormFactor(i,max_undistributed_patch);
+    Vec3f  B_max = getUndistributed(max_undistributed_patch);
+    Vec3f  D_i = mesh->getFace(i)->getMaterial()->getDiffuseColor(); //maybe reflective?
+    double  roughness = mesh->getFace(i)->getMaterial()->getRoughness();
+
+    Vec3f  absorbed = D_i*F_i_max*B_max;
+
+    //helper
+    Vec3f white(1.0,1.0,1.0);
+    Vec3f inverse_color = white - absorbed;
+
+    // Radiance
+    setRadiance(i,getRadiance(i) + absorbed);
+    setUndistributed(i,getUndistributed(i) + absorbed);
+
+    //setAbsorbed(i,inverse_color,);
+
+
+
 
     // Statisitics 
     if(true){
@@ -292,20 +309,15 @@ double Radiosity::Iterate() {
       std::cout << "undistributed: " << getUndistributed(i) << std::endl;
       std::cout << "absorbed:      " << getAbsorbed(i)      << std::endl;
       std::cout << "radiance:      " << getRadiance(i)      << std::endl;
-      std::cout << "form factor:   " << formFac      << std::endl;
+      std::cout << "roughness:     " << roughness      << std::endl;
     }
 
-    //Vec3f white(1.0,1.0,1.0); //remove
-    //setUndistributed(i,white);
   }
-  // ==========================================
-  // ASSIGNMENT:  IMPLEMENT RADIOSITY ALGORITHM
-  // ==========================================
 
-  */
-  // return the total light yet undistributed
-  // (so we can decide when the solution has sufficiently converged)
-  return 0;
+  setUndistributed(max_undistributed_patch,Vec3f(0,0,0));
+  findMaxUndistributed();
+  std::cout << "Max undistributed:  " << total_undistributed  << std::endl;
+  return total_undistributed;
 
 }
 
