@@ -8,6 +8,8 @@
 #include <iostream>
 #include <cassert>
 #include <cmath>
+#include <stdio.h>
+#include <math.h>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -63,13 +65,29 @@ public:
     return sqrt(data[0]*data[0]+data[1]*data[1]+data[2]*data[2]); }
   void Normalize() {
     double length = Length();
-    if (length > 0) { Scale (1/length); } }
+    if (length > 0) { Scale (1/length);} 
+  }
   void Scale(double d) { Scale(d,d,d); }
   void Scale(double d0, double d1, double d2) {
     data[0] *= d0;
     data[1] *= d1;
     data[2] *= d2; }
+
+  double Distance3f(Vec3f &b) const {
+
+    // Compute the distance
+    double delta_x = pow(x() - b.x(), 2.0);
+    double delta_y = pow(y() - b.y(), 2.0);
+    double delta_z = pow(z() - b.z(), 2.0);
+
+    return sqrt(delta_x + delta_y + delta_z);
+    
+  } 
+
   void Negate() { Scale(-1.0); }
+
+
+
   double Dot3(const Vec3f &V) const {
     return data[0] * V.data[0] +
       data[1] * V.data[1] +
@@ -86,6 +104,13 @@ public:
   double delta_y = pow(y() - b.y(), 2.0);
   double delta_z = pow(z() - b.z(), 2.0);
   return sqrt(delta_x + delta_y + delta_z); }
+
+
+  double AngleBetween(const Vec3f &b) const {
+    double top = Dot3(b);
+    double bot = Length() * b.Length();
+    return acos(top/bot);
+  }
 
   // ---------------------
   // VECTOR MATH OPERATORS
@@ -109,6 +134,9 @@ public:
     data[1] /= d;
     data[2] /= d;
     return *this; }  
+  bool operator==(const Vec3f &V){
+    return x() == V.x() && y() == V.y() && z() == V.z();
+  }
   friend Vec3f operator+(const Vec3f &v1, const Vec3f &v2) { 
     Vec3f v3 = v1; v3 += v2; return v3; }
   friend Vec3f operator-(const Vec3f &v1) {

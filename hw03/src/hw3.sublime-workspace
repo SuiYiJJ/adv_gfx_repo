@@ -4,6 +4,182 @@
 		"selected_items":
 		[
 			[
+				"form",
+				"formIndex"
+			],
+			[
+				"formfac",
+				"formfactors"
+			],
+			[
+				"dist",
+				"distance"
+			],
+			[
+				"path",
+				"patch_i"
+			],
+			[
+				"angle_",
+				"angle_j"
+			],
+			[
+				"angl",
+				"angle_i"
+			],
+			[
+				"angle",
+				"angleBetweenRay"
+			],
+			[
+				"ray_",
+				"ray_ij"
+			],
+			[
+				"ray",
+				"ray_i"
+			],
+			[
+				"Le",
+				"Length"
+			],
+			[
+				"direct",
+				"direct1"
+			],
+			[
+				"direc",
+				"direct1"
+			],
+			[
+				"dire",
+				"direct_to_j"
+			],
+			[
+				"path_",
+				"patch_j"
+			],
+			[
+				"comu",
+				"computeCentroid"
+			],
+			[
+				"patch",
+				"patch_j"
+			],
+			[
+				"pathc",
+				"patch_i"
+			],
+			[
+				"or",
+				"origin_i"
+			],
+			[
+				"compute",
+				"computeCentroid"
+			],
+			[
+				"num",
+				"num_antialias_samples"
+			],
+			[
+				"Ran",
+				"RandomPoint"
+			],
+			[
+				"rando",
+				"randomLightVec"
+			],
+			[
+				"Dist",
+				"Distance3f"
+			],
+			[
+				"point",
+				"pointAtParameter"
+			],
+			[
+				"sha",
+				"shadowHit"
+			],
+			[
+				"sh",
+				"shadowRay"
+			],
+			[
+				"Ray",
+				"RayTree::AddShadowSegment"
+			],
+			[
+				"Add",
+				"AddShadowSegment"
+			],
+			[
+				"dirtoL",
+				"dirToLightCentroid"
+			],
+			[
+				"relf",
+				"reflectiveColor"
+			],
+			[
+				"reflec",
+				"reflectiveColor"
+			],
+			[
+				"refl",
+				"reflectiveColor"
+			],
+			[
+				"ref",
+				"reflectiveDir"
+			],
+			[
+				"RayTree",
+				"RayTree::reflected_segments"
+			],
+			[
+				"Raytree",
+				"RayTree::reflected_segments"
+			],
+			[
+				"bou",
+				"bounce"
+			],
+			[
+				"norm",
+				"Normalize"
+			],
+			[
+				"get",
+				"get_t"
+			],
+			[
+				"nor",
+				"normalRay"
+			],
+			[
+				"ADD",
+				"AddReflectedSegment"
+			],
+			[
+				"int",
+				"inter"
+			],
+			[
+				"getM",
+				"getMaterial"
+			],
+			[
+				"in",
+				"inside"
+			],
+			[
+				"Dot",
+				"Dot3"
+			],
+			[
 				"rest",
 				"restStructLength"
 			],
@@ -48,10 +224,6 @@
 				"CELL_FULL"
 			],
 			[
-				"get",
-				"getStatus"
-			],
-			[
 				"std",
 				"std::endl"
 			],
@@ -88,10 +260,6 @@
 				"setPressure"
 			],
 			[
-				"num",
-				"num_adj_cells"
-			],
-			[
 				"getS",
 				"getSurroundingTargets"
 			],
@@ -114,10 +282,6 @@
 			[
 				"dis",
 				"distance"
-			],
-			[
-				"sh",
-				"shearPartVec"
 			],
 			[
 				"provot_s",
@@ -291,7 +455,47 @@
 			"file": "glCanvas.cpp",
 			"settings":
 			{
-				"buffer_size": 15088,
+				"buffer_size": 15914,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 2250,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "MersenneTwister.h",
+			"settings":
+			{
+				"buffer_size": 15604,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "raytree.cpp",
+			"settings":
+			{
+				"buffer_size": 3913,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "raytree.h",
+			"settings":
+			{
+				"buffer_size": 3028,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "material.h",
+			"settings":
+			{
+				"buffer_size": 2079,
 				"line_ending": "Unix"
 			}
 		},
@@ -307,7 +511,114 @@
 			"file": "raytracer.cpp",
 			"settings":
 			{
-				"buffer_size": 4281,
+				"buffer_size": 6385,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "camera.h",
+			"settings":
+			{
+				"buffer_size": 2725,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "camera.cpp",
+			"settings":
+			{
+				"buffer_size": 7594,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "argparser.h",
+			"settings":
+			{
+				"buffer_size": 5306,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#include \"glCanvas.h\"\n\n#include \"radiosity.h\"\n#include \"mesh.h\"\n#include \"face.h\"\n#include \"glCanvas.h\"\n#include \"sphere.h\"\n#include \"raytree.h\"\n#include \"raytracer.h\"\n#include \"utils.h\"\n#include <math.h>\n\n// ================================================================\n// CONSTRUCTOR & DESTRUCTOR\n// ================================================================\nRadiosity::Radiosity(Mesh *m, ArgParser *a) {\n  mesh = m;\n  args = a;\n  num_faces = -1;  \n  formfactors = NULL;\n  area = NULL;\n  PI = 3.141592653589793238L;   // PI\n  undistributed = NULL;\n  absorbed = NULL;\n  radiance = NULL;\n  max_undistributed_patch = -1;\n  total_area = -1;\n  Reset();\n}\n\nRadiosity::~Radiosity() {\n  Cleanup();\n  cleanupVBOs();\n}\n\nvoid Radiosity::Cleanup() {\n  delete [] formfactors;\n  delete [] area;\n  delete [] undistributed;\n  delete [] absorbed;\n  delete [] radiance;\n  num_faces = -1;\n  formfactors = NULL;\n  area = NULL;\n  undistributed = NULL;\n  absorbed = NULL;\n  radiance = NULL;\n  max_undistributed_patch = -1;\n  total_area = -1;\n}\n\nvoid Radiosity::Reset() {\n  delete [] area;\n  delete [] undistributed;\n  delete [] absorbed;\n  delete [] radiance;\n\n  // create and fill the data structures\n  num_faces = mesh->numFaces();\n  area = new double[num_faces];\n  undistributed = new Vec3f[num_faces];\n  absorbed = new Vec3f[num_faces];\n  radiance = new Vec3f[num_faces];\n  for (int i = 0; i < num_faces; i++) {\n    Face *f = mesh->getFace(i);\n    f->setRadiosityPatchIndex(i);\n    setArea(i,f->getArea());\n    Vec3f emit = f->getMaterial()->getEmittedColor();\n    setUndistributed(i,emit);\n    setAbsorbed(i,Vec3f(0,0,0));\n    setRadiance(i,emit);\n  }\n\n  // find the patch with the most undistributed energy\n  findMaxUndistributed();\n}\n\n\n// =======================================================================================\n// =======================================================================================\n\nvoid Radiosity::findMaxUndistributed() {\n  // find the patch with the most undistributed energy \n  // don't forget that the patches may have different sizes!\n  max_undistributed_patch = -1;\n  total_undistributed = 0;\n  total_area = 0;\n  double max = -1;\n  for (int i = 0; i < num_faces; i++) {\n    double m = getUndistributed(i).Length() * getArea(i);\n    total_undistributed += m;\n    total_area += getArea(i);\n    if (max < m) {\n      max = m;\n      max_undistributed_patch = i;\n    }\n  }\n  assert (max_undistributed_patch >= 0 && max_undistributed_patch < num_faces);\n}\n\n\nvoid Radiosity::ComputeFormFactors() {\n  assert (formfactors == NULL);\n  assert (num_faces > 0);\n  formfactors = new double[num_faces*num_faces];\n  int formIndex = 0;\n\n\n  // For each of the patches\n  for(int i = 0; i < num_faces; i ++){\n\n    // Getting the patch\n    Face * patch_i = mesh->getFace(i);\n    Ray ray_i(patch_i->computeCentroid(),patch_i->computeNormal());\n\n    // Has to be equal to one\n    double sanity_check = 0.0;\n\n    // For each other patch\n    for(int j = 0; j < num_faces; j ++){\n\n      // Patch j an ray jw\n      Face * patch_j = mesh->getFace(j);\n      Ray ray_j(patch_j->computeCentroid(), patch_j->computeNormal());\n\n\n      // ray from i->j\n      Vec3f direct_to_j = patch_j->computeCentroid();\n      direct_to_j.Normalize();\n      Ray ray_ij(patch_i->computeCentroid(), direct_to_j);\n\n      // Getting the angles between normals\n      double angle_i = ray_i.angleBetweenRay(ray_ij);\n      double angle_j = ray_j.angleBetweenRay(ray_ij);\n      double distance= patch_i->computeCentroid().Distance3f(patch_j->computeCentroid());\n\n      // Assuming visablity is 1\n      double visablity  = 1;\n\n      // Calc math\n      double formFac = (cos(angle_i) * cos(angle_j)) / (PI * distance*distance);\n      formFac = visablity * formFac;\n      formfactors[formIndex];\n      formIndex++;\n\n    }\n  }\n\n  // =====================================\n  // ASSIGNMENT:  COMPUTE THE FORM FACTORS\n  // =====================================\n\n}\n\n// ================================================================\n// ================================================================\n\ndouble Radiosity::Iterate() {\n  if (formfactors == NULL) \n    ComputeFormFactors();\n  assert (formfactors != NULL);\n  std::cout << \"Ran One Iteration of Form Factors\\n\";\n\n  \n\n\n\n\n  // ==========================================\n  // ASSIGNMENT:  IMPLEMENT RADIOSITY ALGORITHM\n  // ==========================================\n\n\n\n  // return the total light yet undistributed\n  // (so we can decide when the solution has sufficiently converged)\n  return 0;\n}\n\n\n// =======================================================================================\n// VBO & DISPLAY FUNCTIONS\n// =======================================================================================\n\n// for interpolation\nvoid CollectFacesWithVertex(Vertex *have, Face *f, std::vector<Face*> &faces) {\n  for (unsigned int i = 0; i < faces.size(); i++) {\n    if (faces[i] == f) return;\n  }\n  if (have != (*f)[0] && have != (*f)[1] && have != (*f)[2] && have != (*f)[3]) return;\n  faces.push_back(f);\n  for (int i = 0; i < 4; i++) {\n    Edge *ea = f->getEdge()->getOpposite();\n    Edge *eb = f->getEdge()->getNext()->getOpposite();\n    Edge *ec = f->getEdge()->getNext()->getNext()->getOpposite();\n    Edge *ed = f->getEdge()->getNext()->getNext()->getNext()->getOpposite();\n    if (ea != NULL) CollectFacesWithVertex(have,ea->getFace(),faces);\n    if (eb != NULL) CollectFacesWithVertex(have,eb->getFace(),faces);\n    if (ec != NULL) CollectFacesWithVertex(have,ec->getFace(),faces);\n    if (ed != NULL) CollectFacesWithVertex(have,ed->getFace(),faces);\n  }\n}\n\n// different visualization modes\nVec3f Radiosity::setupHelperForColor(Face *f, int i, int j) {\n  assert (mesh->getFace(i) == f);\n  assert (j >= 0 && j < 4);\n  if (args->render_mode == RENDER_MATERIALS) {\n    return f->getMaterial()->getDiffuseColor();\n  } else if (args->render_mode == RENDER_RADIANCE && args->interpolate == true) {\n    std::vector<Face*> faces;\n    CollectFacesWithVertex((*f)[j],f,faces);\n    double total = 0;\n    Vec3f color = Vec3f(0,0,0);\n    Vec3f normal = f->computeNormal();\n    for (unsigned int i = 0; i < faces.size(); i++) {\n      Vec3f normal2 = faces[i]->computeNormal();\n      double area = faces[i]->getArea();\n      if (normal.Dot3(normal2) < 0.5) continue;\n      assert (area > 0);\n      total += area;\n      color += area * getRadiance(faces[i]->getRadiosityPatchIndex());\n    }\n    assert (total > 0);\n    color /= total;\n    return color;\n  } else if (args->render_mode == RENDER_LIGHTS) {\n    return f->getMaterial()->getEmittedColor();\n  } else if (args->render_mode == RENDER_UNDISTRIBUTED) { \n    return getUndistributed(i);\n  } else if (args->render_mode == RENDER_ABSORBED) {\n    return getAbsorbed(i);\n  } else if (args->render_mode == RENDER_RADIANCE) {\n    return getRadiance(i);\n  } else if (args->render_mode == RENDER_FORM_FACTORS) {\n    if (formfactors == NULL) ComputeFormFactors();\n    double scale = 0.2 * total_area/getArea(i);\n    double factor = scale * getFormFactor(max_undistributed_patch,i);\n    return Vec3f(factor,factor,factor);\n  } else {\n    assert(0);\n  }\n  exit(0);\n}\n\n\nvoid Radiosity::initializeVBOs() {\n  // create a pointer for the vertex & index VBOs\n  glGenBuffers(1, &mesh_quad_verts_VBO);\n  glGenBuffers(1, &mesh_quad_indices_VBO);\n  glGenBuffers(1, &mesh_textured_quad_indices_VBO);\n  glGenBuffers(1, &mesh_interior_edge_indices_VBO);\n  glGenBuffers(1, &mesh_border_edge_indices_VBO);\n}\n\n\nvoid Radiosity::setupVBOs() {\n  mesh_quad_verts.clear();\n  mesh_quad_indices.clear();\n  mesh_textured_quad_indices.clear();\n  mesh_border_edge_indices.clear();\n  mesh_interior_edge_indices.clear();\n\n  // initialize the data in each vector\n  int num_faces = mesh->numFaces();\n  assert (num_faces > 0);\n  for (int i = 0; i < num_faces; i++) {\n    Face *f = mesh->getFace(i);\n    Edge *e = f->getEdge();\n    for (int j = 0; j < 4; j++) {\n      Vec3f pos = ((*f)[j])->get();\n      Vec3f normal = f->computeNormal();\n      Vec3f color = setupHelperForColor(f,i,j);\n      color = Vec3f(linear_to_srgb(color.r()),\n		    linear_to_srgb(color.g()),\n		    linear_to_srgb(color.b()));\n      mesh_quad_verts.push_back(VBOPosNormalColorTexture(pos,normal,color,(*f)[j]->get_s(),(*f)[j]->get_t()));\n      if (e->getOpposite() == NULL) { \n	mesh_border_edge_indices.push_back(VBOIndexedEdge(i*4+j,i*4+(j+1)%4));\n      } else if (e->getStartVertex()->getIndex() < e->getEndVertex()->getIndex()) {\n	mesh_interior_edge_indices.push_back(VBOIndexedEdge(i*4+j,i*4+(j+1)%4));\n      }\n      e = e->getNext();\n    }\n    if (f->getMaterial()->hasTextureMap()) {\n      mesh_textured_quad_indices.push_back(VBOIndexedQuad(i*4,i*4+1,i*4+2,i*4+3));\n    } else {\n      mesh_quad_indices.push_back(VBOIndexedQuad(i*4,i*4+1,i*4+2,i*4+3));\n    }\n    // also outline the max_undistributed patch\n    if (args->render_mode == RENDER_FORM_FACTORS && i == max_undistributed_patch) {\n      mesh_border_edge_indices.push_back(VBOIndexedEdge(i*4+0,i*4+1));\n      mesh_border_edge_indices.push_back(VBOIndexedEdge(i*4+1,i*4+2));\n      mesh_border_edge_indices.push_back(VBOIndexedEdge(i*4+2,i*4+3));\n      mesh_border_edge_indices.push_back(VBOIndexedEdge(i*4+3,i*4+0));\n    }\n  }\n  assert ((int)mesh_quad_verts.size() == num_faces*4);\n  assert ((int)mesh_quad_indices.size() + (int)mesh_textured_quad_indices.size() == num_faces);\n\n  // cleanup old buffer data (if any)\n  cleanupVBOs();\n\n  // copy the data to each VBO\n  glBindBuffer(GL_ARRAY_BUFFER,mesh_quad_verts_VBO); \n  glBufferData(GL_ARRAY_BUFFER,\n	       sizeof(VBOPosNormalColorTexture) * num_faces * 4,\n	       &mesh_quad_verts[0],\n	       GL_STATIC_DRAW); \n  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh_quad_indices_VBO); \n  glBufferData(GL_ELEMENT_ARRAY_BUFFER,\n	       sizeof(VBOIndexedQuad) * mesh_quad_indices.size(),\n	       &mesh_quad_indices[0], GL_STATIC_DRAW);\n  if (mesh_textured_quad_indices.size() > 0) {\n    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh_textured_quad_indices_VBO); \n    glBufferData(GL_ELEMENT_ARRAY_BUFFER,\n		 sizeof(VBOIndexedQuad) * mesh_textured_quad_indices.size(),\n		 &mesh_textured_quad_indices[0], GL_STATIC_DRAW);\n  }\n  if (mesh_interior_edge_indices.size() > 0) {\n    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh_interior_edge_indices_VBO); \n    glBufferData(GL_ELEMENT_ARRAY_BUFFER,\n		 sizeof(VBOIndexedEdge) * mesh_interior_edge_indices.size(),\n		 &mesh_interior_edge_indices[0], GL_STATIC_DRAW);\n  }\n  if (mesh_border_edge_indices.size() > 0) {\n    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mesh_border_edge_indices_VBO); \n    glBufferData(GL_ELEMENT_ARRAY_BUFFER,\n		 sizeof(VBOIndexedEdge) * mesh_border_edge_indices.size(),\n		 &mesh_border_edge_indices[0], GL_STATIC_DRAW);\n  }\n\n  // WARNING: this naive VBO implementation only allows a single texture\n  int num_textured_materials = 0;\n  for (unsigned int mat = 0; mat < mesh->materials.size(); mat++) {\n    Material *m = mesh->materials[mat];\n    if (m->hasTextureMap()) {\n      glBindTexture(GL_TEXTURE_2D,m->getTextureID());\n      num_textured_materials++;\n    }\n  }\n  assert (num_textured_materials <= 1);\n}\n\n\nvoid Radiosity::drawVBOs() {\n  // =====================\n  // DRAW ALL THE POLYGONS\n  if (args->render_mode == RENDER_MATERIALS) {\n    glEnable(GL_LIGHTING);\n  } else {\n    glDisable(GL_LIGHTING);\n  }\n  glEnable(GL_POLYGON_OFFSET_FILL);\n  glPolygonOffset(1.1,4.0);\n  int num_faces = mesh->numFaces();\n  assert ((int)mesh_quad_indices.size() + (int)mesh_textured_quad_indices.size() == num_faces);\n\n  glBindBuffer(GL_ARRAY_BUFFER, mesh_quad_verts_VBO);\n  glEnableClientState(GL_VERTEX_ARRAY);\n  glVertexPointer(3, GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(0));\n  glEnableClientState(GL_NORMAL_ARRAY);\n  glNormalPointer(GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(12));\n  glEnableClientState(GL_COLOR_ARRAY);\n  glColorPointer(3, GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(24));\n\n  // draw non textured faces\n  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_quad_indices_VBO);\n  glDrawElements(GL_QUADS, \n		 mesh_quad_indices.size()*4,\n		 GL_UNSIGNED_INT,\n		 BUFFER_OFFSET(0));\n\n  // draw textured faces\n  if (args->render_mode == RENDER_MATERIALS) {\n    glEnable(GL_TEXTURE_2D);\n    glEnableClientState(GL_TEXTURE_COORD_ARRAY);\n    glTexCoordPointer( 2, GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(36));\n  }\n  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_textured_quad_indices_VBO);\n  glDrawElements(GL_QUADS, \n		 mesh_textured_quad_indices.size()*4,\n		 GL_UNSIGNED_INT,\n		 BUFFER_OFFSET(0));\n  if (args->render_mode == RENDER_MATERIALS) {\n    glDisableClientState(GL_TEXTURE_COORD_ARRAY);\n    glDisable(GL_TEXTURE_2D);\n  }\n\n  glDisableClientState(GL_NORMAL_ARRAY);\n  glDisableClientState(GL_COLOR_ARRAY);\n  glDisableClientState(GL_VERTEX_ARRAY);\n\n  glDisable(GL_POLYGON_OFFSET_FILL);  \n\n\n  // =====================\n  // DRAW WIREFRAME\n  if (args->wireframe) {\n    glDisable(GL_LIGHTING);\n    if (mesh_interior_edge_indices.size() > 0) {\n      glLineWidth(1);\n      glColor3f(0,0,0);\n      glBindBuffer(GL_ARRAY_BUFFER, mesh_quad_verts_VBO);\n      glEnableClientState(GL_VERTEX_ARRAY);\n      glVertexPointer(3, GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(0));\n      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_interior_edge_indices_VBO);\n      glDrawElements(GL_LINES, mesh_interior_edge_indices.size()*2, GL_UNSIGNED_INT, 0);\n      glDisableClientState(GL_VERTEX_ARRAY);\n    }\n    if (mesh_border_edge_indices.size() > 0) {\n      glLineWidth(3);\n      glColor3f(1,0,0);\n      glBindBuffer(GL_ARRAY_BUFFER, mesh_quad_verts_VBO);\n      glEnableClientState(GL_VERTEX_ARRAY);\n      glVertexPointer(3, GL_FLOAT, sizeof(VBOPosNormalColorTexture), BUFFER_OFFSET(0));\n      glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh_border_edge_indices_VBO);\n      glDrawElements(GL_LINES, mesh_border_edge_indices.size()*2, GL_UNSIGNED_INT, 0);\n      glDisableClientState(GL_VERTEX_ARRAY);\n    }\n  }\n  HandleGLError(); \n}\n\n\nvoid Radiosity::cleanupVBOs() {\n  glDeleteBuffers(1, &mesh_quad_verts_VBO);\n  glDeleteBuffers(1, &mesh_quad_indices_VBO);\n  glDeleteBuffers(1, &mesh_textured_quad_indices_VBO);\n  glDeleteBuffers(1, &mesh_interior_edge_indices_VBO);\n  glDeleteBuffers(1, &mesh_border_edge_indices_VBO);\n}\n\n",
+			"file": "radiosity.cpp",
+			"file_size": 14235,
+			"file_write_time": 130401905193277594,
+			"settings":
+			{
+				"buffer_size": 14236,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "\n// =======================================================================\n//\n// IMPORTANT NOTE: You should edit this file\n//\n//    This file provides the code for ASCII art printing of trains.\n//    You should implement all of the functions prototyped in\n//    \"traincar_prototypes.h\" in this file.\n//\n// =======================================================================\n\n\n#include <iostream>\n#include <iomanip>\n#include <string>\n#include <cassert>\n#include <vector>\n#include \"traincar.h\"\n#include <cmath>\n\n// =======================================================================\n// =======================================================================\n\n// This helper function checks that the forward and backward pointers\n// in a doubly-linked structure are correctly and consistently assigned.\nvoid SanityCheck(TrainCar* train) {\n  // an empty train is valid\n  if (train == NULL) return;\n  assert (train->prev == NULL);\n  TrainCar *tmp = train;\n  while (tmp->next != NULL) {\n    // the next train better point back to me\n    assert (tmp->next->prev == tmp);\n    tmp = tmp->next;\n  }\n}\n\n\n// This helper function prints one of the 5 rows of the TrainCar ASCII art\nvoid PrintHelper(TrainCar* t, int which_row) {\n  if (t == NULL) {\n    // end of the line\n    std::cout << std::endl;\n    return;\n  }\n\n  if (which_row == 0) {\n    // the top row only contains \"smoke\" for engine traincars\n    if (t->isEngine()) {\n      std::cout << \"     ~~~~\";\n    } else {\n      std::cout << \"         \";\n    }\n  } else if (which_row == 1) {\n    // the 2nd row only contains the smoke stack for engine traincars\n    if (t->isEngine()) {\n      std::cout << \"    ||   \";\n    } else {\n      std::cout << \"         \";\n    }\n  } else if (which_row == 2) {\n    // the 3rd row contains the ID for each traincar\n    // (and engine traincars are shaped a little differently)\n    if (t->isEngine()) {\n      std::cout << \"   \" << std::setw(6) << std::setfill('-') << t->getID();\n    } else {\n      std::cout << std::setw(9) << std::setfill('-') << t->getID();\n    }\n    std::cout << std::setfill(' ');\n  } else if (which_row == 3) {\n    // the 4th row is different for each TrainCar type\n    if (t->isEngine()) {\n      std::cout << \" / ENGINE\";\n    } else if (t->isFreightCar()) {\n      // freight cars display their weight\n      std::cout << \"|\" << std::setw(5) << t->getWeight() << \"  |\";\n    } else if (t->isPassengerCar()) {\n      // passenger cars are simple empty boxes\n      std::cout << \"|       |\";\n    } else if (t->isDiningCar()) {\n      std::cout << \"|  dine |\";\n    } else {\n      assert (t->isSleepingCar());\n      std::cout << \"| sleep |\";\n    }\n  } else if (which_row == 4) {\n    // final row is the same for all cars, just draw the wheels\n    std::cout << \"-oo---oo-\";\n  }\n\n  // between cars display the '+' link symbol on the 5th row \n  // (only if there is a next car)\n  if (t->next != NULL) {\n    if (which_row == 4) {\n      std::cout << \" + \";\n    } else {\n      std::cout << \"   \";\n    }\n  }\n\n  // recurse to print the rest of the row\n  PrintHelper(t->next, which_row);\n}\n\n\nvoid PrintTrain(TrainCar* train) {\n  \n  if (train == NULL) { \n    std::cout << \"PrintTrain: empty train!\" << std::endl; \n    return; \n  }\n\n  // Print each of the 5 rows of the TrainCar ASCII art\n  PrintHelper(train, 0);\n  PrintHelper(train, 1);\n  PrintHelper(train, 2);\n  PrintHelper(train, 3);\n  PrintHelper(train, 4);\n\n  \n  // UNCOMMENT THESE ADDITIONAL STATISTICS AS YOU WORK\n  int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;\n  num_engines = total_weight = num_freight_cars = num_passenger_cars = num_dining_cars = num_sleeping_cars = 0;\n  CountEnginesAndTotalWeight\n    (train, total_weight,\n     num_engines, num_freight_cars, num_passenger_cars, num_dining_cars, num_sleeping_cars);\n  int total_cars = num_engines+num_freight_cars+num_passenger_cars+num_dining_cars+num_sleeping_cars;\n  float speed = CalculateSpeed(train);\n  std::cout << \"#cars = \" << total_cars;\n  std::cout << \", total weight = \" << total_weight;\n  std::cout << \", speed on 2% incline = \" << std::setprecision(1) << std::fixed << speed;\n\n  // If there is at least one passenger car, print the average\n  // distance to dining car statistic\n  if (num_passenger_cars > 0) {\n    float dist_to_dining = AverageDistanceToDiningCar(train);\n    if (dist_to_dining < 0) {\n      // If one or more passenger cars are blocked from accessing the\n      // dining car (by an engine car) then the distance is infinity!\n      std::cout << \", avg distance to dining = inf\";\n    } else {\n      std::cout << \", avg distance to dining = \" << std::setprecision(1) << std::fixed << dist_to_dining;\n    }\n  }\n\n  // If there is at least one sleeping car, print the closest engine\n  // to sleeper car statistic\n  if (num_sleeping_cars > 0) {\n    int closest_engine_to_sleeper = ClosestEngineToSleeperCar(train);\n    std::cout << \", closest engine to sleeper = \" << closest_engine_to_sleeper;\n  }\n\n  std::cout << std::endl;\n \n}\n\nvoid PushBack(TrainCar* &head, TrainCar* new_car)\n{\n	if (head==NULL) //check if train is empty or not\n	{\n		head = new_car;\n	}\n	else\n	{\n		TrainCar* tmp = head;\n		while (tmp->next!=NULL) {tmp=tmp->next;}\n		tmp->next = new_car;\n		new_car->prev = tmp;\n		new_car->next = NULL;\n	}\n}\n\nvoid DeleteAllCars(TrainCar* head)\n{\n	if (head == NULL){ return; }\n	TrainCar* current_car = head;\n	while(current_car->next!=NULL) {current_car=current_car->next;} //go to end\n	while(current_car->prev!=head)//work backwards with delete\n	{\n		current_car=current_car->prev;\n		delete current_car->next;\n	}\n	delete current_car; //get the last 2 and set head back to NULL\n	delete head;\n	head = NULL;\n}\n\n//goes through train linked-list and increments relevent variables depending on the type/weight of the\n//current train car\nvoid CountEnginesAndTotalWeight(TrainCar* train, int &total_weight, int &num_engines, \n		int &num_freight_cars, int &num_passenger_cars, int &num_dining_cars, int &num_sleeping_cars)\n{	\n	TrainCar* t_ptr = train;\n	while(t_ptr!=NULL)\n	{\n		if (t_ptr->isEngine())\n		{\n			num_engines++;\n			total_weight+=t_ptr->getWeight();\n		}\n		if (t_ptr->isFreightCar())\n		{\n			num_freight_cars++;\n			total_weight+=t_ptr->getWeight();\n		}\n		if (t_ptr->isPassengerCar())\n		{\n			num_passenger_cars++;\n			total_weight+=t_ptr->getWeight();\n		}\n		if (t_ptr->isDiningCar())\n		{\n			num_dining_cars++;\n			total_weight+=t_ptr->getWeight();\n		}\n		if (t_ptr->isSleepingCar())\n		{\n			num_sleeping_cars++;\n			total_weight+=t_ptr->getWeight();\n		}\n		t_ptr = t_ptr->next;\n	}\n}\n\n//builds off of CountEnginesAndTotalWeight, and the given speed equation\nfloat CalculateSpeed(TrainCar* train)\n{\n	float speed;\n	int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;\n	num_engines = total_weight = num_freight_cars = num_passenger_cars = num_dining_cars = num_sleeping_cars = 0;\n    CountEnginesAndTotalWeight\n      (train, total_weight, num_engines, num_freight_cars,\n		num_passenger_cars, num_dining_cars, num_sleeping_cars);\n	speed = (num_engines * 28125);\n	speed = speed/total_weight;\n	return speed;\n}\n\n//averages distance from passenger cars to dining car, if impossible to get from one to the other, returns -1\nfloat AverageDistanceToDiningCar(TrainCar* train)\n{\n	float num_passenger_cars = 0;\n	float sum_dist=0;\n	for(TrainCar* t_ptr = train; t_ptr->next!=NULL;)\n	{\n		int fwd_dist = 0;\n		int rev_dist = 0;\n		if(t_ptr->isPassengerCar())\n		{\n			num_passenger_cars++;\n			for(TrainCar* t2_ptr = t_ptr; t2_ptr->next!=NULL;)\n			{\n				if(t2_ptr->next->isDiningCar())\n				{\n					fwd_dist++;\n					break;\n				}\n				else if(t2_ptr->next->isPassengerCar()||t2_ptr->next->isSleepingCar())\n				{\n					fwd_dist++;\n				}\n				else\n				{\n					fwd_dist = 0;\n					break;\n				}\n				t2_ptr = t2_ptr->next;\n			}\n			for(TrainCar* t3_ptr = t_ptr; t3_ptr->prev!=NULL;)\n			{\n				if(t3_ptr->prev->isDiningCar())\n				{\n					rev_dist++;\n					break;\n				}\n				else if(t3_ptr->prev->isPassengerCar()||t3_ptr->prev->isSleepingCar())\n				{\n					rev_dist++;\n				}\n				else\n				{\n					rev_dist = 0;\n					break;\n				}\n				t3_ptr = t3_ptr->prev;\n			}\n			if(rev_dist>fwd_dist)\n			{ sum_dist+=rev_dist; }\n			\n			if(rev_dist<=fwd_dist)\n			{\n				if(fwd_dist==0) {return -1;}\n				else { sum_dist+=fwd_dist; }\n			}\n		}\n		t_ptr = t_ptr->next;\n	}\n	return sum_dist/num_passenger_cars;\n}\n\n//keeps track of what the shortest distance between any sleeper car and any engine is\nint ClosestEngineToSleeperCar(TrainCar* train)\n{\n	int min_dist = 0;\n	for(TrainCar* t_ptr = train; t_ptr!=NULL;)\n	{\n		int fwd_dist = 0;\n		int rev_dist = 0;\n		if(t_ptr->isSleepingCar())\n		{\n			for(TrainCar* t2_ptr = t_ptr; t2_ptr->next!=NULL;)\n			{\n				if(t2_ptr->next==NULL)\n				{\n					fwd_dist = 0;\n					break;\n				}\n				else if(t2_ptr->next->isEngine())\n				{\n					fwd_dist++;\n					break;\n				}\n				else\n				{\n					fwd_dist++;\n				}\n				t2_ptr = t2_ptr->next;\n			}\n			for(TrainCar* t3_ptr = t_ptr; t3_ptr->prev!=NULL;)\n			{\n				if(t3_ptr->prev->isEngine())\n				{\n					rev_dist++;\n					break;\n				}\n				else if(t3_ptr->prev==NULL)\n				{\n					rev_dist = 0;\n					break;\n				}\n				else\n				{\n					rev_dist++;\n				}\n				t3_ptr = t3_ptr->prev;\n			}\n			\n			if((rev_dist<fwd_dist && (rev_dist < min_dist || min_dist == 0) && rev_dist!=0) || fwd_dist==0)\n			{ min_dist=rev_dist; }\n			\n			else if((rev_dist>=fwd_dist && (fwd_dist < min_dist || min_dist == 0)) || rev_dist == 0)\n			{\n				min_dist=fwd_dist;\n			}\n		}\n		t_ptr = t_ptr->next;\n	}\n	return min_dist;\n}\n\n//SHIPS FREIGHT\nstd::vector<TrainCar*> ShipFreight(TrainCar* &all_engines, TrainCar* &all_freight, int min_speed, int max_length)\n{\n	std::vector<TrainCar*> freight_trains;\n	TrainCar* new_train = all_engines; //for the creation of each freight train\n	TrainCar* curr_car = all_engines; //keep track of current car\n	int new_train_length = 1; //keep track of length\n	all_engines = all_engines->next; //increment to the next engine\n	all_engines->prev = NULL;\n	int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;\n	num_engines = total_weight = num_freight_cars = num_passenger_cars = num_dining_cars = num_sleeping_cars = 0;\n	CountEnginesAndTotalWeight (all_freight, total_weight, num_engines, num_freight_cars,\n		num_passenger_cars, num_dining_cars, num_sleeping_cars); \n	num_engines = 1;\n	new_train->next = NULL;\n	new_train->prev = NULL;\n	while(num_freight_cars>0 && all_engines!=NULL) //while there is still freight to ship\n	{\n		if (new_train_length == max_length) //if length maximum has been reached, push_back the train, and make a new one\n		{\n			curr_car->next = NULL;\n			freight_trains.push_back(new_train);\n			new_train = all_engines;\n			all_engines = all_engines->next;\n			all_engines->prev = NULL;\n			new_train->next = NULL;\n			new_train->prev = NULL;\n			new_train_length = 1;\n			num_engines = 1;\n			curr_car = new_train;\n		}\n		TrainCar* tmp_freight = all_freight;\n		all_freight = all_freight->next;\n		tmp_freight->next = NULL;\n		curr_car->next = tmp_freight;\n		if (CalculateSpeed(new_train)<min_speed) //makes sure the addition of the next freight car doesn't bring\n		{										//speed below the minimum\n			tmp_freight->next = all_freight;\n			all_freight = tmp_freight;\n			curr_car->next = NULL;\n			//checks if it is more reasonable to just add an engine to the current train, or make a new one\n			if (float(num_engines)/(num_engines+1) < float(new_train_length)/max_length)  \n			{															\n				freight_trains.push_back(new_train);\n				new_train = all_engines;\n				all_engines = all_engines->next;\n				all_engines->prev = NULL;\n				new_train->next = NULL;\n				new_train->prev = NULL;\n				new_train_length = 1;\n				num_engines = 1;\n				curr_car = new_train;\n			}\n			else\n			{\n				TrainCar* tmp = all_engines;\n				all_engines = all_engines->next;\n				tmp->next = new_train->next;\n				if (new_train->next!=NULL)\n				{tmp->next->prev = tmp;}\n				new_train->next = tmp;\n				tmp->prev = new_train;\n				num_engines++;\n				new_train_length++;\n			}\n		}\n		else //if there is both room and horsepower, keep the freight\n		{\n			if(all_freight!=NULL)\n			{all_freight->prev = NULL;}\n			curr_car->next->next = NULL;\n			curr_car->next->prev = curr_car;\n			new_train_length++;\n			curr_car = curr_car->next;\n			num_freight_cars--;\n		}\n		\n	}\n	curr_car->next = NULL;\n	freight_trains.push_back(new_train);\n	if (all_engines!=NULL)\n	{all_engines->prev = NULL;}\n	return freight_trains;\n}\n//Makes one into 2\nvoid Separate(TrainCar* &t1, TrainCar* &t2, TrainCar* &t3)\n{\n	int total_weight,num_engines,num_freight_cars,num_passenger_cars,num_dining_cars,num_sleeping_cars;\n	num_engines = total_weight = num_freight_cars = num_passenger_cars = num_dining_cars = num_sleeping_cars = 0;\n	CountEnginesAndTotalWeight (t1, total_weight, num_engines, num_freight_cars,\n		num_passenger_cars, num_dining_cars, num_sleeping_cars); \n	t2 = t3 = NULL;\n	TrainCar* t2_ptr = t2; //overarching pointers\n	TrainCar* t3_ptr = t3;\n	if (num_engines%2==0) //for even number of engines\n	{\n		int total_other_cars = num_passenger_cars + num_dining_cars + num_sleeping_cars;\n		TrainCar* t1_ptr = t1;\n		int eng_per_train = num_engines/2;\n		int eng_added = 0;\n		int d_alloc = 0; //keeps track of how many of each car type has been added\n		int s_alloc = 0;\n		int p_alloc = 0;\n		while(d_alloc+p_alloc+s_alloc < total_other_cars/2 || eng_added<eng_per_train)//makes first train\n		{																			//with half the cars\n			if(t1_ptr->isEngine() && eng_added<eng_per_train)//adds an engine if one should be\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL) //alternate procedure for an empty train\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n					t2_ptr->next = t1_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next->next = NULL;\n					t2_ptr->next->prev = t2_ptr;\n					t2_ptr = t2_ptr->next;\n				}\n				eng_added++;\n			}\n			//adds a dining car if one should be\n			else if(t1_ptr->isDiningCar() && d_alloc<(num_dining_cars/2+num_dining_cars%2) && d_alloc+p_alloc+s_alloc < total_other_cars/2)\n			{														\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL) //alternate procedure for an empty train\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				d_alloc++;\n			}\n			//adds a sleeping car if one should be\n			else if(t1_ptr->isSleepingCar() && s_alloc<(num_sleeping_cars/2+num_sleeping_cars%2)&& d_alloc+p_alloc+s_alloc < total_other_cars/2)\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL) //alternate procedure for an empty train\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				s_alloc++;\n			}\n			//adds a passenger car if one should be\n			else if(t1_ptr->isPassengerCar() && s_alloc<(num_passenger_cars/2+num_passenger_cars%2)&& d_alloc+p_alloc+s_alloc < total_other_cars/2)\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL) //alternate procedure for an empty train\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				p_alloc++;\n			}\n			else{t1_ptr = t1_ptr->next;}\n		}\n		t1_ptr = t1;\n		while(d_alloc+s_alloc+p_alloc < total_other_cars || eng_added < num_engines) //uses rest of cars for second train\n		{\n			if(t1_ptr==NULL)\n			{t1_ptr = t1;}\n			if(t1_ptr->isEngine())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n					t3_ptr->next = t1_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next->next = NULL;\n					t3_ptr->next->prev = t3_ptr;\n					t3_ptr = t3_ptr->next;\n				}\n				eng_added++;\n			}\n			else if(t1_ptr->isDiningCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				d_alloc++;\n			}\n			else if(t1_ptr->isSleepingCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				s_alloc++;\n			}\n			else if(t1_ptr->isPassengerCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				p_alloc++;\n			}\n			else{t1_ptr = t1_ptr->next;}\n			\n		}\n	}\n	else //for odd number of engines\n	{\n		int total_other_cars = num_passenger_cars + num_dining_cars + num_sleeping_cars;\n		TrainCar* t1_ptr = t1;\n		int eng_per_train = num_engines/2+1;\n		int eng_added = 0;\n		int d_alloc = 0;\n		int s_alloc = 0;\n		int p_alloc = 0;\n		while(d_alloc+p_alloc+s_alloc < eng_per_train*total_other_cars/(num_engines) || eng_added<eng_per_train)\n		{\n			if(t1_ptr->isEngine() && eng_added<eng_per_train)\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL)\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n					t2_ptr->next = t1_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next->next = NULL;\n					t2_ptr->next->prev = t2_ptr;\n					t2_ptr = t2_ptr->next;\n				}\n				eng_added++;\n			}\n			else if(t1_ptr->isDiningCar() && d_alloc<(eng_per_train*num_dining_cars/(num_engines)+num_dining_cars%2) && d_alloc+p_alloc+s_alloc < eng_per_train*total_other_cars/(num_engines))\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL)\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				d_alloc++;\n			}\n			else if(t1_ptr->isSleepingCar() && s_alloc<(eng_per_train*num_sleeping_cars/(num_engines)+num_sleeping_cars%2)&& d_alloc+p_alloc+s_alloc < eng_per_train*total_other_cars/(num_engines))\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL)\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				s_alloc++;\n			}\n			else if(t1_ptr->isPassengerCar() && s_alloc<(eng_per_train*num_passenger_cars/(num_engines)+num_passenger_cars%2)&& d_alloc+p_alloc+s_alloc < eng_per_train*total_other_cars/(num_engines))\n			{\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if (t2_ptr==NULL)\n				{\n					t2_ptr = t1_ptr;\n					t2 = t2_ptr;\n					t1_ptr = t1_ptr->next;\n					t2_ptr->next = NULL;\n					t2_ptr->prev = NULL;\n				}\n				else\n				{\n				t2_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t2_ptr->next->next = NULL;\n				t2_ptr->next->prev = t2_ptr;\n				t2_ptr = t2_ptr->next;\n				}\n				p_alloc++;\n			}\n			else{t1_ptr = t1_ptr->next;}\n		}\n		t1_ptr = t1;\n		while(d_alloc+s_alloc+p_alloc < total_other_cars || eng_added < num_engines)\n		{\n			if(t1_ptr==NULL)\n			{t1_ptr = t1;}\n			if(t1_ptr->isEngine())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n					t3_ptr->next = t1_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next->next = NULL;\n					t3_ptr->next->prev = t3_ptr;\n					t3_ptr = t3_ptr->next;\n				}\n				eng_added++;\n			}\n			else if(t1_ptr->isDiningCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				d_alloc++;\n			}\n			else if(t1_ptr->isSleepingCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				s_alloc++;\n			}\n			else if(t1_ptr->isPassengerCar())\n			{\n				if (t1_ptr->prev!=NULL)\n				{t1_ptr->prev->next = t1_ptr->next;}\n				if (t1_ptr->next!=NULL)\n				{t1_ptr->next->prev = t1_ptr->prev;}\n				if(t1_ptr == t1)\n				{t1 = t1->next;}\n				if (t3_ptr==NULL)\n				{\n					t3_ptr = t1_ptr;\n					t3 = t3_ptr;\n					t1_ptr = t1_ptr->next;\n					t3_ptr->next = NULL;\n					t3_ptr->prev = NULL;\n				}\n				else\n				{\n				t3_ptr->next = t1_ptr;\n				t1_ptr = t1_ptr->next;\n				t3_ptr->next->next = NULL;\n				t3_ptr->next->prev = t3_ptr;\n				t3_ptr = t3_ptr->next;\n				}\n				p_alloc++;\n			}\n			else{t1_ptr = t1_ptr->next;}\n			\n		}\n	}\n}\n// =======================================================================\n// =======================================================================\n\n",
+			"settings":
+			{
+				"buffer_size": 24504,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/hw6/soln/board_solution.cpp",
+			"settings":
+			{
+				"buffer_size": 10816,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/hw6/soln/board_solution.h",
+			"settings":
+			{
+				"buffer_size": 4056,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/hw6/soln/main_solution.cpp",
+			"settings":
+			{
+				"buffer_size": 11790,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/hw6/soln/move.h",
+			"settings":
+			{
+				"buffer_size": 495,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/espinm2/Code/temp/hw6/soln/README.txt",
+			"settings":
+			{
+				"buffer_size": 1091,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vectors.h",
+			"settings":
+			{
+				"buffer_size": 8211,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "radiosity.h",
+			"settings":
+			{
+				"buffer_size": 3918,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "ray.h",
+			"settings":
+			{
+				"buffer_size": 1356,
 				"line_ending": "Unix"
 			}
 		},
@@ -320,44 +631,10 @@
 			}
 		},
 		{
-			"file": "primitive.h",
+			"file": "face.cpp",
 			"settings":
 			{
-				"buffer_size": 739,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 54 files for \"srgb_to_linear\"\n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/material.cpp:\n   35    // we assume the texture is stored in sRGB and convert to linear for\n   36    // computation.  It will be converted back to sRGB before display.\n   37:   double r = srgb_to_linear(c.r/255.0);\n   38:   double g = srgb_to_linear(c.g/255.0);\n   39:   double b = srgb_to_linear(c.b/255.0);\n   40  \n   41    return Vec3f(r,g,b);\n   ..\n   88      for (int j = 0; j < image->Height(); j++) {\n   89        Color c = image->GetPixel(i,j);\n   90:        r += srgb_to_linear(c.r/255.0);\n   91:        g += srgb_to_linear(c.g/255.0);\n   92:        b += srgb_to_linear(c.b/255.0);\n   93      }\n   94    }\n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/raytracer.cpp:\n   49    // if there is no intersection, simply return the background color\n   50    if (intersect == false) {\n   51:     return Vec3f(srgb_to_linear(mesh->background_color.r()),\n   52: 		 srgb_to_linear(mesh->background_color.g()),\n   53: 		 srgb_to_linear(mesh->background_color.b()));\n   54    }\n   55  \n\n/home/espinm2/Code/adv_gfx_repo/hw03/src/utils.h:\n   45  }\n   46  \n   47: inline double srgb_to_linear(double x) {\n   48    double answer;\n   49    if (x <= 0.04045)\n\n10 matches across 3 files\n",
-			"settings":
-			{
-				"buffer_size": 1255,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "utils.h",
-			"settings":
-			{
-				"buffer_size": 3157,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "hit.h",
-			"settings":
-			{
-				"buffer_size": 1545,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "ray.h",
-			"settings":
-			{
-				"buffer_size": 1044,
+				"buffer_size": 4813,
 				"line_ending": "Unix"
 			}
 		}
@@ -365,7 +642,7 @@
 	"build_system": "Packages/C++/C++.sublime-build",
 	"command_palette":
 	{
-		"height": 354.0,
+		"height": 389.0,
 		"selected_items":
 		[
 			[
@@ -373,19 +650,23 @@
 				":w - Save"
 			],
 			[
-				":q",
-				"Set Syntax: SQL"
+				":W",
+				":w - Save"
 			],
 			[
 				":save all",
 				"File: Save All"
 			],
 			[
-				":s",
+				":save",
 				"File: Save All"
 			],
 			[
-				":save",
+				":q",
+				"Set Syntax: SQL"
+			],
+			[
+				":s",
 				"File: Save All"
 			],
 			[
@@ -399,10 +680,6 @@
 			[
 				":saveall",
 				"File: Save All"
-			],
-			[
-				":W",
-				":w - Save"
 			],
 			[
 				":e",
@@ -442,6 +719,17 @@
 	},
 	"file_history":
 	[
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/material.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/mesh.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/sphere.cpp",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/sphere.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/hit.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/ray.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/face.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/argparser.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw02/src/vectors.h",
+		"/home/espinm2/Code/adv_gfx_repo/hw03/src/utils.h",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_compressible.txt",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/argparser.h",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/hw2_gradesheet.txt",
@@ -449,7 +737,6 @@
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/self_grade_sheet.txt",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_spiral_xy.txt",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/fluid_random_xy.txt",
-		"/home/espinm2/Code/adv_gfx_repo/hw02/src/vectors.h",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/provot_correct_structural.txt",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/cloth_render.cpp",
 		"/home/espinm2/Code/adv_gfx_repo/hw02/src/denim_curtain.txt",
@@ -495,13 +782,14 @@
 	],
 	"find":
 	{
-		"height": 27.0
+		"height": 42.0
 	},
 	"find_in_files":
 	{
 		"height": 124.0,
 		"where_history":
 		[
+			".",
 			""
 		]
 	},
@@ -510,6 +798,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"PI",
+			"GLOBAL_mtrand",
+			"random",
+			"my_max",
+			"r",
+			"max_d",
+			"TraceRay",
+			"CastRay",
+			"TraceTraceRayRay",
+			"void",
+			"cout",
+			"Shade",
+			"AddMainSegment",
+			"args",
 			"CastRay",
 			"Primitive",
 			"srgb_to_linear",
@@ -623,21 +925,7 @@
 			"Edge",
 			"auto",
 			"header",
-			"first",
-			"second",
-			"triangles",
-			"addVertex",
-			"vertices",
-			"addVertex",
-			"/edge",
-			"edge",
-			"Vertex",
-			"vertex",
-			"Vertex",
-			"VERTEX",
-			"Vertex",
-			"vertex",
-			"Vertex"
+			"first"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -654,13 +942,13 @@
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 19,
 			"sheets":
 			[
 				{
@@ -689,7 +977,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 24,
 					"type": "text"
 				},
 				{
@@ -716,10 +1004,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 741.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
@@ -728,15 +1016,164 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15088,
+						"buffer_size": 15914,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7746,
-								7746
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4624.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "CMakeLists.txt",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "MersenneTwister.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15604,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4252,
+								4252
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 833.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 19,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "raytree.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3913,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1675,
+								1675
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 267.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "raytree.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1474,
+								1474
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 528.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 23,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "material.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2079,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1788,
+								1788
 							]
 						],
 						"settings":
@@ -749,11 +1186,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 21,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 8,
 					"file": "raytracer.h",
 					"semi_transient": false,
 					"settings":
@@ -776,44 +1213,421 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 110.0,
+						"translation.y": 39.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 22,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 9,
 					"file": "raytracer.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4281,
+						"buffer_size": 6385,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1980,
-								1980
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/SQL/SQL.tmLanguage",
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 456.0,
+						"translation.y": 1142.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "camera.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1328,
+								1328
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 306.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "camera.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7594,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4529,
+								4529
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1445.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "argparser.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5306,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4848,
+								4848
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "radiosity.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14236,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3852,
+								3852
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2438.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24504,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/home/espinm2/Code/temp/hw6/soln/board_solution.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/home/espinm2/Code/temp/hw6/soln/board_solution.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4056,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "/home/espinm2/Code/temp/hw6/soln/main_solution.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11790,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/home/espinm2/Code/temp/hw6/soln/move.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 495,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/home/espinm2/Code/temp/hw6/soln/README.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 20,
+					"file": "vectors.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8211,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2135,
+								2135
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 895.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "radiosity.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3918,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3910,
+								3910
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 711.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 22,
+					"file": "ray.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1356,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								587,
+								587
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 23,
 					"file": "mesh.cpp",
 					"semi_transient": false,
 					"settings":
@@ -825,8 +1639,8 @@
 						"selection":
 						[
 							[
-								2012,
-								2012
+								11787,
+								11787
 							]
 						],
 						"settings":
@@ -836,210 +1650,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1700.0,
+						"translation.y": 5797.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "primitive.h",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 739,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								366,
-								366
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage"
-						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
+					"buffer": 24,
+					"file": "face.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1255,
+						"buffer_size": 4813,
 						"regions":
 						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										270,
-										284
-									],
-									[
-										317,
-										331
-									],
-									[
-										364,
-										378
-									],
-									[
-										554,
-										568
-									],
-									[
-										600,
-										614
-									],
-									[
-										646,
-										660
-									],
-									[
-										889,
-										903
-									],
-									[
-										943,
-										957
-									],
-									[
-										997,
-										1011
-									],
-									[
-										1150,
-										1164
-									]
-								],
-								"scope": ""
-							}
 						},
 						"selection":
 						[
 							[
-								1101,
-								1101
+								3724,
+								3724
 							]
 						],
 						"settings":
 						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 330.0,
+						"translation.y": 1139.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "utils.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3157,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1606,
-								1606
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1288.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "hit.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1545,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								910,
-								910
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 114.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "ray.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1044,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								512,
-								512
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1047,7 +1691,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 39.0
+		"height": 42.0
 	},
 	"input":
 	{
@@ -1087,7 +1731,7 @@
 	"project": "hw3.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 80.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1095,6 +1739,38 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"",
+				"radiosity.cpp"
+			],
+			[
+				"radio",
+				"radiosity.h"
+			],
+			[
+				"vec",
+				"vectors.h"
+			],
+			[
+				"radi",
+				"radiosity.h"
+			],
+			[
+				"rad",
+				"radiosity.cpp"
+			],
+			[
+				"ray",
+				"ray.h"
+			],
+			[
+				"face",
+				"face.cpp"
+			],
+			[
+				"mesh",
+				"mesh.cpp"
+			]
 		],
 		"width": 0.0
 	},
@@ -1121,7 +1797,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 269.0,
+	"side_bar_width": 249.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

@@ -274,6 +274,17 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
   glutPostRedisplay();
     break; }
 
+  case 'x': case 'X':{
+    std::cout << "Ray Tree Active";
+    RayTree::Activate();
+    radiosity->ComputeFormFactors();
+    RayTree::Deactivate();
+    RayTree::setupVBOs();
+    radiosity->setupVBOs();
+    glutPostRedisplay();
+    break;
+  }
+
   case 'l':  case 'L': {  
     // toggle photon rendering
     args->render_photons = !args->render_photons;

@@ -8,7 +8,16 @@
 #include "raytree.h"
 #include "raytracer.h"
 #include "utils.h"
+#include <stdio.h>
+#include <math.h>
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+#ifndef EPSILON
+#define EPSILON .0001
+#endif
 // ================================================================
 // CONSTRUCTOR & DESTRUCTOR
 // ================================================================
@@ -80,6 +89,7 @@ void Radiosity::Reset() {
 void Radiosity::findMaxUndistributed() {
   // find the patch with the most undistributed energy 
   // don't forget that the patches may have different sizes!
+  // Edit: return's max index
   max_undistributed_patch = -1;
   total_undistributed = 0;
   total_area = 0;
@@ -98,40 +108,205 @@ void Radiosity::findMaxUndistributed() {
 
 
 void Radiosity::ComputeFormFactors() {
+
+  // Barb's code
   assert (formfactors == NULL);
   assert (num_faces > 0);
   formfactors = new double[num_faces*num_faces];
+  findMaxUndistributed();
+
+  // keep track of which form factor I am on.
+  unsigned int index = 0;
+
+  // ? are these triangles or quads? I think quads
+
+  // For each of the patches
+  for(int i = 0; i < num_faces; i ++){
+
+    // Getting the patch i
+    Face * patch_i = mesh->getFace(i);
+    Vec3f normal_i = patch_i->computeNormal(); //this might be wrong direction
+
+
+    // For each other patch
+    for(int j = 0; j < num_faces; j ++){
+
+      // Getting the patch j
+      Face * patch_j = mesh->getFace(j);
+      Vec3f normal_j = patch_j->computeNormal();  //this might be wrong direction
+
+
+      // ray from i->j these are correct directions
+      Vec3f direct_to_j = patch_j->computeCentroid() - patch_i->computeCentroid();
+      Vec3f direct_to_i = patch_i->computeCentroid() - patch_j->computeCentroid();
+      direct_to_j.Normalize();
+      direct_to_i.Normalize();
+      Ray ray_ij(patch_i->computeCentroid(), direct_to_j);
+
+
+      /*
+      // ray from j->i these are correct directions
+      Vec3f direct_to_i = patch_i->computeCentroid();
+      direct_to_i.Normalize();
+      Ray ray_ji(patch_j->computeCentroid(), direct_to_i);
+      Vec3f rayDir_ji = ray_ji.pointAtParameter(1);
+      */
 
 
 
-  // =====================================
-  // ASSIGNMENT:  COMPUTE THE FORM FACTORS
-  // =====================================
+      double angle_i,angle_j;
+      // Getting the angles between normals fixing
+      // issue with normals facing weird directions
 
 
 
+      // Check if I hit the center
+      /*
+      Hit hitCenter;
+      if(raytracer->CastRay(ray_ij,hitCenter,false)){
+        // When I hit a wall
+        Vec3f aprox = ray_ij.pointAtParameter(hitCenter.getT());
+        Vec3f realv = patch_j->computeCentroid();
+        Vec3f diff = realv - aprox;
+        if(fabs(diff.x()) < EPSILON && fabs(diff.y()) < EPSILON && fabs(diff.z()) < EPSILON){
+          // I hit
+        }else{
+          // if i miss flip ray
+          ray_ij = Ray(ray_ij.getOrigin(), -1*ray_ij.getDirection());
+        }
+      }
+      */
+
+
+      angle_i = normal_i.AngleBetween(direct_to_j);
+      angle_j = normal_j.AngleBetween(direct_to_i);
+
+      /*
+      // first check to see if my normal_i is correct
+      if(legalAngle(normal_i.AngleBetween(rayDir_ij))){
+        normal_i.Negate();
+        angle_i = normal_i.AngleBetween(rayDir_ij);
+      }else{
+        //normal is the wrong way, inverse
+        angle_i = normal_i.AngleBetween(rayDir_ij);
+      }
+
+      // Getting angle j
+      if(legalAngle(normal_j.AngleBetween(rayDir_ji))){
+        normal_j.Negate();
+        angle_j = normal_j.AngleBetween(rayDir_ji);
+      }else{
+        angle_j = normal_j.AngleBetween(rayDir_ji);
+      }
+      */
+
+
+      // If you lie on the same plane
+      // if (normal_i == normal_j){
+      //   setFormFactor(i,j,0);
+      //   index ++;
+      //   continue;
+      //}
+
+      double distance = patch_i->computeCentroid().Distance3f(patch_j->computeCentroid());
+
+      // Assuming visablity is 1
+      // Todo implement shadows on form factors
+
+      double visablity  = 1.0;
+
+      // From class
+      double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / (M_PI* distance*distance);
+
+      // (Wallace et al. 1989)
+      //double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / ((M_PI * distance*distance) + patch_j->getArea());
+
+      setFormFactor(i,j,formFac);
+      // Printing those who's normal angles are inverse
+
+      //Visalization
+      if(max_undistributed_patch == i){
+        Hit hit;
+        if(raytracer->CastRay(ray_ij,hit,false)){
+          RayTree::AddShadowSegment(ray_ij,0,hit.getT()/2);
+        }else{
+          RayTree::AddMainSegment(ray_ij,0,.5);
+        }
+        // Normals
+        Ray normalRay(patch_j->computeCentroid(), normal_j);
+        RayTree::AddTransmittedSegment(normalRay,0,.2);
+
+        // Backwards Ray
+        Vec3f direct_to_i = patch_i->computeCentroid() - patch_j->computeCentroid();
+        direct_to_i.Normalize();
+        hit = Hit();
+        Ray ray_ji(patch_j->computeCentroid(), direct_to_i);
+        raytracer->CastRay(ray_ji,hit,false);
+        RayTree::AddReflectedSegment(ray_ji,0,hit.getT()/2);
+      }
+
+      // normal_j.Negate();
+      //if(normal_i == normal_j){
+        //setFormFactor(i,j,.01*angle_i);
+        // printf("patch_%d->%d:\t%2.4f\n",i,j,formfac);
+        // printf("patch #%3d angle i to normal:%2.4f\n",i,angle_i);
+        // printf("patch #%3d angle j to normal:%2.4f\n",j,angle_j);
+        // printf(" patch distances:%2.4f\n",distance);
+      //}
+
+      index++;
+    }
+  }
 }
 
 // ================================================================
 // ================================================================
 
+// jump
 double Radiosity::Iterate() {
-  if (formfactors == NULL) 
+
+  /*
+  // Set up the form factors will only run once
+  if (formfactors == NULL)
     ComputeFormFactors();
   assert (formfactors != NULL);
 
+  // Update for the brightest
+  findMaxUndistributed();
+
+  printf("max undistributed: %d\n", max_undistributed_patch);
 
 
 
+
+  // For other faces in the scene, index j
+  for(int i = 0; i < num_faces; i++){
+
+
+    // WARNING: Maybe flip args
+    double formFac = getFormFactor(i,max_undistributed_patch);
+
+    // Statisitics 
+    if(true){
+      printf("Patch: %d stats=================\n",i);
+      std::cout << "undistributed: " << getUndistributed(i) << std::endl;
+      std::cout << "absorbed:      " << getAbsorbed(i)      << std::endl;
+      std::cout << "radiance:      " << getRadiance(i)      << std::endl;
+      std::cout << "form factor:   " << formFac      << std::endl;
+    }
+
+    //Vec3f white(1.0,1.0,1.0); //remove
+    //setUndistributed(i,white);
+  }
   // ==========================================
   // ASSIGNMENT:  IMPLEMENT RADIOSITY ALGORITHM
   // ==========================================
 
-
-
+  */
   // return the total light yet undistributed
   // (so we can decide when the solution has sufficiently converged)
   return 0;
+
 }
 
 

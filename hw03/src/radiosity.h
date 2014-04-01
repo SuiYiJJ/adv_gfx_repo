@@ -5,6 +5,9 @@
 #include "vectors.h"
 #include "argparser.h"
 #include "vbo_structs.h"
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 class Mesh;
 class Face;
@@ -66,6 +69,8 @@ public:
     assert (j >= 0 && j < num_faces);
     assert (formfactors != NULL);
     formfactors[i*num_faces+j] = value; }
+
+  // Why would I want to normalize this form factors
   void normalizeFormFactors(int i) {
     double sum = 0;
     int j;
@@ -87,6 +92,14 @@ public:
   void setRadiance(int i, Vec3f value) { 
     assert (i >= 0 && i < num_faces);
     radiance[i] = value; }
+
+  // ========
+  // Max Helper Functions
+  bool legalAngle(double angle){
+    // checks if falls within -90 and +90 degrees
+    return (-1.0*(M_PI/2.0)) <= angle && angle <= (1.0*(M_PI/2.0));
+  }
+
 
 private:
   Vec3f setupHelperForColor(Face *f, int i, int j);

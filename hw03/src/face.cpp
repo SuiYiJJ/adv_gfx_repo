@@ -93,7 +93,6 @@ bool Face::triangle_intersect(const Ray &r, Hit &h, Vertex *a, Vertex *b, Vertex
 
 
 bool Face::plane_intersect(const Ray &r, Hit &h, bool intersect_backfacing) const {
-
   // insert the explicit equation for the ray into the implicit equation of the plane
 
   // equation for a plane
@@ -123,7 +122,6 @@ bool Face::plane_intersect(const Ray &r, Hit &h, bool intersect_backfacing) cons
   }
   return 0;
 }
-
 
 inline Vec3f ComputeNormal(const Vec3f &p1, const Vec3f &p2, const Vec3f &p3) {
   Vec3f v12 = p2;

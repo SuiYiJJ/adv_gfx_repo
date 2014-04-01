@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "vectors.h"
+#include <math.h>
 
 // Ray class mostly copied from Peter Shirley and Keith Morley
 // ====================================================================
@@ -22,6 +23,7 @@ public:
   const Vec3f& getDirection() const { return direction; }
   Vec3f pointAtParameter(double t) const {
     return origin+direction*t; }
+  
 
 private:
   Ray () { assert(0); } // don't use this constructor
