@@ -31,7 +31,7 @@ public:
     data[1] = V.data[1];
     data[2] = V.data[2]; }
   Vec3f(double d0, double d1, double d2) {
-    data[0] = d0;
+    data[0] = d0;m
     data[1] = d1;
     data[2] = d2; }
   const Vec3f& operator=(const Vec3f &V) {

@@ -31,6 +31,7 @@ Radiosity::Radiosity(Mesh *m, ArgParser *a) {
   undistributed = NULL;
   absorbed = NULL;
   radiance = NULL;
+  ambient = 0;
   max_undistributed_patch = -1;
   total_area = -1;
   Reset();
@@ -250,6 +251,16 @@ void Radiosity::ComputeFormFactors() {
 // jump
 double Radiosity::Iterate() {
 
+	// Set ambient light back so I have real data
+	if(args->ambient_term){
+	  for(int i = 0; i <num_faces;i++){
+	  	//convert ambient_total to grey
+	  	Vec3f dif = mesh->getFace(i)->getMaterial()->getDiffuseColor();
+	  	Vec3f amb_dif = ambient * dif;
+	  	setRadiance(i,getRadiance(i) - amb_dif);
+	  }
+	}
+
   Vec3f white(1.0,1.0,1.0);
   // Set up the form factors will only run once
   if (formfactors == NULL)
@@ -295,6 +306,33 @@ double Radiosity::Iterate() {
   //jump
   setUndistributed(max_undistributed_patch,Vec3f(0,0,0));
   findMaxUndistributed(); //calc a lot of stuff
+
+  // Trying to calculte ambient light
+  if(args->ambient_term){
+	  double radiosity_delta= total_undistributed / total_area;
+	  double diff_total = 0.0;
+
+  	// percent reflective
+	  for(int i = 0; i < num_faces; i++)
+	  	diff_total += mesh->getFace(i)->getMaterial()->getDiffuseColor().Length() * getArea(i);
+
+	  
+	  double diffuse_delta = diff_total/total_area;
+	  assert(diffuse_delta > 0 && radiosity_delta >0);
+	  double R_total  = 1.0 / (1.0 - diffuse_delta);
+	  double ambient_total = R_total * radiosity_delta;
+	  assert(0<=ambient_total && ambient_total <=1);
+	  ambient = ambient_total;
+
+
+	  // update
+	  for(int i = 0; i <num_faces;i++){
+	  	//convert ambient_total to grey
+	  	Vec3f dif = mesh->getFace(i)->getMaterial()->getDiffuseColor();
+	  	Vec3f amb_dif = ambient * dif;
+	  	setRadiance(i,getRadiance(i) + amb_dif);
+	  }
+	}
   return total_undistributed*total_area;
 
 }

@@ -75,6 +75,8 @@ public:
       } else if (!strcmp(argv[i],"-num_photons_to_collect")) {
 	i++; assert (i < argc);
 	num_photons_to_collect = atoi(argv[i]);
+      } else if (!strcmp(argv[i],"-ambient_term")) {
+  ambient_term = true;
       } else if (!strcmp(argv[i],"-gather_indirect")) {
 	gather_indirect = true;
       } else {
@@ -121,6 +123,7 @@ public:
     sphere_horiz = 8;
     sphere_vert = 6;
     cylinder_ring_rasterization = 20; 
+    ambient_term = false;
 
     // RAYTRACING PARAMETERS
     num_bounces = 0;
@@ -157,6 +160,7 @@ public:
   int sphere_horiz;
   int sphere_vert;
   int cylinder_ring_rasterization;
+  bool ambient_term;
 
   // RAYTRACING PARAMETERS
   int num_bounces;

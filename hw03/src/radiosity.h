@@ -124,6 +124,7 @@ private:
   int max_undistributed_patch;  // the patch with the most undistributed energy
   double total_undistributed;    // the total amount of undistributed light
   double total_area;             // the total area of the scene
+  double  ambient;                 // remember subtract this from th start of all iteratoins
 
   // VBOs
   GLuint mesh_quad_verts_VBO;

@@ -4,8 +4,8 @@ reflective 0 0 0
 emitted 20 20 20
 
 material
-texture_file green_mosaic.ppm
-reflective 0 0 0
+texture_file pebbles.ppm
+reflective 0.1 0.1 0.1
 emitted 0 0 0
 
 material
@@ -13,6 +13,7 @@ diffuse 0 0 0
 reflective 0.8 0.8 0.8
 roughness 0.2
 emitted 0 0 0
+
 
 v -7 10 7
 v -7 10 3
@@ -35,7 +36,14 @@ m 1
 f 5 6 7 8
 
 m 2
-s -1 3 -1 4
+s -1 3 -1 3
+
+m 2
+s -4 5 0 1.5
+
+m 2
+s 0.3 5 1 1.5
+
 
 background_color 0.7 0.8 0.9
 
