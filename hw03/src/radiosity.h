@@ -19,7 +19,6 @@ class PhotonMapping;
 // ====================================================================
 // This class manages the radiosity calculations, including form factors
 // and radiance solution.
-
 class Radiosity {
 
 public:
@@ -138,8 +137,6 @@ private:
   std::vector<VBOIndexedEdge> mesh_interior_edge_indices;
   std::vector<VBOIndexedEdge> mesh_border_edge_indices;
 };
-
 // ====================================================================
 // ====================================================================
-
 #endif

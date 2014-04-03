@@ -274,6 +274,7 @@ void GLCanvas::keyboard(unsigned char key, int x, int y) {
   glutPostRedisplay();
     break; }
 
+  // New form factor visualization
   case 'x': case 'X':{
     std::cout << "Ray Tree Active";
     RayTree::Activate();

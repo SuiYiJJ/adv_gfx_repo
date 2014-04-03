@@ -9,6 +9,7 @@
 #include "raytracer.h"
 #include "utils.h"
 #include <stdio.h>
+#include <float.h>
 #include <math.h>
 
 #ifndef M_PI
@@ -144,82 +145,75 @@ void Radiosity::ComputeFormFactors() {
       Ray ray_ij(patch_i->computeCentroid(), direct_to_j);
 
 
-      /*
-      // ray from j->i these are correct directions
-      Vec3f direct_to_i = patch_i->computeCentroid();
-      direct_to_i.Normalize();
-      Ray ray_ji(patch_j->computeCentroid(), direct_to_i);
-      Vec3f rayDir_ji = ray_ji.pointAtParameter(1);
-      */
-
-
 
       double angle_i,angle_j;
       // Getting the angles between normals fixing
       // issue with normals facing weird directions
 
-
-
-      // Check if I hit the center
-      /*
-      Hit hitCenter;
-      if(raytracer->CastRay(ray_ij,hitCenter,false)){
-        // When I hit a wall
-        Vec3f aprox = ray_ij.pointAtParameter(hitCenter.getT());
-        Vec3f realv = patch_j->computeCentroid();
-        Vec3f diff = realv - aprox;
-        if(fabs(diff.x()) < EPSILON && fabs(diff.y()) < EPSILON && fabs(diff.z()) < EPSILON){
-          // I hit
-        }else{
-          // if i miss flip ray
-          ray_ij = Ray(ray_ij.getOrigin(), -1*ray_ij.getDirection());
-        }
-      }
-      */
-
-
       angle_i = normal_i.AngleBetween(direct_to_j);
       angle_j = normal_j.AngleBetween(direct_to_i);
 
-      /*
-      // first check to see if my normal_i is correct
-      if(legalAngle(normal_i.AngleBetween(rayDir_ij))){
-        normal_i.Negate();
-        angle_i = normal_i.AngleBetween(rayDir_ij);
-      }else{
-        //normal is the wrong way, inverse
-        angle_i = normal_i.AngleBetween(rayDir_ij);
-      }
 
-      // Getting angle j
-      if(legalAngle(normal_j.AngleBetween(rayDir_ji))){
-        normal_j.Negate();
-        angle_j = normal_j.AngleBetween(rayDir_ji);
-      }else{
-        angle_j = normal_j.AngleBetween(rayDir_ji);
-      }
-      */
-
-
-      // If you lie on the same plane
-      // if (normal_i == normal_j){
-      //   setFormFactor(i,j,0);
-      //   index ++;
-      //   continue;
-      //}
 
       double distance = patch_i->computeCentroid().Distance3f(patch_j->computeCentroid());
 
       // Assuming visablity is 1
+      double visablity = 0;
       // Todo implement shadows on form factors
 
-      double visablity  = 1.0;
+
+      if(args->num_shadow_samples >= 1){
+      	// visablity calcs
+      	int hit_count = 0;
+
+      	for(int r = 0; r < args->num_form_factor_samples; r++){
+      		//printf("Shooting shadow ray\n" );
+      		// get random points on patch j
+      		Vec3f rand_patch_i = patch_i->RandomPoint();
+      		Vec3f rand_patch_j = patch_j->RandomPoint();
+
+      		// get the direction vector
+      		Vec3f dir_ray = rand_patch_j - rand_patch_i;
+      		dir_ray.Normalize();
+
+      		// Make ray
+      		Ray freedom(rand_patch_i, dir_ray);
+      		Hit justice;
+
+      		// Trace ray + incr if I hit something
+      		if(raytracer->CastRay(freedom,justice,true)){
+      			Vec3f hitPoint = freedom.pointAtParameter(justice.getT());
+      			//std::cout << "========================================\n";
+      			//std::cout << "Hit: " << hitPoint << "Aiming for " << rand_patch_j;
+      			// Did i hit near my location?
+      			double dist_diff = rand_patch_j.Distance3f(hitPoint);
+      			//std::cout << "Missed by: " << dist_diff << std::endl;
+      			if(dist_diff <= EPSILON){hit_count++;}
+      		}
+      	}//for
+
+      	// Assign a visablity
+      	//printf("Hit count: %d\tOut of %d\n",hit_count,args->num_form_factor_samples);
+      	visablity = (double)hit_count / args->num_form_factor_samples;
+      	assert(0 <= visablity && visablity <= 1 );
+
+      }else{
+	      visablity  = 1.0;
+      }
 
       // From class
-      double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / (M_PI* distance*distance);
+      //double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / (M_PI* distance*distance);
 
       // (Wallace et al. 1989)
-      //double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / ((M_PI * distance*distance) + patch_j->getArea());
+      double formFac = (cos(angle_i) * cos(angle_j) * visablity * patch_j->getArea()) / ((M_PI * distance*distance) + patch_j->getArea());
+
+      // Fixing my hack
+      if(cos(angle_i) * cos(angle_j) < 0 && visablity != 0){
+      	formFac = 0;
+      }
+
+      formFac = fabs(formFac); // the key is to have an even number or errors
+
 
       setFormFactor(i,j,formFac);
       // Printing those who's normal angles are inverse
@@ -245,15 +239,6 @@ void Radiosity::ComputeFormFactors() {
         RayTree::AddReflectedSegment(ray_ji,0,hit.getT()/2);
       }
 
-      // normal_j.Negate();
-      //if(normal_i == normal_j){
-        //setFormFactor(i,j,.01*angle_i);
-        // printf("patch_%d->%d:\t%2.4f\n",i,j,formfac);
-        // printf("patch #%3d angle i to normal:%2.4f\n",i,angle_i);
-        // printf("patch #%3d angle j to normal:%2.4f\n",j,angle_j);
-        // printf(" patch distances:%2.4f\n",distance);
-      //}
-
       index++;
     }
   }
@@ -265,6 +250,7 @@ void Radiosity::ComputeFormFactors() {
 // jump
 double Radiosity::Iterate() {
 
+  Vec3f white(1.0,1.0,1.0);
   // Set up the form factors will only run once
   if (formfactors == NULL)
     ComputeFormFactors();
@@ -272,7 +258,6 @@ double Radiosity::Iterate() {
 
   // Update for the brightest
   findMaxUndistributed();
-  printf("max undistributed: %d\n", max_undistributed_patch);
 
 
   // Go though all the faces to find how much of max_undistrubted effects them
@@ -280,44 +265,37 @@ double Radiosity::Iterate() {
 
     if(i == max_undistributed_patch) { continue; }
 
-
+    // Used to compute absored
 
     // WARNING: Maybe flip args
     double F_i_max = getFormFactor(i,max_undistributed_patch);
     Vec3f  B_max = getUndistributed(max_undistributed_patch);
     Vec3f  D_i = mesh->getFace(i)->getMaterial()->getDiffuseColor(); //maybe reflective?
+    Vec3f  A_i =  white - D_i;
     double  roughness = mesh->getFace(i)->getMaterial()->getRoughness();
+    Vec3f  bounced 	= D_i*F_i_max*B_max;
+    Vec3f  absorbed = A_i*F_i_max*B_max;
 
-    Vec3f  absorbed = D_i*F_i_max*B_max;
-
-    //helper
-    Vec3f white(1.0,1.0,1.0);
-    Vec3f inverse_color = white - absorbed;
 
     // Radiance
-    setRadiance(i,getRadiance(i) + absorbed);
-    setUndistributed(i,getUndistributed(i) + absorbed);
-
-    //setAbsorbed(i,inverse_color,);
-
-
-
+    setRadiance(i,getRadiance(i) + bounced);
+    setUndistributed(i,getUndistributed(i) + bounced);
+    setAbsorbed(i,getAbsorbed(i)+absorbed);
 
     // Statisitics 
-    if(true){
-      printf("Patch: %d stats=================\n",i);
-      std::cout << "undistributed: " << getUndistributed(i) << std::endl;
-      std::cout << "absorbed:      " << getAbsorbed(i)      << std::endl;
-      std::cout << "radiance:      " << getRadiance(i)      << std::endl;
-      std::cout << "roughness:     " << roughness      << std::endl;
+    if(false){
+      //printf("Patch: %d stats=================\n",i);
+      //std::cout << "undistributed: " << getUndistributed(i) << std::endl;
+      //std::cout << "absorbed:      " << getAbsorbed(i)      << std::endl;
+      //std::cout << "radiance:      " << getRadiance(i)      << std::endl;
     }
 
   }
 
+  //jump
   setUndistributed(max_undistributed_patch,Vec3f(0,0,0));
-  findMaxUndistributed();
-  std::cout << "Max undistributed:  " << total_undistributed  << std::endl;
-  return total_undistributed;
+  findMaxUndistributed(); //calc a lot of stuff
+  return total_undistributed*total_area;
 
 }
 
