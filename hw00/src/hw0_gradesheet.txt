@@ -1,0 +1,52 @@
+HOMEWORK 0: TRANSFORMATIONS & OPENGL WARMUP
+
+
+NAME:  < insert name >
+
+
+TOTAL:  [ ?? / 5 ]
+** If code does not compile and run as submitted, total score
+   multiplied by 0.5 **
+
+
+PROPER SUBMISSION FORMAT [ ?? / 1 ] 
+All files inside a "hw0" directory, code compiles, submission includes
+a README.txt file, submission includes a preliminary gradesheet.  
+
+
+IFS FOR POINTS  [ ?? / 2 ]
+basic implementation & efficiency discussion in README.txt
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 0 -size 200
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 1 -size 200
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 2 -size 200
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 3 -size 200
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 4 -size 200
+./ifs -input sierpinski_triangle.txt -points 10000 -iters 30 -size 200
+./ifs -input fern.txt -points 50000 -iters 30 -size 400
+./ifs -input giant_x.txt -points 10000 -size 400 -iters 0
+./ifs -input giant_x.txt -points 10000 -size 400 -iters 1
+./ifs -input giant_x.txt -points 10000 -size 400 -iters 2
+./ifs -input giant_x.txt -points 10000 -size 400 -iters 3
+./ifs -input giant_x.txt -points 10000 -size 400 -iters 4
+
+
+IFS, CUBE VISUALIZATION [ ?? / 1 ]
+basic implementation & efficiency discussion in README.txt
+./ifs -input giant_x.txt -size 400 -iters 0 -cubes
+./ifs -input giant_x.txt -size 400 -iters 1 -cubes
+./ifs -input giant_x.txt -size 400 -iters 2 -cubes
+./ifs -input giant_x.txt -size 400 -iters 3 -cubes
+./ifs -input giant_x.txt -size 400 -iters 4 -cubes
+
+
+PARAMETERS [ ?? / 1 ]
+The other command line arguments do what they are supposed to.
+
+
+EXTRA CREDIT [ ?? ] (1-5 pts, depending on complexity)
+Possibilities include:
+* design a new IFS --- figure out the transformations and probabilities
+* implement a non-trivial color scheme
+* implement anti-aliasing
+* experiment with depth-first vs. breadth-first
+
