@@ -1,0 +1,39 @@
+Computer-aid furniture placement to maximize the utility of natural lighting.
+
+For my final project I would like to extend current research being done with natural lighting in the CS Graphics group at RPI. 
+
+Specifically I would like extend the over/under illumination feature used in the this paper:
+ 	
+ 	Physical Avatars in a Projector-Camera Tangible User Interface Enhance Quantitative Simulation Analysis and Engagement 
+
+ 	http://www.cs.rpi.edu/~cutler/publications/nasman_ccd_procams_2013.pdf
+
+I would like to able to give a realistically possible arrangement of furniture in a room that makes the best use of natural lighting.
+
+The best use of natural lighting being defined as:
+	
+	Items that suffer of glare are placed/oriented in locations and directions to minimize glare
+
+	Items that usually require lighting (artificial or natural) are preferred to be placed in natural daylight (minimize unused natural lighting)
+
+	Items that share common placements (chairs around tables) are placed as so.
+
+	Items are not too close to each other (as in not everything is jammed under the window)
+
+	Others (depending on time/complexity)
+
+The items I would consider would be mainly geared towards office spaces, such as desk/tables/cubical/computers.
+
+I would probably borrow ideas presented in the following research papers:
+
+	Make it Home: Automatic Optimization Furniture Arrangement
+	http://dl.acm.org/citation.cfm?id=1964921.1964981&coll=DL&dl=ACM&CFID=423273137&CFTOKEN=65278154
+
+	A heuristic problem solving design system for equipment or furniture layouts
+	http://dl.acm.org/citation.cfm?id=360817
+
+
+
+
+
+

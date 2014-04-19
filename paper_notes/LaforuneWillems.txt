@@ -1,0 +1,36 @@
+Claims:
+
+  *Global reflection distro function 
+  *Not "geared" towards any specific algorithms
+
+Introduction:
+  
+  There complex problem of simulation the behavior of light is hard to model exactly. Including that of global illumination
+
+  We therefore simplify the problem and assumptions.
+
+  NEW FORUMATION OF GLOBAL ILLUMINATION PROBLEM
+
+  Praise to Goral for Radiosity
+
+  Fredholm equation of the second kind? <--DeFaq is that?
+
+  Most Global Illumination alg, are 2 pass methods
+	Pass 1 -> Radiosity
+	Pass 2 -> Tracing
+	(-) Bad on storage
+	(+) Hanrahan and Christensen only focus on imporant light contrbutions.
+
+  Math and jazz
+  	L(x,0_x)
+
+
+
+
+
+
+
+
+
+
+

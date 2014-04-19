@@ -1,0 +1,53 @@
+ABSTRACT:
+ 
+ Intergral Line Equation Generalization
+ 
+ Hierarchical Sampling
+ 	(+) Monte Carlo Procedures
+
+The Rendering Equation
+
+	Everything everyones been trying to do is reduced to this equation.
+
+	We reduced the big bad equation into a much smaller one for you whimps.
+
+	I(x,x') is strength of the light PASSING from  x' --> x
+	g(x,x') is magic "geometry" term
+	e(x,x') is strength of the light EMIITTED from x' --> x
+	p(x,x',x'') is strength of light SCATTERED 
+		form x'' --> x by patch as surface x'
+
+	This baby equation has the spirt of radiosity!
+	ENGLISH MOTHER FUCKER: "the transport of intensity of light from one surface point to another is simply the sum of the emiited light and the total light intensity which is scatted towards x from all other surface points"
+
+	It's even better then radiosity!!
+	It has no assumption about reflectance of a specific surface, fuck that shit!
+
+	Unoccluded Mutlipoint Transport Quantities!
+
+	Maxwell's demon all up in here, no not really
+	but his equations are nice too!
+
+	Other stuff I glanced over
+
+Discussion of Transport Quantities
+
+Unoccluded 2 point transport intensity (Transport Intensity)
+
+
+
+RESULTS
+	
+	What the fuck is Varience Reduction?
+		Hierarchial Sampling is a kind of varience reduction tech
+		
+	Why is it important?
+
+	Multidimensional Sequence Sampling?
+
+
+	
+
+
+
+

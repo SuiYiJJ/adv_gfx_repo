@@ -27,27 +27,41 @@ int main(int argc, char *argv[]) {
   ArgParser args(argc, argv);
   GLCanvas::initialize(&args); 
 
-  glClearColor(0.8,0.9,1.0,0.0);  // light blue sky
+  // Creates background color behind all objects (SKY)
+  glClearColor(0.8,0.9,1.0,0.0);
+
+  // If enabled do depth comparisons and update the depth buffer
   glEnable(GL_DEPTH_TEST);
+
+  // Specify the value used for depth buffer comparisons
   glDepthFunc(GL_LESS); 
 
+  // While we don't close this window
   while (!glfwWindowShouldClose(GLCanvas::window))  {
     
+    // Clear the buffers, color info + depth info
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Run this program GLCanvas
     glUseProgram(GLCanvas::programID);
+
+    // Create camera (VIEW TRANSFORMATIONS)
     GLCanvas::camera->glPlaceCamera();
     glm::vec3 center;
     GLCanvas::bbox.getCenter(center);
     glm::mat4 myTranslateMatrix = glm::translate(-center);
+
     double maxDim = GLCanvas::bbox.maxDim();
     float scaleFactor = 2.0 / float(maxDim);
     glm::mat4 myScalingMatrix = glm::scale(glm::vec3(scaleFactor,scaleFactor,scaleFactor));
     glm::mat4 ModelMatrix = myScalingMatrix*myTranslateMatrix;
+    
     // Build the matrix to position the camera based on keyboard and mouse input
     glm::mat4 ProjectionMatrix = GLCanvas::camera->getProjectionMatrix();
     glm::mat4 ViewMatrix = GLCanvas::camera->getViewMatrix();
     GLCanvas::drawVBOs(ProjectionMatrix,ViewMatrix,ModelMatrix);
     GLCanvas::animate();
+
     // Swap buffers
     glfwSwapBuffers(GLCanvas::window);
     fflush(stdout);

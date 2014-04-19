@@ -1,0 +1,16 @@
+TODO:
+
+  Need to find out how searching goes?
+    * each primitives has a class that inherties that class
+    * spheres are one
+
+  What does virtual mean?
+    * it is a function that is meant to be overridden
+      as in promises made to make this later in another
+      related/inhertied class
+
+  What does setting a function = 0 mean?
+    * means its a pure virtual implementation
+      meaning that it HAS to be made, or else
+      compiler will get angry and eat your babies
+

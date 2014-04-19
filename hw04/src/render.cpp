@@ -8,6 +8,7 @@
 #include "argparser.h"
 #include "utils.h"
 
+// Predefined colors to use
 glm::vec4 floor_color(0.9,0.8,0.7,1);
 glm::vec4 mesh_color(0.8,0.8,0.8,1);
 glm::vec4 mirror_color(0.1,0.1,0.2,1);
@@ -36,20 +37,36 @@ glm::vec3 Mesh::LightPosition() const {
 
 
 void Mesh::initializeVBOs() {
+
+  // Regular mesh buffer
   glGenBuffers(1,&mesh_tri_verts_VBO);
   glGenBuffers(1,&mesh_tri_indices_VBO);
+
+  // Relfection mesh buffers
   glGenBuffers(1,&reflected_mesh_tri_verts_VBO);
   glGenBuffers(1,&reflected_mesh_tri_indices_VBO);
+
+  // Shadow buffers
   glGenBuffers(1,&shadow_polygon_tri_verts_VBO);
   glGenBuffers(1,&shadow_polygon_tri_indices_VBO);
+
+  // Mirror buffers
   glGenBuffers(1,&mirror_tri_verts_VBO);
   glGenBuffers(1,&mirror_tri_indices_VBO);
+
+  // Floor triangles
   glGenBuffers(1,&floor_tri_verts_VBO);
   glGenBuffers(1,&floor_tri_indices_VBO);
+
+  // Reflected floor
   glGenBuffers(1,&reflected_floor_tri_verts_VBO);
   glGenBuffers(1,&reflected_floor_tri_indices_VBO);
+
+  // Silhouette buffers
   glGenBuffers(1,&silhouette_edge_tri_verts_VBO);
   glGenBuffers(1,&silhouette_edge_tri_indices_VBO);
+
+  // Light buffer
   glGenBuffers(1,&light_vert_VBO);
   bbox.initializeVBOs();
 }
@@ -93,12 +110,16 @@ void Mesh::SetupMirror() {
   glm::vec3 normal = ComputeNormal(a,c,b);
   glm::vec4 color(0.1,0.1,0.1,1);
 
+  // OBJ Style
   mirror_tri_verts.push_back(VBOPosNormalColor(a,normal,mirror_color));
   mirror_tri_verts.push_back(VBOPosNormalColor(b,normal,mirror_color));
   mirror_tri_verts.push_back(VBOPosNormalColor(c,normal,mirror_color));
   mirror_tri_verts.push_back(VBOPosNormalColor(d,normal,mirror_color));
   mirror_tri_indices.push_back(VBOIndexedTri(0,1,2));
   mirror_tri_indices.push_back(VBOIndexedTri(0,2,3));
+
+
+  //glBindBuffer
   glBindBuffer(GL_ARRAY_BUFFER,mirror_tri_verts_VBO); 
   glBufferData(GL_ARRAY_BUFFER,
 	       sizeof(VBOPosNormalColor) * mirror_tri_verts.size(), 
@@ -535,6 +556,7 @@ void Mesh::drawVBOs() {
   glUniform1i(GLCanvas::colormodeID, 0);
 
   DrawLight();
+  
   if (args->bounding_box) {
     bbox.drawVBOs();
   }
