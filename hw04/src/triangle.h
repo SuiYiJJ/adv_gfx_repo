@@ -3,6 +3,7 @@
 
 #include "boundingbox.h"
 #include "edge.h"
+#include <glm/glm.hpp>
 
 // ===========================================================
 // Simple half-edge data structure representation for a triangle mesh
@@ -34,6 +35,18 @@ public:
     return edge; 
   }
   int getID() { return id; }
+
+
+  //get center of triangle
+  glm::vec3 getCenter(){
+    glm::vec3  a= edge->getStartVertex()->getPos();
+    glm::vec3  b= edge->getNext()->getStartVertex()->getPos();              
+    glm::vec3  c= edge->getNext()->getNext()->getStartVertex()->getPos();   
+    glm::vec3 res = a + b + c;
+    res = res * (1.0f/3.0f);
+    return res;
+}
+  
 
   // =========
   // MODIFIERS

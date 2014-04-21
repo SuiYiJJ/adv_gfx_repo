@@ -7,6 +7,10 @@
 #include "triangle.h"
 #include "argparser.h"
 #include "utils.h"
+#include <list>
+#include <algorithm>
+#include <math.h>       /* fabs */
+#include <stdio.h>      /* printf */
 
 // Predefined colors to use
 glm::vec4 floor_color(0.9,0.8,0.7,1);
@@ -194,9 +198,57 @@ void Mesh::SetupMesh() {
 // draw a second copy of the object where it appears to be on the other side of the mirror
 void Mesh::SetupReflectedMesh() {
 
+  // Setup some stuff
+  glm::vec3 diff = bbox.getMax()-bbox.getMin();
+
+  float mirror_x = (-0.25)*diff.x + bbox.getMin().x;
+
+  for (triangleshashtype::iterator iter = triangles.begin();
+       iter != triangles.end(); iter++) {
+    Triangle *t = iter->second;
+    
+    glm::vec3 a = (*t)[0]->getPos();
+    glm::vec3 b = (*t)[1]->getPos();
+    glm::vec3 c = (*t)[2]->getPos();    
 
 
-  // ASSIGNMENT: WRITE THIS FUNCTION
+    glm::vec3 * v[3] = {&a,&b,&c};
+    
+    for(int i = 0; i < 3; i++){
+      //translate
+      float dist_2_mirror = sqrt(pow((v[i]->x - mirror_x),2));
+      v[i]->x = v[i]->x - (2*dist_2_mirror);
+    }
+
+
+    // Alter order
+    glm::vec3 na = ComputeNormal(c,b,a);
+    glm::vec3 nb = na;
+    glm::vec3 nc = na;
+    if (args->gouraud_normals) {
+      na = (*t)[0]->getGouraudNormal();
+      nb = (*t)[1]->getGouraudNormal();
+      nc = (*t)[2]->getGouraudNormal();
+    }
+    // Alter order
+    int start = reflected_mesh_tri_verts.size();
+    reflected_mesh_tri_verts.push_back(VBOPosNormalColor(c,nc,mesh_color));
+    reflected_mesh_tri_verts.push_back(VBOPosNormalColor(b,nb,mesh_color));
+    reflected_mesh_tri_verts.push_back(VBOPosNormalColor(a,na,mesh_color));
+    reflected_mesh_tri_indices.push_back(VBOIndexedTri(start,start+1,start+2));
+  }
+  
+  // After pushing
+  glBindBuffer(GL_ARRAY_BUFFER,reflected_mesh_tri_verts_VBO); 
+  glBufferData(GL_ARRAY_BUFFER,
+	       sizeof(VBOPosNormalColor) * reflected_mesh_tri_verts.size(), 
+	       &reflected_mesh_tri_verts[0],
+	       GL_STATIC_DRAW); 
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,reflected_mesh_tri_indices_VBO); 
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+	       sizeof(VBOIndexedTri) * reflected_mesh_tri_indices.size(),
+	       &reflected_mesh_tri_indices[0], GL_STATIC_DRAW);
+
 
 
 }
@@ -206,6 +258,46 @@ void Mesh::SetupReflectedMesh() {
 void Mesh::SetupReflectedFloor() {
 
 
+  glm::vec3 diff = bbox.getMax()-bbox.getMin();
+  float mirror_x = (-0.25)*diff.x + bbox.getMin().x;
+  // create vertices just a bit bigger than the bounding box
+  glm::vec3 a = bbox.getMin() + glm::vec3(-floor_factor*diff.x,0,-floor_factor*diff.z);
+  glm::vec3 b = bbox.getMin() + glm::vec3(-floor_factor*diff.x,0, (1+floor_factor)*diff.z);
+  glm::vec3 c = bbox.getMin() + glm::vec3( (1+floor_factor)*diff.x,0, (1+floor_factor)*diff.z);
+  glm::vec3 d = bbox.getMin() + glm::vec3( (1+floor_factor)*diff.x,0,-floor_factor*diff.z);
+
+
+    glm::vec3 * v[4] = {&a,&b,&c,&d};
+    
+    for(int i = 0; i < 4; i++){
+      //translate
+      float dist_2_mirror = sqrt(pow((v[i]->x - mirror_x),2));
+      if(v[i]->x < mirror_x){
+      v[i]->x = v[i]->x + (2*dist_2_mirror);
+      
+      }else{
+      v[i]->x = v[i]->x - (2*dist_2_mirror);
+      
+      }
+    }
+
+
+  glm::vec3 normal = ComputeNormal(d,c,a);
+  reflected_floor_tri_verts.push_back(VBOPosNormalColor(a,normal,floor_color));
+  reflected_floor_tri_verts.push_back(VBOPosNormalColor(b,normal,floor_color));
+  reflected_floor_tri_verts.push_back(VBOPosNormalColor(c,normal,floor_color));
+  reflected_floor_tri_verts.push_back(VBOPosNormalColor(d,normal,floor_color));
+  reflected_floor_tri_indices.push_back(VBOIndexedTri(2,1,0));
+  reflected_floor_tri_indices.push_back(VBOIndexedTri(3,2,0));
+  glBindBuffer(GL_ARRAY_BUFFER,reflected_floor_tri_verts_VBO); 
+  glBufferData(GL_ARRAY_BUFFER,
+	       sizeof(VBOPosNormalColor) * reflected_floor_tri_verts.size(), 
+	       &reflected_floor_tri_verts[0],
+	       GL_STATIC_DRAW); 
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,reflected_floor_tri_indices_VBO); 
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+	       sizeof(VBOIndexedTri) * reflected_floor_tri_indices.size(),
+	       &reflected_floor_tri_indices[0], GL_STATIC_DRAW);
 
   // ASSIGNMENT: WRITE THIS FUNCTION
 
@@ -216,28 +308,84 @@ void Mesh::SetupReflectedFloor() {
 // figure out which edges are the silhouette of the object 
 void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
 
+  std::cout << "running" << std::endl;
+  std::list<Edge *> silhouette;
+
+  //jump
+
+  for (triangleshashtype::iterator iter = triangles.begin();
+       iter != triangles.end(); iter++) {
+    Triangle *t = iter->second;
+
+    glm::vec3 a = (*t)[0]->getPos();
+    glm::vec3 b = (*t)[1]->getPos();
+    glm::vec3 c = (*t)[2]->getPos();    
+
+    
+    // Getting center of the triangle
+    glm::vec3 center = (*t).getCenter();
+
+    // Getitng light direction from light to center
+    glm::vec3 lightDir =  light_position - center;
 
 
-  // ASSIGNMENT: FIND THE SILOUETTE EDGES
+    if(glm::dot(lightDir, ComputeNormal(a,b,c)) >= 0.0){
+      // ploygon faces away from light source
+      Edge * ea  = (*t).getEdge();
+      Edge * eb  = (*t).getEdge()->getNext();
+      Edge * ec  = (*t).getEdge()->getNext()->getNext();
 
+      Edge * edges[3] = {ea,eb,ec};
+
+      // for each edge check if I am in the list
+      for(int i=0; i < 3; i++){
+
+
+        std::list<Edge*>::iterator found = std::find(
+            silhouette.begin(),silhouette.end(),edges[i]->getOpposite());
+
+        if(found != silhouette.end()){
+          //alread in list
+          // remove
+          silhouette.erase(found);
+        }else{
+          //add to list
+          silhouette.push_back(edges[i]);
+        }
+      
+      }//each edge
+    }//if_face
+  }//each tri
+
+
+  std::cout << "all computed" << std::endl;
   float thickness = 0.003*getBoundingBox().maxDim();
   
-  // & use this helper function to create geometry for each edge
-  // addEdgeGeometry(silhouette_edge_tri_verts,silhouette_edge_tri_indices,
-  //                 /*VERTEX POS A*/,/*VERTEX POS B*/,red,red,thickness,thickness);
+  
 
+  std::list<Edge*>::iterator cur = silhouette.begin();
+  for(;cur != silhouette.end(); cur++){
+    glm::vec3 v1 = (*cur)->getStartVertex()->getPos();
+    glm::vec3 v2 = (*cur)->getEndVertex()->getPos();
 
-
+    addEdgeGeometry(
+        silhouette_edge_tri_verts,silhouette_edge_tri_indices,
+        v1,v2,red,red,thickness,thickness);
+  }
+  
 
   glBindBuffer(GL_ARRAY_BUFFER,silhouette_edge_tri_verts_VBO); 
   glBufferData(GL_ARRAY_BUFFER,sizeof(VBOPosNormalColor)*silhouette_edge_tri_verts.size(),&silhouette_edge_tri_verts[0],GL_STATIC_DRAW); 
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,silhouette_edge_tri_indices_VBO); 
   glBufferData(GL_ELEMENT_ARRAY_BUFFER,sizeof(VBOIndexedTri)*silhouette_edge_tri_indices.size(),&silhouette_edge_tri_indices[0],GL_STATIC_DRAW);
+
 }
 
 
 // project the silhouette edges away from the light source
 void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
+
+
 
 
 
@@ -341,6 +489,7 @@ void Mesh::DrawReflectedFloor() {
 void Mesh::DrawReflectedMesh() {
   if (reflected_mesh_tri_verts.size() > 0) {
     HandleGLError("enter draw reflected_mesh");
+
     glBindBuffer(GL_ARRAY_BUFFER,reflected_mesh_tri_verts_VBO); 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,reflected_mesh_tri_indices_VBO); 
     glEnableVertexAttribArray(0);
