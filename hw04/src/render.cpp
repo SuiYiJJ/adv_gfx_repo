@@ -311,7 +311,6 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
   std::cout << "running" << std::endl;
   std::list<Edge *> silhouette;
 
-  //jump
 
   for (triangleshashtype::iterator iter = triangles.begin();
        iter != triangles.end(); iter++) {
@@ -371,6 +370,8 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
     addEdgeGeometry(
         silhouette_edge_tri_verts,silhouette_edge_tri_indices,
         v1,v2,red,red,thickness,thickness);
+    //save for later
+    extend_edges.push_back(*cur);
   }
   
 
@@ -384,13 +385,47 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
 
 // project the silhouette edges away from the light source
 void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
+  //jump
+  
+  float thickness = 0.003*getBoundingBox().maxDim();
+  float large_number = 100;
 
+  //for each edge
+  for(int i = 0; i < extend_edges.size(); i++){
+    glm::vec3 v1 =  extend_edges[i]->getStartVertex()->getPos();
+    glm::vec3 v2 =  extend_edges[i]->getEndVertex()->getPos();
+    
+    glm::vec3 lightDir_v1 = v1 - light_position;
+    glm::vec3 lightDir_v2 = v2 - light_position;
 
+    glm::vec3 projected_v1 = v1 + lightDir_v1*large_number;
+    glm::vec3 projected_v2 = v2 + lightDir_v2*large_number;
 
+    //clock wise
+    glm::vec3 normal = ComputeNormal(light_position,v2,v1);
+
+    //count clock wise
+    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v1,normal,green));
+    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v2,normal,green));
+    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v1,normal,green));
+    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v2,normal,green));
+    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+3,i+2,i));
+    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+3,i,i+1));
+    
+  }
 
 
   // ASSIGNMENT: WRITE THIS FUNCTION
   
+  glBindBuffer(GL_ARRAY_BUFFER,shadow_polygon_tri_verts_VBO); 
+  glBufferData(GL_ARRAY_BUFFER,
+	       sizeof(VBOPosNormalColor) * shadow_polygon_tri_verts.size(), 
+	       &shadow_polygon_tri_verts[0],
+	       GL_STATIC_DRAW); 
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,shadow_polygon_tri_indices_VBO); 
+  glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+	       sizeof(VBOIndexedTri) * shadow_polygon_tri_indices.size(),
+	       &shadow_polygon_tri_indices[0], GL_STATIC_DRAW);
 
 
 
@@ -564,6 +599,9 @@ void Mesh::setupVBOs() {
   silhouette_edge_tri_verts.clear(); 
   silhouette_edge_tri_indices.clear();
   light_vert.clear();
+  
+  //self
+  extend_edges.clear();
 
   // setup the new geometry
   glm::vec3 light_position = LightPosition();

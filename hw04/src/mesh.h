@@ -122,6 +122,10 @@ private:
   std::vector<VBOIndexedTri> silhouette_edge_tri_indices;
   std::vector<VBOPosNormalColor> light_vert;
 
+  //self
+  std::vector<Edge*>extend_edges;
+
+
 };
 
 // ======================================================================
