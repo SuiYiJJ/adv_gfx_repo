@@ -266,7 +266,6 @@ void Mesh::SetupReflectedFloor() {
   glm::vec3 c = bbox.getMin() + glm::vec3( (1+floor_factor)*diff.x,0, (1+floor_factor)*diff.z);
   glm::vec3 d = bbox.getMin() + glm::vec3( (1+floor_factor)*diff.x,0,-floor_factor*diff.z);
 
-
     glm::vec3 * v[4] = {&a,&b,&c,&d};
     
     for(int i = 0; i < 4; i++){
@@ -280,7 +279,6 @@ void Mesh::SetupReflectedFloor() {
       
       }
     }
-
 
   glm::vec3 normal = ComputeNormal(d,c,a);
   reflected_floor_tri_verts.push_back(VBOPosNormalColor(a,normal,floor_color));
@@ -715,10 +713,69 @@ void Mesh::drawVBOs() {
   // SHADOW ONLY RENDERING
   else if (!args->mirror && args->shadow) {
     
+    // Clear frame, depth & stencil buffers, disable stencil
+    // enable light
+
+    // Light on
+    glUniform1i(GLCanvas::colormodeID, 1);
+
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
+    glDisable(GL_STENCIL_TEST);
+    glColorMask(1,1,1,1); 
+    glClearStencil(0);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    // Draw scene
+    DrawMesh();
+    DrawFloor();
+
+    // Turn light off
+    glUniform1i(GLCanvas::colormodeID, 2);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LESS);
+    glDepthMask(0);
+    // do not disturb the depth buffer
+    glEnable(GL_STENCIL_TEST);
+    glStencilFunc(GL_ALWAYS, 0, 0);
+    glStencilMask(0x1);
+    // just write least significant
+    // stencil bit
+
+    glStencilOp(GL_KEEP, GL_KEEP, GL_INVERT);
+    // invert stencil bit if depth pass
+    glColorMask(0,0,0,0);
+    // do not disturb the color buffer
+
+    // shadow polygons
+    glDisable(GL_CULL_FACE);
+    DrawShadowPolygons();
+    glEnable(GL_CULL_FACE);
+
+
+
+    glEnable(GL_LIGHTING);
+    // use lighting
+    glDisable(GL_LIGHT0);
+    // just not the shadowed light
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_EQUAL);
+    // must match depth from 1st step
+    glDepthMask(0);
+
+    glEnable(GL_STENCIL_TEST);
+    // and use stencil to update only
+    glStencilFunc(GL_EQUAL, 0x1, 0x1);
+    // pixels tagged as
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+    // “in the shadow volume”
+    glColorMask(1,1,1,1);
+    DrawMesh();
+    DrawFloor();
 
 
   // ASSIGNMENT: WRITE THIS RENDERING MODE
-
 
 
   // use the following code to turn the lights on & off
@@ -727,6 +784,8 @@ void Mesh::drawVBOs() {
   //glUniform1i(GLCanvas::colormodeID, 2);
   // mode 1: STANDARD PHONG LIGHTING (LIGHT ON)
   //glUniform1i(GLCanvas::colormodeID, 1);
+
+
 
 
 
