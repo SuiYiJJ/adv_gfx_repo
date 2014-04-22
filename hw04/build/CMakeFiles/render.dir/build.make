@@ -31,14 +31,17 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
+# Escaping for special characters.
+EQUALS = =
+
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/cmake-gui
+CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/espinm2/Code/adv_gfx_repo/hw04/src
+CMAKE_SOURCE_DIR = /home/maxe/adv_gfx_repo/hw04/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/espinm2/Code/adv_gfx_repo/hw04/build
+CMAKE_BINARY_DIR = /home/maxe/adv_gfx_repo/hw04/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/render.dir/depend.make
@@ -50,18 +53,18 @@ include CMakeFiles/render.dir/progress.make
 include CMakeFiles/render.dir/flags.make
 
 CMakeFiles/render.dir/main.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/main.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_1)
+CMakeFiles/render.dir/main.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/main.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/main.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/main.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/main.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/main.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/main.cpp
 
 CMakeFiles/render.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/main.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/main.cpp > CMakeFiles/render.dir/main.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/main.cpp > CMakeFiles/render.dir/main.cpp.i
 
 CMakeFiles/render.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/main.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/main.cpp -o CMakeFiles/render.dir/main.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/main.cpp -o CMakeFiles/render.dir/main.cpp.s
 
 CMakeFiles/render.dir/main.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/main.cpp.o.requires
@@ -73,18 +76,18 @@ CMakeFiles/render.dir/main.cpp.o.provides: CMakeFiles/render.dir/main.cpp.o.requ
 CMakeFiles/render.dir/main.cpp.o.provides.build: CMakeFiles/render.dir/main.cpp.o
 
 CMakeFiles/render.dir/edge.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/edge.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/edge.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_2)
+CMakeFiles/render.dir/edge.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/edge.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/edge.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/edge.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/edge.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/edge.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/edge.cpp
 
 CMakeFiles/render.dir/edge.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/edge.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/edge.cpp > CMakeFiles/render.dir/edge.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/edge.cpp > CMakeFiles/render.dir/edge.cpp.i
 
 CMakeFiles/render.dir/edge.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/edge.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/edge.cpp -o CMakeFiles/render.dir/edge.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/edge.cpp -o CMakeFiles/render.dir/edge.cpp.s
 
 CMakeFiles/render.dir/edge.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/edge.cpp.o.requires
@@ -96,18 +99,18 @@ CMakeFiles/render.dir/edge.cpp.o.provides: CMakeFiles/render.dir/edge.cpp.o.requ
 CMakeFiles/render.dir/edge.cpp.o.provides.build: CMakeFiles/render.dir/edge.cpp.o
 
 CMakeFiles/render.dir/glCanvas.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/glCanvas.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/glCanvas.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_3)
+CMakeFiles/render.dir/glCanvas.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/glCanvas.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/glCanvas.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/glCanvas.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/glCanvas.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/glCanvas.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/glCanvas.cpp
 
 CMakeFiles/render.dir/glCanvas.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/glCanvas.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/glCanvas.cpp > CMakeFiles/render.dir/glCanvas.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/glCanvas.cpp > CMakeFiles/render.dir/glCanvas.cpp.i
 
 CMakeFiles/render.dir/glCanvas.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/glCanvas.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/glCanvas.cpp -o CMakeFiles/render.dir/glCanvas.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/glCanvas.cpp -o CMakeFiles/render.dir/glCanvas.cpp.s
 
 CMakeFiles/render.dir/glCanvas.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/glCanvas.cpp.o.requires
@@ -119,18 +122,18 @@ CMakeFiles/render.dir/glCanvas.cpp.o.provides: CMakeFiles/render.dir/glCanvas.cp
 CMakeFiles/render.dir/glCanvas.cpp.o.provides.build: CMakeFiles/render.dir/glCanvas.cpp.o
 
 CMakeFiles/render.dir/camera.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/camera.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/camera.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_4)
+CMakeFiles/render.dir/camera.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/camera.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/camera.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/camera.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/camera.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/camera.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/camera.cpp
 
 CMakeFiles/render.dir/camera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/camera.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/camera.cpp > CMakeFiles/render.dir/camera.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/camera.cpp > CMakeFiles/render.dir/camera.cpp.i
 
 CMakeFiles/render.dir/camera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/camera.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/camera.cpp -o CMakeFiles/render.dir/camera.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/camera.cpp -o CMakeFiles/render.dir/camera.cpp.s
 
 CMakeFiles/render.dir/camera.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/camera.cpp.o.requires
@@ -142,18 +145,18 @@ CMakeFiles/render.dir/camera.cpp.o.provides: CMakeFiles/render.dir/camera.cpp.o.
 CMakeFiles/render.dir/camera.cpp.o.provides.build: CMakeFiles/render.dir/camera.cpp.o
 
 CMakeFiles/render.dir/mesh.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/mesh.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/mesh.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_5)
+CMakeFiles/render.dir/mesh.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/mesh.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/mesh.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/mesh.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/mesh.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/mesh.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/mesh.cpp
 
 CMakeFiles/render.dir/mesh.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/mesh.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/mesh.cpp > CMakeFiles/render.dir/mesh.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/mesh.cpp > CMakeFiles/render.dir/mesh.cpp.i
 
 CMakeFiles/render.dir/mesh.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/mesh.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/mesh.cpp -o CMakeFiles/render.dir/mesh.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/mesh.cpp -o CMakeFiles/render.dir/mesh.cpp.s
 
 CMakeFiles/render.dir/mesh.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/mesh.cpp.o.requires
@@ -165,18 +168,18 @@ CMakeFiles/render.dir/mesh.cpp.o.provides: CMakeFiles/render.dir/mesh.cpp.o.requ
 CMakeFiles/render.dir/mesh.cpp.o.provides.build: CMakeFiles/render.dir/mesh.cpp.o
 
 CMakeFiles/render.dir/render.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/render.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/render.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_6)
+CMakeFiles/render.dir/render.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/render.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/render.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/render.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/render.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/render.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/render.cpp
 
 CMakeFiles/render.dir/render.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/render.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/render.cpp > CMakeFiles/render.dir/render.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/render.cpp > CMakeFiles/render.dir/render.cpp.i
 
 CMakeFiles/render.dir/render.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/render.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/render.cpp -o CMakeFiles/render.dir/render.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/render.cpp -o CMakeFiles/render.dir/render.cpp.s
 
 CMakeFiles/render.dir/render.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/render.cpp.o.requires
@@ -188,18 +191,18 @@ CMakeFiles/render.dir/render.cpp.o.provides: CMakeFiles/render.dir/render.cpp.o.
 CMakeFiles/render.dir/render.cpp.o.provides.build: CMakeFiles/render.dir/render.cpp.o
 
 CMakeFiles/render.dir/boundingbox.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/boundingbox.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/boundingbox.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_7)
+CMakeFiles/render.dir/boundingbox.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/boundingbox.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/boundingbox.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/boundingbox.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/boundingbox.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/boundingbox.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/boundingbox.cpp
 
 CMakeFiles/render.dir/boundingbox.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/boundingbox.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/boundingbox.cpp > CMakeFiles/render.dir/boundingbox.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/boundingbox.cpp > CMakeFiles/render.dir/boundingbox.cpp.i
 
 CMakeFiles/render.dir/boundingbox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/boundingbox.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/boundingbox.cpp -o CMakeFiles/render.dir/boundingbox.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/boundingbox.cpp -o CMakeFiles/render.dir/boundingbox.cpp.s
 
 CMakeFiles/render.dir/boundingbox.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/boundingbox.cpp.o.requires
@@ -211,18 +214,18 @@ CMakeFiles/render.dir/boundingbox.cpp.o.provides: CMakeFiles/render.dir/bounding
 CMakeFiles/render.dir/boundingbox.cpp.o.provides.build: CMakeFiles/render.dir/boundingbox.cpp.o
 
 CMakeFiles/render.dir/utils.cpp.o: CMakeFiles/render.dir/flags.make
-CMakeFiles/render.dir/utils.cpp.o: /home/espinm2/Code/adv_gfx_repo/hw04/src/utils.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_8)
+CMakeFiles/render.dir/utils.cpp.o: /home/maxe/adv_gfx_repo/hw04/src/utils.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/render.dir/utils.cpp.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -o CMakeFiles/render.dir/utils.cpp.o -c /home/espinm2/Code/adv_gfx_repo/hw04/src/utils.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/render.dir/utils.cpp.o -c /home/maxe/adv_gfx_repo/hw04/src/utils.cpp
 
 CMakeFiles/render.dir/utils.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/render.dir/utils.cpp.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -E /home/espinm2/Code/adv_gfx_repo/hw04/src/utils.cpp > CMakeFiles/render.dir/utils.cpp.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/maxe/adv_gfx_repo/hw04/src/utils.cpp > CMakeFiles/render.dir/utils.cpp.i
 
 CMakeFiles/render.dir/utils.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/render.dir/utils.cpp.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -g -Wall -pedantic -S /home/espinm2/Code/adv_gfx_repo/hw04/src/utils.cpp -o CMakeFiles/render.dir/utils.cpp.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/maxe/adv_gfx_repo/hw04/src/utils.cpp -o CMakeFiles/render.dir/utils.cpp.s
 
 CMakeFiles/render.dir/utils.cpp.o.requires:
 .PHONY : CMakeFiles/render.dir/utils.cpp.o.requires
@@ -255,22 +258,22 @@ render: CMakeFiles/render.dir/mesh.cpp.o
 render: CMakeFiles/render.dir/render.cpp.o
 render: CMakeFiles/render.dir/boundingbox.cpp.o
 render: CMakeFiles/render.dir/utils.cpp.o
-render: /usr/lib/x86_64-linux-gnu/libGLU.so
-render: /usr/lib/x86_64-linux-gnu/libGL.so
-render: /usr/lib/x86_64-linux-gnu/libSM.so
-render: /usr/lib/x86_64-linux-gnu/libICE.so
-render: /usr/lib/x86_64-linux-gnu/libX11.so
-render: /usr/lib/x86_64-linux-gnu/libXext.so
-render: /usr/lib/x86_64-linux-gnu/libGLEW.a
-render: /usr/lib/x86_64-linux-gnu/libGL.so
-render: /usr/lib/x86_64-linux-gnu/libGLEW.a
-render: /usr/lib/x86_64-linux-gnu/libGL.so
-render: /usr/lib/x86_64-linux-gnu/libGLEW.a
-render: /usr/lib/x86_64-linux-gnu/libSM.so
-render: /usr/lib/x86_64-linux-gnu/libICE.so
-render: /usr/lib/x86_64-linux-gnu/libX11.so
-render: /usr/lib/x86_64-linux-gnu/libXext.so
 render: CMakeFiles/render.dir/build.make
+render: /usr/lib64/libGLU.so
+render: /usr/lib64/libGL.so
+render: /usr/lib64/libSM.so
+render: /usr/lib64/libICE.so
+render: /usr/lib64/libX11.so
+render: /usr/lib64/libXext.so
+render: /usr/lib64/libGLEW.so
+render: /usr/lib64/libGL.so
+render: /usr/lib64/libGLEW.so
+render: /usr/lib64/libGL.so
+render: /usr/lib64/libGLEW.so
+render: /usr/lib64/libSM.so
+render: /usr/lib64/libICE.so
+render: /usr/lib64/libX11.so
+render: /usr/lib64/libXext.so
 render: CMakeFiles/render.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable render"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/render.dir/link.txt --verbose=$(VERBOSE)
@@ -294,6 +297,6 @@ CMakeFiles/render.dir/clean:
 .PHONY : CMakeFiles/render.dir/clean
 
 CMakeFiles/render.dir/depend:
-	cd /home/espinm2/Code/adv_gfx_repo/hw04/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/espinm2/Code/adv_gfx_repo/hw04/src /home/espinm2/Code/adv_gfx_repo/hw04/src /home/espinm2/Code/adv_gfx_repo/hw04/build /home/espinm2/Code/adv_gfx_repo/hw04/build /home/espinm2/Code/adv_gfx_repo/hw04/build/CMakeFiles/render.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/maxe/adv_gfx_repo/hw04/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/maxe/adv_gfx_repo/hw04/src /home/maxe/adv_gfx_repo/hw04/src /home/maxe/adv_gfx_repo/hw04/build /home/maxe/adv_gfx_repo/hw04/build /home/maxe/adv_gfx_repo/hw04/build/CMakeFiles/render.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/render.dir/depend
 
