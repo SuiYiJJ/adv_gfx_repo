@@ -311,7 +311,6 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
   std::cout << "running" << std::endl;
   std::list<Edge *> silhouette;
 
-
   for (triangleshashtype::iterator iter = triangles.begin();
        iter != triangles.end(); iter++) {
     Triangle *t = iter->second;
@@ -319,14 +318,12 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
     glm::vec3 a = (*t)[0]->getPos();
     glm::vec3 b = (*t)[1]->getPos();
     glm::vec3 c = (*t)[2]->getPos();    
-
     
     // Getting center of the triangle
     glm::vec3 center = (*t).getCenter();
 
     // Getitng light direction from light to center
     glm::vec3 lightDir =  light_position - center;
-
 
     if(glm::dot(lightDir, ComputeNormal(a,b,c)) >= 0.0){
       // ploygon faces away from light source
@@ -356,10 +353,9 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
     }//if_face
   }//each tri
 
-
   std::cout << "all computed" << std::endl;
+
   float thickness = 0.003*getBoundingBox().maxDim();
-  
   
 
   std::list<Edge*>::iterator cur = silhouette.begin();
@@ -371,7 +367,6 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
         silhouette_edge_tri_verts,silhouette_edge_tri_indices,
         v1,v2,red,red,thickness,thickness);
     //save for later
-    extend_edges.push_back(*cur);
   }
   
 
@@ -386,14 +381,71 @@ void Mesh::SetupSilhouetteEdges(const glm::vec3 &light_position) {
 // project the silhouette edges away from the light source
 void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
   //jump
+
   
   float thickness = 0.003*getBoundingBox().maxDim();
   float large_number = 100;
 
+  /////////////////////////////////////////////////// (expensive & avoidible)
+  std::list<Edge *> extend_edges;
+
+  // for each triangle
+  for (triangleshashtype::iterator iter = triangles.begin();
+       iter != triangles.end(); iter++) {
+    Triangle *t = iter->second;
+    
+    glm::vec3 a = (*t)[0]->getPos();
+    glm::vec3 b = (*t)[1]->getPos();
+    glm::vec3 c = (*t)[2]->getPos();    
+    
+    // Getting center of the triangle
+    glm::vec3 center = (*t).getCenter();
+
+    // Getitng light direction from light to center
+    glm::vec3 lightDir =  light_position - center;
+
+
+    // Am i facing the light (triangle)
+    // If continue to add in all my edges that arn't in the list already
+    if(glm::dot(lightDir, ComputeNormal(a,b,c)) >= 0.0){
+
+
+      // getting all my edges (clockwise) 
+      // these e->getTriangle() faces light
+      Edge * ea  = (*t).getEdge();
+      Edge * eb  = (*t).getEdge()->getNext();
+      Edge * ec  = (*t).getEdge()->getNext()->getNext();
+
+      Edge * edges[3] = {ea,eb,ec};
+
+      // for each edge check if I am in the list
+      for(int i=0; i < 3; i++){
+
+        std::list<Edge*>::iterator found = std::find(
+            extend_edges.begin(),extend_edges.end(),edges[i]->getOpposite());
+
+        if(found != extend_edges.end()){
+          //alread in list
+          // remove
+          extend_edges.erase(found);
+        }else{
+          //add to list
+          extend_edges.push_back(edges[i]);
+        }
+      
+      }//each edge
+    }//if_face
+  }//each tri
+
+  
   //for each edge
-  for(int i = 0; i < extend_edges.size(); i++){
-    glm::vec3 v1 =  extend_edges[i]->getStartVertex()->getPos();
-    glm::vec3 v2 =  extend_edges[i]->getEndVertex()->getPos();
+
+  std::list<Edge*>::iterator i = extend_edges.begin();
+  int c = 0;
+  for(; i != extend_edges.end(); i++){
+
+    glm::vec3 v1 =  (*i)->getStartVertex()->getPos();
+    glm::vec3 v2 =  (*i)->getEndVertex()->getPos();
     
     glm::vec3 lightDir_v1 = v1 - light_position;
     glm::vec3 lightDir_v2 = v2 - light_position;
@@ -401,20 +453,29 @@ void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
     glm::vec3 projected_v1 = v1 + lightDir_v1*large_number;
     glm::vec3 projected_v2 = v2 + lightDir_v2*large_number;
 
-    //clock wise
+    //clock wise correct
     glm::vec3 normal = ComputeNormal(light_position,v2,v1);
+
+    //addEdgeGeometry(
+    //    shadow_polygon_tri_verts,shadow_polygon_tri_indices,
+    //    v1,v2,green,green,thickness,thickness);
 
     //count clock wise
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v1,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v2,normal,green));
-    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v1,normal,green));
-    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v2,normal,green));
-    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+3,i+2,i));
-    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+3,i,i+1));
+    shadow_polygon_tri_verts.push_back(VBOPosNormalColor(light_position,normal,green));
+    //shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v2,normal,green));
+    shadow_polygon_tri_indices.push_back(VBOIndexedTri(c,c+1,c+2));
+    //shadow_polygon_tri_indices.push_back(VBOIndexedTri());
     
+    if(c < 4){
+      c++;
+      printf("created %d\n",c);
+    }else{
+      break;
+    }
+
   }
-
-
   // ASSIGNMENT: WRITE THIS FUNCTION
   
   glBindBuffer(GL_ARRAY_BUFFER,shadow_polygon_tri_verts_VBO); 
@@ -600,8 +661,6 @@ void Mesh::setupVBOs() {
   silhouette_edge_tri_indices.clear();
   light_vert.clear();
   
-  //self
-  extend_edges.clear();
 
   // setup the new geometry
   glm::vec3 light_position = LightPosition();
