@@ -419,18 +419,18 @@ void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
 
 
     //count clock wise
+    int start = shadow_polygon_tri_verts.size();
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v1,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v2,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v1,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v2,normal,green));
+    //shadow_polygon_tri_verts.push_back(VBOPosNormalColor(light_position,normal,green));
 
     //clock wise
-    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i,i+2,i+1));
-    shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+1,i+2,i+3));
+    //shadow_polygon_tri_indices.push_back(VBOIndexedTri(start,start+1,start+4));
+    shadow_polygon_tri_indices.push_back(VBOIndexedTri(start,start+2,start+3));
+    shadow_polygon_tri_indices.push_back(VBOIndexedTri(start+1,start,start+3));
 
-    //counter clock wise
-    //shadow_polygon_tri_indices.push_back(VBOIndexedTri(i,i+2,i+1));
-    //shadow_polygon_tri_indices.push_back(VBOIndexedTri(i+1,i+2,i+3));
 
   }
   // ASSIGNMENT: WRITE THIS FUNCTION
