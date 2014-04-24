@@ -422,10 +422,8 @@ void Mesh::SetupShadowPolygons(const glm::vec3 &light_position) {
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(v2,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v1,normal,green));
     shadow_polygon_tri_verts.push_back(VBOPosNormalColor(projected_v2,normal,green));
-    //shadow_polygon_tri_verts.push_back(VBOPosNormalColor(light_position,normal,green));
 
     //clock wise
-    //shadow_polygon_tri_indices.push_back(VBOIndexedTri(start,start+1,start+4));
     shadow_polygon_tri_indices.push_back(VBOIndexedTri(start,start+2,start+3));
     shadow_polygon_tri_indices.push_back(VBOIndexedTri(start+1,start,start+3));
 
@@ -644,12 +642,18 @@ void Mesh::drawVBOs() {
   // --------------------------
   // NEITHER SHADOWS NOR MIRROR
   if (!args->mirror && !args->shadow) {
+    glDisable(GL_STENCIL_TEST);
+    glClearDepth(1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+    glDepthFunc(GL_LEQUAL);
+    glEnable(GL_DEPTH_TEST);
     DrawMirror();
     DrawFloor();
     if (args->geometry) {
       // shader 1: CHECKERBOARD
       // shader 2: ORANGE
       // shader 3: other
+      //
       glUniform1i(GLCanvas::whichshaderID, args->whichshader);
       DrawMesh();
       glUniform1i(GLCanvas::whichshaderID, 0);
@@ -712,6 +716,7 @@ void Mesh::drawVBOs() {
   // ---------------------
   // SHADOW ONLY RENDERING
   else if (!args->mirror && args->shadow) {
+    //alpha
     
     // Clear frame, depth & stencil buffers, disable stencil
     // enable light
@@ -721,7 +726,6 @@ void Mesh::drawVBOs() {
 
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-    glEnable(GL_DEPTH_TEST);
     glDisable(GL_STENCIL_TEST);
     glColorMask(1,1,1,1); 
     glClearStencil(0);
@@ -755,9 +759,7 @@ void Mesh::drawVBOs() {
 
 
 
-    glEnable(GL_LIGHTING);
-    // use lighting
-    glDisable(GL_LIGHT0);
+    glUniform1i(GLCanvas::colormodeID, 2);
     // just not the shadowed light
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_EQUAL);
@@ -774,9 +776,10 @@ void Mesh::drawVBOs() {
     DrawMesh();
     DrawFloor();
 
+    // glDisable(GL_DEPTH_TEST);
+    glDepthMask(1);
 
   // ASSIGNMENT: WRITE THIS RENDERING MODE
-
 
   // use the following code to turn the lights on & off
   // ... instead of glEnable(GL_LIGHTS), etc.
@@ -785,27 +788,14 @@ void Mesh::drawVBOs() {
   // mode 1: STANDARD PHONG LIGHTING (LIGHT ON)
   //glUniform1i(GLCanvas::colormodeID, 1);
 
-
-
-
-
   }
 
   // --------------------------
   // MIRROR & SHADOW!
   else {
     assert (args->mirror && args->shadow);
-
-
-
-
     // EXTRA CREDIT: IMPLEMENT THIS INTERACTION
-
-
-
-
   }
-
 
   // -------------------------
   // ADDITIONAL VISUALIZATIONS (for debugging)
