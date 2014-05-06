@@ -1,49 +1,47 @@
 This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
 The top-level auxiliary file: article_2.aux
 The style file: plain.bst
+I found no \citation commands---while reading file article_2.aux
 Database file #1: ref.bib
-A bad cross reference---entry "ShengYYC09"
-refers to entry "DBLP:conf/vr/2009", which doesn't exist
-Warning--I didn't find a database entry for "DBLP:conf/vr/2009"
-You've used 1 entry,
+You've used 0 entries,
             2118 wiz_defined-function locations,
-            506 strings with 4211 characters,
-and the built_in function-call counts, 485 in all, are:
-= -- 43
-> -- 23
-< -- 1
-+ -- 9
-- -- 8
-* -- 32
-:= -- 78
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 7
+            497 strings with 3994 characters,
+and the built_in function-call counts, 18 in all, are:
+= -- 0
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 2
+:= -- 7
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
 chr.to.int$ -- 0
-cite$ -- 1
-duplicate$ -- 21
-empty$ -- 39
-format.name$ -- 8
-if$ -- 107
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 1
 int.to.chr$ -- 0
-int.to.str$ -- 1
-missing$ -- 1
-newline$ -- 8
-num.names$ -- 2
-pop$ -- 10
+int.to.str$ -- 0
+missing$ -- 0
+newline$ -- 3
+num.names$ -- 0
+pop$ -- 0
 preamble$ -- 1
-purify$ -- 6
+purify$ -- 0
 quote$ -- 0
-skip$ -- 17
+skip$ -- 1
 stack$ -- 0
-substring$ -- 25
-swap$ -- 9
-text.length$ -- 1
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 4
+type$ -- 0
 warning$ -- 0
-while$ -- 4
-width$ -- 2
-write$ -- 13
+while$ -- 0
+width$ -- 0
+write$ -- 2
 (There was 1 error message)

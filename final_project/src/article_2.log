@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2014.3.26)  24 APR 2014 04:09
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2014.3.26)  5 MAY 2014 21:01
 entering extended mode
  %&-line parsing enabled.
 **article_2.tex
@@ -328,17 +328,40 @@ Package: abstract 2009/06/08 v1.2a configurable abstracts
 \absparindent=\skip53
 \absparsep=\skip54
 )
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: dvips.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen150
+\Gin@req@width=\dimen151
+)
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/relsize.sty
+Package: relsize 2003/07/04 ver 3.1
+)
 (/usr/share/texmf-texlive/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2007/08/12 v2.8 Sectioning titles
 \ttl@box=\box57
 \beforetitleunit=\skip55
 \aftertitleunit=\skip56
-\ttl@plus=\dimen150
-\ttl@minus=\dimen151
+\ttl@plus=\dimen152
+\ttl@minus=\dimen153
 \ttl@toksa=\toks24
-\titlewidth=\dimen152
-\titlewidthlast=\dimen153
-\titlewidthfirst=\dimen154
+\titlewidth=\dimen154
+\titlewidthlast=\dimen155
+\titlewidthfirst=\dimen156
 )
 (/usr/share/texmf-texlive/tex/latex/titlesec/block.tss
 File: block.tss 2007/08/12
@@ -356,27 +379,27 @@ File: block.tss 2007/08/12
 ) (./article_2.aux)
 \openout1 = `article_2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 77.
-LaTeX Font Info:    ... okay on input line 77.
-LaTeX Font Info:    Try loading font information for T1+pplx on input line 77.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Try loading font information for T1+pplx on input line 79.
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/t1pplx.fd
 File: t1pplx.fd 2004/09/06 font definitions for T1/pplx.
 )
-\big@size=\dimen155
-LaTeX Info: Redefining \microtypecontext on input line 77.
+\big@size=\dimen157
+LaTeX Info: Redefining \microtypecontext on input line 79.
 Package microtype Info: Generating DVI output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -396,7 +419,7 @@ landscape: --
 twocolumn: --
 twoside: true
 asymmetric: --
-h-parts: 54.2025pt, 505.89pt, 54.2025pt
+h-parts: 65.04256pt, 484.20988pt, 65.04256pt
 v-parts: 91.04881pt, 567.34796pt, 136.57321pt
 hmarginratio: --
 vmarginratio: 2:3
@@ -411,10 +434,10 @@ driver: dvips
 -------------------- Page layout dimensions and switches
 \paperwidth  614.295pt
 \paperheight 794.96999pt
-\textwidth  505.89pt
+\textwidth  484.20988pt
 \textheight 567.34796pt
-\oddsidemargin  -18.06749pt
-\evensidemargin -18.06749pt
+\oddsidemargin  -7.22743pt
+\evensidemargin -7.22743pt
 \topmargin  -18.22118pt
 \headheight 12.0pt
 \headsep    25.0pt
@@ -433,7 +456,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring OFF on input line 77.
+Package hyperref Info: Link coloring OFF on input line 79.
 (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2007/05/29 v2.31 Cross-referencing by name of section
 
@@ -442,40 +465,40 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 )
 \c@section@level=\count115
 )
-LaTeX Info: Redefining \ref on input line 77.
-LaTeX Info: Redefining \pageref on input line 77.
+LaTeX Info: Redefining \ref on input line 79.
+LaTeX Info: Redefining \pageref on input line 79.
  (./article_2.out)
 (./article_2.out)
 \@outlinefile=\write3
 \openout3 = `article_2.out'.
 
 \AtBeginShipoutBox=\box58
-LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <24> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 80.
-LaTeX Font Info:    Try loading font information for OT1+pplx on input line 80.
+LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <18> not available
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 82.
+LaTeX Font Info:    Try loading font information for OT1+pplx on input line 82.
 
  (/usr/share/texmf-texlive/tex/latex/psnfss/ot1pplx.fd
 File: ot1pplx.fd 2004/09/06 font definitions for OT1/pplx.
 )
-LaTeX Font Info:    Try loading font information for OML+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 82.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/omlzplm.fd
 File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMS+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 82.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/omszplm.fd
 File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
 )
-LaTeX Font Info:    Try loading font information for OMX+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 82.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/omxzplm.fd
 File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
 )
-LaTeX Font Info:    Try loading font information for OT1+zplm on input line 80.
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 82.
 
 
 (/usr/share/texmf-texlive/tex/latex/psnfss/ot1zplm.fd
@@ -485,35 +508,23 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
 LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <10> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 87.
-Package microtype Info: Character `029' is missing
-(microtype)             in font `T1/pplx/m/sc/10'.
-(microtype)             Ignoring protrusion settings for this character.
-LaTeX Font Info:    Try loading font information for OMS+pplx on input line 122
-.
-LaTeX Font Info:    No file OMSpplx.fd. on input line 122.
+(Font)              Font shape `T1/pplx/b/n' tried instead on input line 94.
+File: images/placeholder_wide.eps Graphic file (type eps)
 
+<images/placeholder_wide.eps> [1
 
-LaTeX Font Warning: Font shape `OMS/pplx/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbullet' on input line 122.
+] [2] [3] [4] [5] (./article_2.bbl
 
-LaTeX Font Info:    Font shape `T1/pplx/bx/n' in size <9> not available
-(Font)              Font shape `T1/pplx/b/n' tried instead on input line 140.
-[1
+LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
-] (./article_2.bbl) [2] (./article_2.aux)
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
- ) 
+) [6] (./article_2.aux) ) 
 Here is how much of TeX's memory you used:
- 7572 strings out of 493849
- 117010 string characters out of 1152846
- 324780 words of memory out of 3000000
- 10741 multiletter control sequences out of 15000+50000
- 40842 words of font info for 59 fonts, out of 3000000 for 9000
+ 7878 strings out of 493849
+ 120788 string characters out of 1152846
+ 325486 words of memory out of 3000000
+ 11029 multiletter control sequences out of 15000+50000
+ 31958 words of font info for 54 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 38i,10n,43p,262b,514s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,13n,43p,262b,474s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on article_2.dvi (2 pages, 14284 bytes).
+Output written on article_2.dvi (6 pages, 38716 bytes).
