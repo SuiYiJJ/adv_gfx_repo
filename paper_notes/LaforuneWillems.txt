@@ -20,6 +20,7 @@ Introduction:
 	Pass 2 -> Tracing
 	(-) Bad on storage
 	(+) Hanrahan and Christensen only focus on imporant light contrbutions.
+	(+) Added stuff
 
   Math and jazz
   	L(x,0_x)
